@@ -45,7 +45,7 @@
   </script>
   <script>
     function sendBackMessage() {
-      var message = "Test00285";
+      var message = document.getElementById("htmlinput").value;
       console.log("Sending message to Unity: " + message);
       unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
     }

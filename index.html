@@ -17,38 +17,50 @@
 </head>
 
 <body>
-  <div class="webgl-content" style="display: table; width: 100%; height: 100%;">
+  <div class="webgl-content">
     <div id="unityContainer"></div>
-  <script>
+
+    <!-- <script>
     var myWidth = innerWidth;
     var myHeight = innerHeight;
     document.getElementById("unityContainer").style.width = myWidth + "px";
     document.getElementById("unityContainer").style.height = myHeight + "px";
-  </script>
-  <script>
-    var recaptureInputAndFocus = function () {
-      var canvas = document.getElementById("#canvas");
-      if (canvas) {
-        canvas.setAttribute("tabindex", "1");
-        canvas.focus();
-      } else
-        setTimeout(recaptureInputAndFocus, 100);
-    }
-    recaptureInputAndFocus();
-  </script>
-  <script>
-    var messageFromUnity = "FromUnity";
+  </script> -->
 
-    function WebGetMessage(message) {
-      messageFromUnity = message;
-      // $id.html(messageFromUnity);
-    }
+    <script>
+      var canvas = document.getElementById('#canvas');
+      var ratio = canvas.width / canvas.height;
 
-    function sendBackMessage() {
-      var message = "Test00285";
-      console.log("Sending message to Unity: " + message);
-      unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
-    }
+      canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+      canvas.width = canvas.height * ratio;
+
+      canvas.style.position = "absolute";
+      canvas.style.left = ((window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth) / 2 - canvas.width / 2) + "px";   
+    </script>
+    <script>
+      var recaptureInputAndFocus = function () {
+        var canvas = document.getElementById("#canvas");
+        if (canvas) {
+          canvas.setAttribute("tabindex", "1");
+          canvas.focus();
+        } else
+          setTimeout(recaptureInputAndFocus, 100);
+      }
+      recaptureInputAndFocus();
+    </script>
+    <script>
+      var messageFromUnity = "FromUnity";
+
+      function WebGetMessage(message) {
+        messageFromUnity = message;
+        // $id.html(messageFromUnity);
+      }
+
+      function sendBackMessage() {
+        var message = "Test00285";
+        console.log("Sending message to Unity: " + message);
+        unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
+      }
 
     // var $id = $("#id"),
     //   str = "This is ID",
@@ -56,7 +68,7 @@
     //   nodeNames = [];
 
     // $id.html(html);
-  </script>
+    </script>
 </body>
 
 </html>

@@ -1,69 +1,82 @@
-<!--
-unity webgl responsive
-
-template by dom
-dom@crowscrowscrows.com
-https://twitter.com/zerstoerer
-
-source code on github
-https://github.com/sno/unity-webgl-responsive
--->
-
 <!DOCTYPE html>
 <html lang="en-us">
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>cny-project</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="assets/css/reset.css">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-  <script src="assets/js/jquery-3.4.1.min.js"></script>
-
-  <!-- unity resources -->
+  <title>Unity WebGL Player | cny-project</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <script src="TemplateData/UnityProgress.js"></script>
   <script src="Build/UnityLoader.js"></script>
-
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   <script>
-      UnityLoader.compatibilityCheck = function (e, t, r) { t(); };
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/cny-project.json");
+    UnityLoader.compatibilityCheck = function (e, t, r) { t(); };
+    var unityInstance = UnityLoader.instantiate("unityContainer", "Build/cny-project.json", { onProgress: UnityProgress });
   </script>
+  <style>
+    input,
+    button {
+      padding: 10px;
+    }
+  </style>
 </head>
 
 <body>
-
-  <div class="webgl-wrapper">
-    <div class="webgl-content">
-      <div id="unityContainer" style="width:1280px; height: 720px;"></div>
+  <div class="webgl-content" style="display: table; width: 100%; height: 100%;">
+    <div id="unityContainer"></div>
+    <!--div class="footer">
+      //webgl1.0
+      <div class="webgl-logo"></div>
+      <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+      <div class="title">cny-project</div>
+    </div-->
+    <!--div>
+      <input placeholder="Enter text..." id="htmlinput"><button onclick="sendBackMessage()">Send to Unity</button>
     </div>
-  </div>
-  
+    <div id="id">
+      MyID
+    </div>
+  </div-->
   <script>
-    var messageFromUnity = "FromUnity";
-
-    function WebGetMessage(message) {
-      messageFromUnity = message;
-      // $id.html(messageFromUnity);
-    }
-
+    var myWidth = innerWidth;
+    var myHeight = innerHeight;
+    document.getElementById("unityContainer").style.width = myWidth + "px";
+    document.getElementById("unityContainer").style.height = myHeight + "px";
+  </script>
+  <script>
     function sendBackMessage() {
       var message = "Test00285";
       console.log("Sending message to Unity: " + message);
       unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
     }
-
-      // var $id = $("#id"),
-      //   str = "This is ID",
-      //   html = $.parseHTML(str),
-      //   nodeNames = [];
-
-      // $id.html(html);
   </script>
+  <script>
+    var recaptureInputAndFocus = function () {
+      var canvas = document.getElementById("#canvas");
+      if (canvas) {
+        canvas.setAttribute("tabindex", "1");
+        canvas.focus();
+      } else
+        setTimeout(recaptureInputAndFocus, 100);
+    }
+    recaptureInputAndFocus();
+  </script>
+  <script>
+    var messageFromUnity = "FromUnity";
 
-  <script src="assets/js/app.js"></script>
+    function WebGetMessage(message) {
+      messageFromUnity = message;
+      $id.html(messageFromUnity);
+    }
+
+    var $id = $("#id"),
+      str = "This is ID",
+      html = $.parseHTML(str),
+      nodeNames = [];
+
+    $id.html(html);
+  </script>
 </body>
 
 </html>

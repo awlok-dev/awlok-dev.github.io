@@ -49,7 +49,7 @@
 
     function WebGetMessage(message) {
       messageFromUnity = message;
-      $id.html(messageFromUnity);
+      //$id.html(messageFromUnity);
     }
 
     function sendBackMessage() {
@@ -58,12 +58,12 @@
       unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
     }
 
-    var $id = $("#id"),
-      str = "This is ID",
-      html = $.parseHTML(str),
-      nodeNames = [];
+    // var $id = $("#id"),
+    //   str = "This is ID",
+    //   html = $.parseHTML(str),
+    //   nodeNames = [];
 
-    $id.html(html);
+    // $id.html(html);
   </script>
 </body>
 

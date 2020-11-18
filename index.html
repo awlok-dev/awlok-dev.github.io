@@ -1,62 +1,74 @@
+<!--
+unity webgl responsive
+
+template by dom
+dom@crowscrowscrows.com
+https://twitter.com/zerstoerer
+
+source code on github
+https://github.com/sno/unity-webgl-responsive
+-->
+
 <!DOCTYPE html>
 <html lang="en-us">
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Unity WebGL Player | cny-project</title>
-  <link rel="shortcut icon" href="TemplateData/favicon.ico">
-  <link rel="stylesheet" href="TemplateData/style.css">
-  <script src="TemplateData/UnityProgress.js"></script>
-  <script src="Build/UnityLoader.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-  <script>
-    UnityLoader.compatibilityCheck = function (e, t, r) { t(); };
-    var unityInstance = UnityLoader.instantiate("unityContainer", "Build/cny-project.json", { onProgress: UnityProgress });
-  </script>
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>cny-project</title>
 
-<body>
-  <div class="webgl-content" style="display: table; width: 100%; height: 100%;">
-    <div id="unityContainer"></div>
-  <script>
-    var myWidth = innerWidth;
-    var myHeight = innerHeight;
-    document.getElementById("unityContainer").style.width = myWidth + "px";
-    document.getElementById("unityContainer").style.height = myHeight + "px";
-  </script>
-  <script>
-    var recaptureInputAndFocus = function () {
-      var canvas = document.getElementById("#canvas");
-      if (canvas) {
-        canvas.setAttribute("tabindex", "1");
-        canvas.focus();
-      } else
-        setTimeout(recaptureInputAndFocus, 100);
-    }
-    recaptureInputAndFocus();
-  </script>
-  <script>
-    var messageFromUnity = "FromUnity";
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    function WebGetMessage(message) {
-      messageFromUnity = message;
-      // $id.html(messageFromUnity);
-    }
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
-    function sendBackMessage() {
-      var message = "Test00285";
-      console.log("Sending message to Unity: " + message);
-      unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
-    }
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <!-- unity resources -->
+    <script src="Build/UnityLoader.js"></script>
 
-    // var $id = $("#id"),
-    //   str = "This is ID",
-    //   html = $.parseHTML(str),
-    //   nodeNames = [];
+    <script>
+      // instantiate webgl only if we're not on a touch device
+      UnityLoader.compatibilityCheck = function (e, t, r) { t(); };
+      var isTouch = ('ontouchstart' in document.documentElement);
 
-    // $id.html(html);
-  </script>
-</body>
+      if ( !isTouch ) {
+        var unityInstance = UnityLoader.instantiate("unityContainer", "Build/cny-project.json");
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <div class="webgl-wrapper">
+        <div class="webgl-content">
+          <div id="unityContainer" style="width:960px; height: 600px;"></div>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+
+    <script>
+      var messageFromUnity = "FromUnity";
+  
+      function WebGetMessage(message) {
+        messageFromUnity = message;
+        // $id.html(messageFromUnity);
+      }
+  
+      function sendBackMessage() {
+        var message = "Test00285";
+        console.log("Sending message to Unity: " + message);
+        unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
+      }
+  
+      // var $id = $("#id"),
+      //   str = "This is ID",
+      //   html = $.parseHTML(str),
+      //   nodeNames = [];
+  
+      // $id.html(html);
+    </script>
+  </body>
 
 </html>

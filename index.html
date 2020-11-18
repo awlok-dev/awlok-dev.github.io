@@ -17,33 +17,16 @@
     window.addEventListener("resize", onResize);
 
     function onResize() {
-      unityInstance.SendMessage('GameController', 'SetHeight', window.innerHeight);
-      unityInstance.SendMessage('GameController', 'SetWidth', window.innerWidth);
+      unityInstance.SendMessage('GameController', 'SetWindowHeight', window.innerHeight);
+      unityInstance.SendMessage('GameController', 'SetWindowWidth', window.innerWidth);
       unityInstance.SendMessage('GameController', 'OnResize');
     }
   </script>
 </head>
 
-<body style="margin:0; overflow: hidden;">
+<body style="margin:0px; overflow: hidden;">
   <div id="unityContainer"></div>
 
-  <!-- <script>
-    var myWidth = innerWidth;
-    var myHeight = innerHeight;
-    document.getElementById("unityContainer").style.width = myWidth + "px";
-    document.getElementById("unityContainer").style.height = myHeight + "px";
-  </script> -->
-  <!-- <script>
-    var recaptureInputAndFocus = function () {
-      var canvas = document.getElementById("#canvas");
-      if (canvas) {
-        canvas.setAttribute("tabindex", "1");
-        canvas.focus();
-      } else
-        setTimeout(recaptureInputAndFocus, 100);
-    }
-    recaptureInputAndFocus();
-  </script> -->
   <script>
     var messageFromUnity = "FromUnity";
 
@@ -57,13 +40,6 @@
       console.log("Sending message to Unity: " + message);
       unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
     }
-
-    // var $id = $("#id"),
-    //   str = "This is ID",
-    //   html = $.parseHTML(str),
-    //   nodeNames = [];
-
-    // $id.html(html);
   </script>
 </body>
 

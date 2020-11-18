@@ -4,136 +4,72 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>{{{ PRODUCT_NAME }}}</title>
+  <title>Unity WebGL Player | cny-project</title>
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
   <link rel="stylesheet" href="TemplateData/style.css">
+  <script src="TemplateData/UnityProgress.js"></script>
+  <script src="Build/UnityLoader.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <script>
+    UnityLoader.compatibilityCheck = function (e, t, r) { t(); };
+    var unityInstance = UnityLoader.instantiate("unityContainer", "Build/cny-project.json", { onProgress: UnityProgress });
+  </script>
+  <style>
+    html {
+      box-sizing: border-box;
+    }
 
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+    #unityContainer {
+        width: 100vw;
+        height: 100vh;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+  </style>
 </head>
 
-<body class="{{{ SPLASH_SCREEN_STYLE.toLowerCase() }}}">
-  <div id="unity-container" class="unity-desktop">
-    <canvas id="unity-canvas"></canvas>
-  </div>
-  <div id="loading-cover" style="display:none;">
-    <div id="unity-loading-bar">
-      <div id="unity-logo"><img src="logo.png"></div>
-      <div id="unity-progress-bar-empty" style="display: none;">
-        <div id="unity-progress-bar-full"></div>
-      </div>
-      <div class="spinner"></div>
-    </div>
-  </div>
-  <div id="unity-fullscreen-button" style="display: none;"></div>
-  <script>
-    const hideFullScreenButton = "{{{ HIDE_FULL_SCREEN_BUTTON }}}";
-    const buildUrl = "Build";
-    const loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
-    const config = {
-      dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
-      frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
-      codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
-      #if MEMORY_FILENAME
-        memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
-      #endif
-#if SYMBOLS_FILENAME
-        symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
-      #endif
-        streamingAssetsUrl: "StreamingAssets",
-      companyName: "{{{ COMPANY_NAME }}}",
-      productName: "{{{ PRODUCT_NAME }}}",
-      productVersion: "{{{ PRODUCT_VERSION }}}",
-    };
-
-    const container = document.querySelector("#unity-container");
-    const canvas = document.querySelector("#unity-canvas");
-    const loadingCover = document.querySelector("#loading-cover");
-    const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
-    const progressBarFull = document.querySelector("#unity-progress-bar-full");
-    const fullscreenButton = document.querySelector("#unity-fullscreen-button");
-    const spinner = document.querySelector('.spinner');
-
-    const canFullscreen = (function () {
-      for (const key of [
-        'exitFullscreen',
-        'webkitExitFullscreen',
-        'webkitCancelFullScreen',
-        'mozCancelFullScreen',
-        'msExitFullscreen',
-      ]) {
-        if (key in document) {
-          return true;
-        }
+<body>
+    <div id="unityContainer"></div>
+    <script>
+      var recaptureInputAndFocus = function () {
+        var canvas = document.getElementById("#canvas");
+        if (canvas) {
+          canvas.setAttribute("tabindex", "1");
+          canvas.focus();
+        } else
+          setTimeout(recaptureInputAndFocus, 100);
       }
-      return false;
-    }());
+      recaptureInputAndFocus();
+    </script>
+    <script>
+      var messageFromUnity = "FromUnity";
 
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-      container.className = "unity-mobile";
-      config.devicePixelRatio = 1;
-    }
-#if BACKGROUND_FILENAME
-    canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
-#endif
-    loadingCover.style.display = "";
+      function WebGetMessage(message) {
+        messageFromUnity = message;
+        // $id.html(messageFromUnity);
+      }
 
-    const script = document.createElement("script");
-    script.src = loaderUrl;
-    script.onload = () => {
-      createUnityInstance(canvas, config, (progress) => {
-        spinner.style.display = "none";
-        progressBarEmpty.style.display = "";
-        progressBarFull.style.width = `${100 * progress}%`;
-      }).then((unityInstance) => {
-        loadingCover.style.display = "none";
-        if (canFullscreen) {
-          if (!hideFullScreenButton) {
-            fullscreenButton.style.display = "";
-          }
-          fullscreenButton.onclick = () => {
-            unityInstance.SetFullscreen(1);
-          };
-        }
-      }).catch((message) => {
-        alert(message);
-      });
-    };
-    document.body.appendChild(script);
-  </script>
+      function sendBackMessage() {
+        var message = "Test00285";
+        console.log("Sending message to Unity: " + message);
+        unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
+      }
 
-<script>
-  function sendBackMessage() {
-    var message = "Test00285";
-    console.log("Sending message to Unity: " + message);
-    unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
-  }
-</script>
-<script>
-  var recaptureInputAndFocus = function () {
-    var canvas = document.getElementById("#canvas");
-    if (canvas) {
-      canvas.setAttribute("tabindex", "1");
-      canvas.focus();
-    } else
-      setTimeout(recaptureInputAndFocus, 100);
-  }
-  recaptureInputAndFocus();
-</script>
-<script>
-  var messageFromUnity = "FromUnity";
+    // var $id = $("#id"),
+    //   str = "This is ID",
+    //   html = $.parseHTML(str),
+    //   nodeNames = [];
 
-  function WebGetMessage(message) {
-    messageFromUnity = message;
-    // $id.html(messageFromUnity);
-  }
-
-  // var $id = $("#id"),
-  //   str = "This is ID",
-  //   html = $.parseHTML(str),
-  //   nodeNames = [];
-
-  // $id.html(html);
-</script>
+    // $id.html(html);
+    </script>
 </body>
 
 </html>

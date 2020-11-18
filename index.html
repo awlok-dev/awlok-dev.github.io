@@ -13,46 +13,27 @@
   <script>
     UnityLoader.compatibilityCheck = function (e, t, r) { t(); };
     var unityInstance = UnityLoader.instantiate("unityContainer", "Build/cny-project.json", { onProgress: UnityProgress });
-  </script>
-  <style>
-    input,
-    button {
-      padding: 10px;
+
+    window.addEventListener("resize", onResize);
+
+    function onResize() {
+      unityInstance.SendMessage('GameController', 'SetHeight', window.innerHeight);
+      unityInstance.SendMessage('GameController', 'SetWidth', window.innerWidth);
+      unityInstance.SendMessage('GameController', 'OnResize');
     }
-  </style>
+  </script>
 </head>
 
-<body>
-  <div class="webgl-content" style="display: table; width: 100%; height: 100%;">
-    <div id="unityContainer"></div>
-    <!--div class="footer">
-      //webgl1.0
-      //scale down
-      <div class="webgl-logo"></div>
-      <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
-      <div class="title">cny-project</div>
-    </div-->
-    <!--div>
-      <input placeholder="Enter text..." id="htmlinput"><button onclick="sendBackMessage()">Send to Unity</button>
-    </div>
-    <div id="id">
-      MyID
-    </div>
-  </div-->
-  <script>
+<body style="margin:0; overflow: hidden;">
+  <div id="unityContainer"></div>
+
+  <!-- <script>
     var myWidth = innerWidth;
     var myHeight = innerHeight;
     document.getElementById("unityContainer").style.width = myWidth + "px";
     document.getElementById("unityContainer").style.height = myHeight + "px";
-  </script>
-  <script>
-    function sendBackMessage() {
-      var message = "Test00285";
-      console.log("Sending message to Unity: " + message);
-      unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
-    }
-  </script>
-  <script>
+  </script> -->
+  <!-- <script>
     var recaptureInputAndFocus = function () {
       var canvas = document.getElementById("#canvas");
       if (canvas) {
@@ -62,13 +43,19 @@
         setTimeout(recaptureInputAndFocus, 100);
     }
     recaptureInputAndFocus();
-  </script>
+  </script> -->
   <script>
     var messageFromUnity = "FromUnity";
 
     function WebGetMessage(message) {
       messageFromUnity = message;
       $id.html(messageFromUnity);
+    }
+
+    function sendBackMessage() {
+      var message = "Test00285";
+      console.log("Sending message to Unity: " + message);
+      unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
     }
 
     var $id = $("#id"),

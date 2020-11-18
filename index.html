@@ -13,6 +13,11 @@
   <script>
     UnityLoader.compatibilityCheck = function (e, t, r) { t(); };
     var unityInstance = UnityLoader.instantiate("unityContainer", "Build/cny-project.json", { onProgress: UnityProgress });
+
+    var myWidth = innerWidth;
+    var myHeight = innerHeight;
+    document.getElementById("unityContainer").style.width = myWidth + "px";
+    document.getElementById("unityContainer").style.height = myHeight + "px";
   </script>
 </head>
 
@@ -21,14 +26,6 @@
     <div id="unityContainer"></div>
 
     <script>
-      window.addEventListener("fit", fitScreen);
-
-      function fitScreen() {
-        var myWidth = innerWidth;
-        var myHeight = innerHeight;
-        document.getElementById("unityContainer").style.width = myWidth + "px";
-        document.getElementById("unityContainer").style.height = myHeight + "px";
-      }
       var recaptureInputAndFocus = function () {
         var canvas = document.getElementById("#canvas");
         if (canvas) {

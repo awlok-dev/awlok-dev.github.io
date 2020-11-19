@@ -33,8 +33,12 @@
         var ua = navigator.userAgent;
         if (ua.indexOf("Android") >= 0) {
           var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8));
-          if (androidversion < 10) {
+          if (androidversion >= 10) {
             window.alert("This is Android 10 or above");
+          }
+          else
+          {
+            window.alert("This is Android 10 below");
           }
         }
       }

@@ -35,18 +35,18 @@
           var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8));
           if (androidversion >= 10) {
             window.alert("This is Android 10 or above");
+            document.getElementById("unityContainer").style.width = myWidth + "px";
+            document.getElementById("unityContainer").style.height = (window.innerHeight - 50) * 0.9 + "px";
           }
-          else
-          {
+          else {
             window.alert("This is Android 10 below");
+            document.getElementById("unityContainer").style.width = myWidth + "px";
+            document.getElementById("unityContainer").style.height = myHeight + "px";
           }
         }
       }
 
       getAndroidVersion();
-
-      document.getElementById("unityContainer").style.width = myWidth + "px";
-      document.getElementById("unityContainer").style.height = myHeight + "px";
     </script>
 
     <script>

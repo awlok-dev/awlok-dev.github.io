@@ -31,6 +31,8 @@
 
       function getAndroidVersion() {
         var ua = navigator.userAgent;
+        var isAndroid = ua.indexOf("android") > -1;
+
         if (ua.indexOf("Android") >= 0) {
           var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8));
           if (androidversion >= 10) {
@@ -45,8 +47,13 @@
           }
         }
       }
-
-      getAndroidVersion();
+      if (isAndroid) {
+        getAndroidVersion();
+      }
+      else {
+        document.getElementById("unityContainer").style.width = myWidth + "px";
+        document.getElementById("unityContainer").style.height = myHeight + "px";
+      }
     </script>
 
     <script>

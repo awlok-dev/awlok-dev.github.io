@@ -28,6 +28,19 @@
     <script>
       var myWidth = innerWidth;
       var myHeight = innerHeight;
+
+      function getAndroidVersion() {
+        var ua = navigator.userAgent;
+        if (ua.indexOf("Android") >= 0) {
+          var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8));
+          if (androidversion < 10) {
+            window.alert("This is Android 10 or above");
+          }
+        }
+      }
+
+      getAndroidVersion();
+
       document.getElementById("unityContainer").style.width = myWidth + "px";
       document.getElementById("unityContainer").style.height = myHeight + "px";
     </script>

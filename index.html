@@ -32,9 +32,11 @@
       var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false);
 
       if (iOS) {
-        window.alert("IOS Device");
+        //window.alert("IOS Device");
+        document.getElementById("unityContainer").style.width = myWidth + "px";
+        document.getElementById("unityContainer").style.height = myHeight + "px";
       }
-      
+
       function getAndroidVersion() {
         var ua = navigator.userAgent;
 

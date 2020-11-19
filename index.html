@@ -29,6 +29,12 @@
       var myWidth = innerWidth;
       var myHeight = innerHeight;
 
+      var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false);
+
+      if (IOS) {
+        window.alert("IOS Device");
+      }
+
       function getAndroidVersion() {
         var ua = navigator.userAgent;
 

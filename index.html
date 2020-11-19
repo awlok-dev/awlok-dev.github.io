@@ -29,10 +29,10 @@
       var myWidth = innerWidth;
       var myHeight = innerHeight;
 
-      function getAndroidVersion() {
-        var ua = navigator.userAgent;
-        var isAndroid = ua.indexOf("android") > -1;
+      var ua = navigator.userAgent;
+      var isAndroid = ua.indexOf("android") > -1;
 
+      function getAndroidVersion() {
         if (ua.indexOf("Android") >= 0) {
           var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8));
           if (androidversion >= 10) {

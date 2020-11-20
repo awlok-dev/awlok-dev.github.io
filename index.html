@@ -24,7 +24,7 @@
 
 <body>
   <div class="webgl-content" style="display: table; width: 100%; height: 100%;">
-    <div id="unityContainer" onclick="fullScreen()"></div>
+    <div id="unityContainer"></div>
     <script>
       var myWidth = innerWidth;
       var myHeight = innerHeight;
@@ -83,22 +83,22 @@
         unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
       }
 
-      function fullScreen() {
-        var gameScreen = document.getElementById("#canvas");
+      // function fullScreen() {
+      //   var gameScreen = document.getElementById("#canvas");
 
-        if (gameScreen.requestFullscreen) /* API spec */ {
-          gameScreen.requestFullscreen();
-        }
-        else if (gameScreen.mozRequestFullScreen) /* Firefox */ {
-          gameScreen.mozRequestFullScreen();
-        }
-        else if (gameScreen.webkitRequestFullscreen) /* Chrome, Safari and Opera */ {
-          gameScreen.webkitRequestFullscreen();
-        }
-        else if (gameScreen.msRequestFullscreen) /* IE/Edge */ {
-          gameScreen.msRequestFullscreen();
-        }
-      }
+      //   if (gameScreen.requestFullscreen) /* API spec */ {
+      //     gameScreen.requestFullscreen();
+      //   }
+      //   else if (gameScreen.mozRequestFullScreen) /* Firefox */ {
+      //     gameScreen.mozRequestFullScreen();
+      //   }
+      //   else if (gameScreen.webkitRequestFullscreen) /* Chrome, Safari and Opera */ {
+      //     gameScreen.webkitRequestFullscreen();
+      //   }
+      //   else if (gameScreen.msRequestFullscreen) /* IE/Edge */ {
+      //     gameScreen.msRequestFullscreen();
+      //   }
+      // }
 
     // var $id = $("#id"),
     //   str = "This is ID",

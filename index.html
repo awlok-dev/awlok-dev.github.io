@@ -24,7 +24,7 @@
 
 <body>
   <div class="webgl-content" style="display: table; width: 100%; height: 100%;">
-    <div id="unityContainer"></div>
+    <div id="unityContainer" onclick="fullScreen()"></div>
     <script>
       var myWidth = innerWidth;
       var myHeight = innerHeight;
@@ -78,9 +78,14 @@
       }
 
       function sendBackMessage() {
-        var message = "Test00285";
+        var message = "Abc123";
         console.log("Sending message to Unity: " + message);
         unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
+      }
+
+      function fullScreen()
+      {
+        unityInstance.SendMessage('GameController','GoFullScreen');
       }
 
     // var $id = $("#id"),

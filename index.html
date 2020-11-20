@@ -83,9 +83,21 @@
         unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
       }
 
-      function fullScreen()
-      {
-        unityInstance.SendMessage('GameController','GoFullScreen');
+      function fullScreen() {
+        var gameScreen = document.getElementById("#canvas");
+
+        if (gameScreen.requestFullscreen) /* API spec */ {
+          gameScreen.requestFullscreen();
+        }
+        else if (gameScreen.mozRequestFullScreen) /* Firefox */ {
+          gameScreen.mozRequestFullScreen();
+        }
+        else if (gameScreen.webkitRequestFullscreen) /* Chrome, Safari and Opera */ {
+          gameScreen.webkitRequestFullscreen();
+        }
+        else if (gameScreen.msRequestFullscreen) /* IE/Edge */ {
+          gameScreen.msRequestFullscreen();
+        }
       }
 
     // var $id = $("#id"),

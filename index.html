@@ -71,17 +71,16 @@
       recaptureInputAndFocus();
     </script>
     <script>
-      var messageFromUnity = "FromUnity";
-
+      var messageFromUnity = 'FromUnity';
+      var messageToUnity =  'FromServer';
       function WebGetMessage(message) {
         messageFromUnity = message;
         // $id.html(messageFromUnity);
       }
 
       function sendBackMessage() {
-        var message = 'Abc123';
-        console.log("Sending message to Unity: " + message);
-        unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
+        console.log("Sending message to Unity: " + messageToUnity);
+        unityInstance.SendMessage('GameController', 'SendMessageToUnity', messageToUnity);
       }
 
       function gamedone()

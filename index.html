@@ -36,6 +36,7 @@
         //window.alert("IOS Device");
         document.getElementById("unityContainer").style.width = myWidth + "px";
         document.getElementById("unityContainer").style.height = myHeight + "px";
+        unityInstance.SendMessage('GameController', 'DisableFullScreenButton');
       }
 
       function getAndroidVersion() {

@@ -8,7 +8,7 @@
 "asmCodeUrl": "cny-project.asm.code.unityweb",
 "asmMemoryUrl": "cny-project.asm.memory.unityweb",
 "asmFrameworkUrl": "cny-project.asm.framework.unityweb",
-"TOTAL_MEMORY": 268435456,
+"TOTAL_MEMORY": 134217728,
 "graphicsAPI": ["WebGL 1.0","WebGL 2.0"],
 "webglContextAttributes": {"preserveDrawingBuffer": false},
 "splashScreenStyle": "Dark",

@@ -1,0 +1,20 @@
+{
+"companyName": "DefaultCompany",
+"productName": "cny-project",
+"productVersion": "0.1",
+"dataUrl": "cny-project.data.unityweb",
+"wasmCodeUrl": "cny-project.wasm.code.unityweb",
+"wasmFrameworkUrl": "cny-project.wasm.framework.unityweb",
+"asmCodeUrl": "cny-project.asm.code.unityweb",
+"asmMemoryUrl": "cny-project.asm.memory.unityweb",
+"asmFrameworkUrl": "cny-project.asm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 1.0","WebGL 2.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.8f1"
+}

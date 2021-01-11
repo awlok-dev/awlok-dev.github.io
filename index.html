@@ -11,7 +11,7 @@
   <script src="Build/UnityLoader.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   <script>
-    //note : 20201214 fix update
+    //note : 20200111 added js function
     UnityLoader.compatibilityCheck = function (e, t, r) { t(); };
     var unityInstance = UnityLoader.instantiate("unityContainer", "Build/cny-project.json", { onProgress: UnityProgress });
   </script>
@@ -89,6 +89,10 @@
 
       function gamedone() {
         console.log("Game done trigger");
+      }
+
+      function ADTracking(){
+        console.log("Get AD Tracking message from unity");
       }
 
       // function fullScreen() {

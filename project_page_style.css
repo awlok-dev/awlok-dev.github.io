@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1b2838;
+    color: #ffffff;
+}
+
+header {
+    background-color: #171a21;
+    padding: 20px;
+    text-align: center;
+}
+
+section {
+    padding: 50px;
+}
+
+.game-banner {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.game-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.game-description {
+    max-width: 900px;
+}
+
+.buy-button {
+    background-color: #5cb85c;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.gallery {
+    margin-top: 20px;
+}
+
+.gallery img {
+    width: 100%;
+    /* Make the image width equal to the gallery width */
+    height: auto;
+    /* Make the image height adjust automatically */
+    object-fit: cover;
+    /* Make the image cover the entire gallery */
+    aspect-ratio: 16 / 9;
+    /* Set the aspect ratio to 16:9 */
+}
+
+.slick-slider {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.slick-prev,
+.slick-next {
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+    color: #5cb85c;
+}
+
+.slick-dots {
+    bottom: 10px;
+}
+
+.slick-dots li button:before {
+    color: #ffffff;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #5cb85c;
+}
+
+.slick-slider iframe {
+    width: 100%; /* Make the iframe width equal to the slick-slider width */
+    height: auto; /* Make the iframe height adjust automatically */
+    aspect-ratio: 16 / 9; /* Set the aspect ratio to 16:9 */
+}

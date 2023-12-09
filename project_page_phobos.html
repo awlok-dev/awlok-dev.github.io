@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project - Phobos Oddity Hong Kong</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <link href="./project_page_style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <header>
+        <h1>Phobos Oddity Hong Kong</h1>
+    </header>
+
+    <section>
+        <div class="gallery">
+            <div class="slick-slider">
+                <div>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/gt-v_YCkaMY?si=v0I2rsuCbRFqYcwy"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+                <div><img src="./assets/images/project_phobos/image1.png" alt="Screenshot 1"></div>
+                <div><img src="./assets/images/project_phobos/image2.png" alt="Screenshot 2"></div>
+                <div><img src="./assets/images/project_phobos/image3.png" alt="Screenshot 3"></div>
+                <div><img src="./assets/images/project_phobos/image4.png" alt="Screenshot 4"></div>
+                <div><img src="./assets/images/project_phobos/image5.png" alt="Screenshot 5"></div>
+                <div><img src="./assets/images/project_phobos/image6.gif" alt="Screenshot 6"></div>
+                <div><img src="./assets/images/project_phobos/image7.gif" alt="Screenshot 7"></div>
+                <div><img src="./assets/images/project_phobos/image8.gif" alt="Screenshot 8"></div>
+                <div><img src="./assets/images/project_phobos/image9.gif" alt="Screenshot 9"></div>
+                <!-- Add more screenshots as needed -->
+            </div>
+        </div>
+
+        <div class="game-details">
+            <div class="game-description">
+                <h2>About the Game</h2>
+                <p>Your game description goes here. Provide information about gameplay, features, and any other relevant
+                    details.Your game description goes here. Provide information about gameplay, features, and any other relevant
+                    details.Your game description goes here. Provide information about gameplay, features, and any other relevant
+                    details.</p>
+            </div>
+
+            <div class="buy-button-container">
+                <a href="./index.html">
+                <button class="buy-button">Back</button>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.slick-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                prevArrow: '<button type="button" class="slick-prev"></button>',
+                nextArrow: '<button type="button" class="slick-next"></button>'
+            });
+        });
+    </script>
+</body>
+
+</html>

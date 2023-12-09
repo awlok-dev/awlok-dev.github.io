@@ -1,0 +1,336 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+header,
+nav,
+section,
+footer {
+    margin: 0px;
+    padding: 10px;
+}
+
+header {
+    position: relative;
+    background-color: #333;
+    color: white;
+    text-align: center;
+}
+
+#theme-button {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background: none;
+    border: none;
+    user-select: none;
+    font-size: 35px;
+}
+
+#theme-button:hover {
+    color: gray;
+    /* Change this to the color you want when hovering */
+}
+
+.light-mode {
+    background-color: white;
+    color: black;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 30px;
+    /* Adjust this value as needed */
+    left: 35px;
+    /* Adjust this value as needed */
+}
+
+nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #a5a5a5;
+    font-weight: bold;
+}
+
+section {
+    margin-top: 40px;
+}
+
+.project {
+    margin-bottom: 40px;
+}
+
+.about-container {
+    margin: 100px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+    border-radius: 50%;
+    border: 5px solid #b8b8b8;
+    /* Add this line */
+}
+
+.center-text {
+    text-align: center;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 columns */
+    gap: 200px;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background-color: #333;
+    color: white;
+    position: static;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    /* You can adjust this value as needed */
+}
+
+.social-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px; /* Adjust size as needed */
+    margin-right: 50px;
+}
+
+.social-icon:hover {
+    color: #ffffff; /* Change color on hover */
+    transform: scale(1.1); /* Scales the icon up to 110% */
+    transition: all 0.3s ease-in-out; /* Animates the transformation and color change */
+}
+
+/*---   Project Card (Unused)  ---*/
+.project-image {
+    width: 50%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 40px;
+}
+
+.project-image:hover {
+    transform: scale(1.05);
+    /* Scales the image up to 105% */
+    transition: transform 0.3s ease-in-out;
+    /* Animates the transformation */
+}
+
+.project.container {
+    width: 980px;
+    height: 480px;
+    display: flex;
+    gap: 10px;
+}
+
+
+/*---   Project Card  ---*/
+.container {
+    width: 100%;
+    width: 1300px;
+    height: 400px;
+    display: flex;
+    gap: 10px;
+    margin-inline: 50px;
+}
+
+.card {
+    min-width: 70px;
+    height: 100%;
+    border-radius: 30px;
+    overflow: hidden;
+
+    display: flex;
+    align-items: flex-end;
+    flex-grow: 1;
+    cursor: pointer;
+    position: relative;
+    transition: 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+    --transition-timing: 0.25s;
+}
+
+.card.active {
+    flex-grow: 100;
+}
+
+.card>.background {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    object-position: left;
+    filter: brightness(0.8);
+    z-index: -1;
+    transition: var(--transition-timing) ease;
+}
+
+.card.active>.background {
+    filter: brightness(1) grayscale(0);
+}
+
+.card>.card-content {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 20px;
+    overflow: hidden;
+    transition: var(--transition-timing);
+    z-index: 10;
+}
+
+.card.active>.card-content {
+    inset: 20px;
+    top: auto;
+}
+
+.card-content * {
+    transition: var(--transition-timing);
+}
+
+.card-content>.profile-image {
+    min-width: 50px;
+    max-width: 50px;
+    height: 50px;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.card.active .profile-image {
+    border: 1px solid rgb(110, 252, 205);
+}
+
+.profile-image>svg {
+    stroke: #fefefe;
+}
+
+.card.active .profile-image>svg {
+    stroke: rgb(110, 252, 205);
+}
+
+.card-content>.title {
+    white-space: pre;
+    margin-left: 10px;
+    translate: 0 100%;
+    opacity: 0;
+    transition-delay: 0.3s;
+    color: #fefefe;
+}
+
+.card.active .title {
+    opacity: 1;
+    translate: 0 0;
+}
+
+.card>.backdrop {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100px;
+    z-index: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+}
+
+/*---   Particle Effects  ---*/
+/* ---- stats.js ---- */
+
+.count-particles{
+    background: #000022;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    width: 80px;
+    color: #13E8E9;
+    font-size: .8em;
+    text-align: left;
+    text-indent: 4px;
+    line-height: 14px;
+    padding-bottom: 2px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+  }
+  
+  .js-count-particles{
+    font-size: 1.1em;
+  }
+  
+  #stats,
+  .count-particles{
+    -webkit-user-select: none;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+  
+  #stats{
+    border-radius: 3px 3px 0 0;
+    overflow: hidden;
+  }
+  
+  .count-particles{
+    border-radius: 0 0 3px 3px;
+  }
+  
+  
+  /* ---- particles.js container ---- */
+  
+  #particles-js{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-color: #000000;
+    background-image: url('');
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+  }

@@ -1,124 +1,271 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Unity WebGL Player | cny-project</title>
-  <link rel="shortcut icon" href="TemplateData/favicon.ico">
-  <link rel="stylesheet" href="TemplateData/style.css">
-  <script src="TemplateData/UnityProgress.js"></script>
-  <script src="Build/UnityLoader.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-  <script>
-    //note : 20200111 added js function
-    UnityLoader.compatibilityCheck = function (e, t, r) { t(); };
-    var unityInstance = UnityLoader.instantiate("unityContainer", "Build/cny-project.json", { onProgress: UnityProgress });
-  </script>
-
-  <style>
-    body {
-      background-color: rgb(44, 44, 44);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="description" content="Awlok portfolio.">
+    <meta name="author" content="Alex Wong" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet" type="text/css">
+    <script src="./script.js" defer></script>
+    <title>Alex Wong - Portfolio</title>
 </head>
 
-<body>
-  <div class="webgl-content" style="display: table; width: 100%; height: 100%; max-width: 1920px;">
-    <div id="unityContainer"></div>
+<body class="dark-mode">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="./particles.js"></script>
+    <script src="./app.js"></script>
+    <script src="./stats.js"></script>
+
+    <div id="particles-js"></div>
     <script>
-      var myWidth = innerWidth;
-      var myHeight = innerHeight;
-
-      function getIOSDevice() {
-        var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false);
-
-        if (iOS) {
-          console.log("IOS");
-          document.getElementById("unityContainer").style.width = myWidth + "px";
-          document.getElementById("unityContainer").style.height = myHeight + "px";
-        }
-      }
-
-      function getAndroidVersion() {
-        var ua = navigator.userAgent;
-
-        if (ua.indexOf("Android") >= 0) {
-          var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8));
-          if (androidversion >= 10) {
-            //window.alert("This is Android 10 or above");
-            document.getElementById("unityContainer").style.width = myWidth + "px";
-            document.getElementById("unityContainer").style.height = (myHeight - 100) * 0.9 + "px";
-          }
-          else {
-            //window.alert("This is Android 10 below");
-            document.getElementById("unityContainer").style.width = myWidth + "px";
-            document.getElementById("unityContainer").style.height = myHeight + "px";
-          }
-        }
-      }
-
-      getAndroidVersion();
-      getIOSDevice();
+        var count_particles, stats, update;
+        stats = new Stats;
+        stats.setMode(0);
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.left = '0px';
+        stats.domElement.style.top = '0px';
+        document.body.appendChild(stats.domElement);
+        count_particles = document.querySelector('.js-count-particles');
+        update = function () {
+            stats.begin();
+            stats.end();
+            if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+                count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+            }
+            requestAnimationFrame(update);
+        };
+        requestAnimationFrame(update);
     </script>
 
-    <script>
-      var recaptureInputAndFocus = function () {
-        var canvas = document.getElementById("#canvas");
-        if (canvas) {
-          canvas.setAttribute("tabindex", "1");
-          canvas.focus();
-        } else
-          setTimeout(recaptureInputAndFocus, 100);
-      }
-      recaptureInputAndFocus();
-    </script>
-    <script>
-      var messageFromUnity = "FromUnity";
+    <header>
+        <h1>Alex Wong</h1>
+        <p>Game Developer | 3D Artist</p>
 
-      function WebGetMessage(message) {
-        messageFromUnity = message;
-        // $id.html(messageFromUnity);
-      }
+        <nav>
+            <ul>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#project-title">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-      function sendBackMessage() {
-        var message = "Abc123";
-        console.log("Sending message to Unity: " + message);
-        unityInstance.SendMessage('GameController', 'SendMessageToUnity', message);
-      }
 
-      function gamedone() {
-        console.log("Game done trigger");
-      }
+    <i id="theme-button" class="material-icons">light_mode</i>
+    <section class="center-text" id="about">
+        <div class="about-container">
+            <h2>About Me</h2>
+            <img class="center" src="./assets/images/icon.png" alt="About Me Icon">
+            <p class="center-text">Welcome to my portfolio! I'm a passionate game developer and 3D artist with expertise
+                in Unity, Unreal Engine, and Blender.</p>
+        </div>
+    </section>
 
-      function ACTracking(){
-        console.log("Get AD Tracking message from unity");
-      }
 
-      // function fullScreen() {
-      //   var gameScreen = document.getElementById("#canvas");
+    <!--
+    <div class="center-content">
+        <h2 class="center-text" id="project-title">Projects</h2>
+        <section id="projects" class="project-grid">
+            <div class="project">
+                <a href="project1.html">
+                    <img class="project-image" src="assets/images/project_phobos_thumbnail.png" alt="Project 1">
+                    <h3>Project 1</h3>
+                </a>
+            </div>
+            <div class="project">
+                <a href="project2.html">
+                    <img src="project2.jpg" alt="Project 2">
+                    <h3>Project 2</h3>
+                </a>
+            </div>
 
-      //   if (gameScreen.requestFullscreen) /* API spec */ {
-      //     gameScreen.requestFullscreen();
-      //   }
-      //   else if (gameScreen.mozRequestFullScreen) /* Firefox */ {
-      //     gameScreen.mozRequestFullScreen();
-      //   }
-      //   else if (gameScreen.webkitRequestFullscreen) /* Chrome, Safari and Opera */ {
-      //     gameScreen.webkitRequestFullscreen();
-      //   }
-      //   else if (gameScreen.msRequestFullscreen) /* IE/Edge */ {
-      //     gameScreen.msRequestFullscreen();
-      //   }
-      // }
+            <div class="project">
+                <a href="project3.html">
+                    <img src="project3.jpg" alt="Project 3">
+                    <h3>Project 3</h3>
+                </a>
+            </div>
+    </div>
+    -->
+    <!-- Add more projects as needed -->
 
-    // var $id = $("#id"),
-    //   str = "This is ID",
-    //   html = $.parseHTML(str),
-    //   nodeNames = [];
+    <!--Project Card Test-->
+    <div class="center-content">
+        <div class="container">
+            <div class="card active" data-url="project_page_phobos.html">
+                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
 
-    // $id.html(html);
-    </script>
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">Phobos Oddity - Hong Kong</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project1.html">
+                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">God Of War</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card">
+                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">Baldur's Gate 3</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card">
+                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">Elden Ring</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card">
+                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">The Last of Us</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card">
+                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">The Last of Us</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card">
+                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">The Last of Us</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--Test-->
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Feel free to reach out to me! Email: alexwonglok@gmail.com</p>
+        <!-- Add more contact details or a contact form if desired -->
+    </section>
+
+    <footer>
+        <p>Alex Wong Portfolio</p>
+        <a href="https://www.instagram.com/awlok.dev" target="_blank" class="social-icon">
+            <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+    </footer>
 </body>
 
 </html>

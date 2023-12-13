@@ -132,14 +132,18 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px; /* Adjust size as needed */
+    font-size: 50px;
+    /* Adjust size as needed */
     margin-right: 50px;
 }
 
 .social-icon:hover {
-    color: #ffffff; /* Change color on hover */
-    transform: scale(1.1); /* Scales the icon up to 110% */
-    transition: all 0.3s ease-in-out; /* Animates the transformation and color change */
+    color: #ffffff;
+    /* Change color on hover */
+    transform: scale(1.1);
+    /* Scales the icon up to 110% */
+    transition: all 0.3s ease-in-out;
+    /* Animates the transformation and color change */
 }
 
 /*---   Project Card (Unused)  ---*/
@@ -200,7 +204,7 @@ footer {
     position: absolute;
     inset: 0;
     object-fit: cover;
-    object-position: left;
+    object-position: center;
     filter: brightness(0.8);
     z-index: -1;
     transition: var(--transition-timing) ease;
@@ -282,7 +286,7 @@ footer {
 /*---   Particle Effects  ---*/
 /* ---- stats.js ---- */
 
-.count-particles{
+.count-particles {
     background: #000022;
     position: absolute;
     top: 48px;
@@ -296,32 +300,78 @@ footer {
     padding-bottom: 2px;
     font-family: Helvetica, Arial, sans-serif;
     font-weight: bold;
-  }
-  
-  .js-count-particles{
+}
+
+.js-count-particles {
     font-size: 1.1em;
-  }
-  
-  #stats,
-  .count-particles{
+}
+
+#stats,
+.count-particles {
     -webkit-user-select: none;
     margin-top: 5px;
     margin-left: 5px;
-  }
-  
-  #stats{
+}
+
+#stats {
     border-radius: 3px 3px 0 0;
     overflow: hidden;
-  }
-  
-  .count-particles{
+}
+
+.count-particles {
     border-radius: 0 0 3px 3px;
-  }
-  
-  
-  /* ---- particles.js container ---- */
-  
-  #particles-js{
+}
+
+/* ---- gallery ---- */
+.gallery-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    margin-top: 50px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 16px;
+    align-items: center;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item img {
+    display: block;
+    width: 350px;
+    /* Specify the width */
+    height: 350px;
+    /* Specify the height */
+    object-fit: cover;
+    /* Make the images cover their container */
+    border-radius: 8px;
+}
+
+.gallery-item video {
+    display: block;
+    width: 350px;
+    /* Specify the width */
+    height: 350px;
+    /* Specify the height */
+    object-fit: contain;
+    /* Make the images cover their container */
+    border-radius: 8px;
+}
+
+/* ---- particles.js container ---- */
+
+#particles-js {
     position: fixed;
     top: 0;
     left: 0;
@@ -333,4 +383,4 @@ footer {
     background-size: cover;
     background-position: 50% 50%;
     background-repeat: no-repeat;
-  }
+}

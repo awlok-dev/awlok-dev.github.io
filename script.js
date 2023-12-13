@@ -24,6 +24,20 @@ cardsContainer.querySelectorAll(".card").forEach((card) => {
   });
 });
 
+let videos = document.querySelectorAll('.gallery-item video');
+
+videos.forEach(video => {
+  video.controls = false; // Hide controls by default
+
+  video.onmouseover = function () {
+    this.controls = true;
+  };
+
+  video.onmouseout = function () {
+    this.controls = false;
+  };
+});
+
 document.getElementById('theme-button').textContent = 'light_mode';
 
 document.getElementById('theme-button').addEventListener('click', function () {

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="./style.css" rel="stylesheet" type="text/css">
+    <link href="./lightbox.css" rel="stylesheet" type="text/css">
     <script src="./script.js" defer></script>
     <title>Alex Wong - Portfolio</title>
 </head>
@@ -18,6 +19,7 @@
     <script src="./particles.js"></script>
     <script src="./app.js"></script>
     <script src="./stats.js"></script>
+    <script src="./lightbox.js" defer></script>
 
     <div id="particles-js"></div>
     <script>
@@ -94,6 +96,7 @@
 
     <!--Project Card Test-->
     <div class="center-content">
+        <h2 class="center-text" id="project-title">Projects</h2>
         <div class="container">
             <div class="card active" data-url="project_page_phobos.html">
                 <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
@@ -117,8 +120,8 @@
                 <div class="backdrop"></div>
             </div>
 
-            <div class="card" data-url="project1.html">
-                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+            <div class="card" data-url="project_page_vampire.html">
+                <img class="background" src="./assets/images/project_vampire_thumbnail.jpg" alt="">
 
                 <div class="card-content">
                     <div class="profile-image">
@@ -134,13 +137,101 @@
                         </svg>
                     </div>
 
-                    <h3 class="title">God Of War</h3>
+                    <h3 class="title">Vampire Lust And Bite</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_goblin.html">
+                <img class="background" src="./assets/images/project_idle_goblin_thumbnail.png" alt="">
+
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">Golbin Idle Game</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_cny.html">
+                <img class="background" src="./assets/images/project_cny_thumbnail.png" alt="">
+
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">Clarins Event Game</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_fallhero.html">
+                <img class="background" src="./assets/images/project_fall_cube_thumbnail.jpg" alt="">
+
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">Fall Hero</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_reality.html">
+                <img class="background" src="./assets/images/project_reality_thumbnail.jpg" alt="">
+
+                <div class="card-content">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-gamepad-2">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="title">"Reality" Elderly Interaction Hub</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card">
-                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+                <img class="background" src="./assets/images/project_fall_cube_thumbnail.jpg" alt="">
 
                 <div class="card-content">
                     <div class="profile-image">
@@ -156,13 +247,13 @@
                         </svg>
                     </div>
 
-                    <h3 class="title">Baldur's Gate 3</h3>
+                    <h3 class="title">"Reality" Elderly Interaction Hub</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card">
-                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+                <img class="background" src="./assets/images/project_fall_cube_thumbnail.jpg" alt="">
 
                 <div class="card-content">
                     <div class="profile-image">
@@ -178,13 +269,13 @@
                         </svg>
                     </div>
 
-                    <h3 class="title">Elden Ring</h3>
+                    <h3 class="title">"Reality" Elderly Interaction Hub</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card">
-                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+                <img class="background" src="./assets/images/project_fall_cube_thumbnail.jpg" alt="">
 
                 <div class="card-content">
                     <div class="profile-image">
@@ -200,13 +291,13 @@
                         </svg>
                     </div>
 
-                    <h3 class="title">The Last of Us</h3>
+                    <h3 class="title">"Reality" Elderly Interaction Hub</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card">
-                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
+                <img class="background" src="./assets/images/project_fall_cube_thumbnail.jpg" alt="">
 
                 <div class="card-content">
                     <div class="profile-image">
@@ -222,37 +313,71 @@
                         </svg>
                     </div>
 
-                    <h3 class="title">The Last of Us</h3>
-                </div>
-                <div class="backdrop"></div>
-            </div>
-
-            <div class="card">
-                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
-
-                <div class="card-content">
-                    <div class="profile-image">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-
-                    <h3 class="title">The Last of Us</h3>
+                    <h3 class="title">"Reality" Elderly Interaction Hub</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
         </div>
     </div>
 
-    <!--Test-->
-    </section>
+    <!--- Gallery --->
+    <div class="gallery-container">
+        <h2 class="center-text" id="project-title">Gallery</h2>
+        <div class="gallery">
+            <!-- Replace these image URLs with your own -->
+            <div class="gallery-item">
+                <video controls loop controlsList="nodownload">
+                    <source src="./assets/videos/scifi_street_animation.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="gallery-item">
+                <video controls loop controlsList="nodownload">
+                    <source src="./assets/videos/spawn_cube.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="gallery-item">
+                <video controls loop controlsList="nodownload">
+                    <source src="./assets/videos/turret.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <a href="./assets/images/gallery/backhole_deepspace.png" data-lightbox="models" data-title="Image 1">
+                <div class="gallery-item">
+                    <img src="./assets/images/gallery/backhole_deepspace.png" alt="Image 1">
+                </div>
+            </a>
+
+            <a href="./assets/images/gallery/cdplayer-3am.jpg" data-lightbox="models" data-title="Image 2">
+                <div class="gallery-item">
+                    <img src="./assets/images/gallery/cdplayer-3am.jpg" alt="Image 2">
+                </div>
+            </a>
+
+            <a href="./assets/images/gallery/cyberpunk-scene-1x1.jpg" data-lightbox="models" data-title="Image 3">
+                <div class="gallery-item">
+                    <img src="./assets/images/gallery/cyberpunk-scene-1x1.jpg" alt="Image 3">
+                </div>
+            </a>
+
+            <a href="./assets/images/gallery/neon_icon_2.jpg" data-lightbox="models" data-title="Image 4">
+                <div class="gallery-item">
+                    <img src="./assets/images/gallery/neon_icon_2.jpg" alt="Image 4">
+                </div>
+            </a>
+
+            <a href="./assets/images/gallery/pixel_plant.png" data-lightbox="models" data-title="Image 5">
+                <div class="gallery-item">
+                    <img src="./assets/images/gallery/pixel_plant.png" alt="Image 5">
+                </div>
+            </a>
+            <!-- Add more items as needed -->
+        </div>
+    </div>
 
     <section id="contact">
         <h2>Contact</h2>

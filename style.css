@@ -85,6 +85,17 @@ section {
     margin: 100px;
 }
 
+.paragraph{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 60px;
+    max-width: 800px;
+    font-size: 1.1em;
+    line-height: 1.6em;
+    text-align: justify;
+}
+
 .center {
     display: block;
     margin-left: auto;

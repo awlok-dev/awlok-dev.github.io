@@ -38,6 +38,14 @@ videos.forEach(video => {
   };
 });
 
+videos.forEach(video => {
+  video.addEventListener('play', function() {
+      videos.forEach(v => {
+          if(v != this) v.pause();
+      });
+  });
+});
+
 document.getElementById('theme-button').textContent = 'light_mode';
 
 document.getElementById('theme-button').addEventListener('click', function () {

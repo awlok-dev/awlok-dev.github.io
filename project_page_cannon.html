@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project - Island Destroyer</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <link href="./project_page_style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="./assets/images/web_icon.png" />
+</head>
+
+<body>
+    <header>
+        <h1>Island Destroyer</h1>
+    </header>
+
+    <section>
+        <div class="gallery">
+            <div class="slick-slider">
+                <div>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/cvQ3iZEuYO8?si=12BoZwAY4hzkqFP6"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_001_0000.jpg"
+                        alt="Screenshot 1"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_002_0000.jpg"
+                        alt="Screenshot 2"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_003_0000.jpg"
+                        alt="Screenshot 3"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_004_0000.jpg"
+                        alt="Screenshot 4"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_005_0000.jpg"
+                        alt="Screenshot 5"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_006_0000.jpg"
+                        alt="Screenshot 6"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_007_0000.jpg"
+                        alt="Screenshot 7"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_008_0000.jpg"
+                        alt="Screenshot 8"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_009_0000.jpg"
+                        alt="Screenshot 9"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_010_0000.jpg"
+                        alt="Screenshot 10"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_011_0000.jpg"
+                        alt="Screenshot 11"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_019_0000.jpg"
+                        alt="Screenshot 12"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_021_0000.jpg"
+                        alt="Screenshot 13"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_022_0000.jpg"
+                        alt="Screenshot 14"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_023_0000.jpg"
+                        alt="Screenshot 15"></div>
+                <div><img class="aspect-ratio" src="./assets/images/project_cannon/image_024_0000.jpg"
+                        alt="Screenshot 16"></div>
+                <!-- Add more screenshots as needed -->
+            </div>
+        </div>
+
+        <div class="game-details">
+            <div class="game-description">
+                <h2>About the Game</h2>
+
+                <p style="color: cyan;">Platform: Android</p>
+
+                <p>Island Destroyer is a hyper casual game, player needs to destroy the targets on the island with your
+                    cannon. Be careful the traps and obstacles that block the cannon!</p>
+                </p>
+            </div>
+            <div class="buy-button-container">
+                <a href="./index.html">
+                    <button class="buy-button">Back</button>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.slick-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                prevArrow: '<button type="button" class="slick-prev"></button>',
+                nextArrow: '<button type="button" class="slick-next"></button>'
+            });
+        });
+    </script>
+</body>
+
+</html>

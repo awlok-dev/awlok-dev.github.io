@@ -85,7 +85,7 @@ section {
     margin: 100px;
 }
 
-.paragraph{
+.paragraph {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -388,6 +388,24 @@ footer {
     object-fit: contain;
     /* Make the images cover their container */
     border-radius: 8px;
+}
+
+/* ---- sketchfab viewer ---- */
+.sketchfab-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    margin-top: 50px;
+}
+
+.sketchfab-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 16px;
+    align-items: center;
 }
 
 /* ---- particles.js container ---- */

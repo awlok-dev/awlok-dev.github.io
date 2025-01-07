@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>六合彩Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .title {
+            font-size: 24px;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .balls-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .ball {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: transform 0.5s;
+        }
+
+        .main-ball {
+            background: #3b82f6;
+        }
+
+        .special-ball {
+            background: #eab308;
+        }
+
+        .ball.animate {
+            animation: spin 0.5s ease-in-out;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(0.8); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background: #2563eb;
+        }
+
+        button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">六合彩Simulator</h1>
+        <div class="balls-container" id="ballsContainer"></div>
+        <button onclick="generateNewNumbers()" id="generateBtn">馬會出糧</button>
+    </div>
+
+    <script>
+        function generateNumbers() {
+            const numbers = new Set();
+            while (numbers.size < 6) {
+                numbers.add(Math.floor(Math.random() * 49) + 1);
+            }
+            const specialNumber = Math.floor(Math.random() * 49) + 1;
+            return {
+                main: Array.from(numbers).sort((a, b) => a - b),
+                special: specialNumber
+            };
+        }
+
+        function createBall(number, isSpecial = false) {
+            const ball = document.createElement('div');
+            ball.className = `ball ${isSpecial ? 'special-ball' : 'main-ball'}`;
+            ball.textContent = number;
+            return ball;
+        }
+
+        function updateDisplay() {
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = true;
+            
+            const container = document.getElementById('ballsContainer');
+            container.innerHTML = '';
+            
+            const numbers = generateNumbers();
+            
+            // Add main numbers
+            numbers.main.forEach(number => {
+                const ball = createBall(number);
+                ball.classList.add('animate');
+                container.appendChild(ball);
+            });
+            
+            // Add special number
+            const specialBall = createBall(numbers.special, true);
+            specialBall.classList.add('animate');
+            container.appendChild(specialBall);
+            
+            setTimeout(() => {
+                document.querySelectorAll('.ball').forEach(ball => {
+                    ball.classList.remove('animate');
+                });
+                btn.disabled = false;
+            }, 500);
+        }
+
+        // Function to handle button click
+        function generateNewNumbers() {
+            updateDisplay();
+        }
+
+        // Initial generation
+        updateDisplay();
+    </script>
+</body>
+</html>

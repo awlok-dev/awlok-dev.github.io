@@ -5,11 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project - CNY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
     <link href="./project_page_style.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="./assets/images/web_icon.png" />
+    <style>
+        #play-button {
+            display: block;
+            margin: 20px auto;
+            background-color: #64b5f6;
+            color: #0a0a0a;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        #play-button:hover {
+            background-color: #4ba3e2;
+        }
+        
+        #game-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        #game-container {
+            width: 80%;
+            height: 80%;
+        }
+        
+        #game-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -18,39 +65,44 @@
     </header>
 
     <section>
-        <div class="gallery">
-            <div class="slick-slider">
-                <div><img class="aspect-ratio" src="./assets/images/project_cny/1.png" alt="Screenshot 1"></div>
-                <div><img class="aspect-ratio" src="./assets/images/project_cny/2.png" alt="Screenshot 2"></div>
-                <div><img class="aspect-ratio" src="./assets/images/project_cny/3.png" alt="Screenshot 3"></div>
-                <div><img class="aspect-ratio" src="./assets/images/project_cny/4.png" alt="Screenshot 4"></div>
-                <div><img class="aspect-ratio" src="./assets/images/project_cny/5.png" alt="Screenshot 5"></div>
-                <div><img class="aspect-ratio" src="./assets/images/project_cny/6.png" alt="Screenshot 6"></div>
-                <div><img class="aspect-ratio" src="./assets/images/project_cny/7.png" alt="Screenshot 7"></div>
-                <!-- Add more screenshots as needed -->
+        <div class="content-container">
+            <div class="gallery-container">
+                <div class="gallery">
+                    <div class="slick-slider">
+                        <div><img class="aspect-ratio" src="./assets/images/project_cny/1.png" alt="Screenshot 1"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_cny/2.png" alt="Screenshot 2"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_cny/3.png" alt="Screenshot 3"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_cny/4.png" alt="Screenshot 4"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_cny/5.png" alt="Screenshot 5"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_cny/6.png" alt="Screenshot 6"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_cny/7.png" alt="Screenshot 7"></div>
+                    </div>
+                </div>
+                
+                <button id="play-button">Play</button>
+
+                <div id="game-overlay" style="display: none;">
+                    <div id="game-container">
+                        <iframe id="game-frame" src="./games/cny/"></iframe>
+                    </div>
+                </div>
             </div>
-        </div>
+            
+            <div class="info-container">
+                <div class="game-details">
+                    <div class="game-description">
+                        <h2>About the Game</h2>
 
-        <button id="play-button">Play</button>
+                        <p style="color: #64b5f6;">Platform: Android, IOS, Web</p>
 
-        <div id="game-overlay" style="display: none;">
-            <div id="game-container">
-                <iframe id="game-frame" src="./games/cny/"></iframe>
-            </div>
-        </div>
-
-        <div class="game-details">
-            <div class="game-description">
-                <h2>About the Game</h2>
-
-                <p style="color: cyan;">Platform: Android, IOS, Web</p>
-
-                <p>Clarins Lunar new year event game, player needs to find all the "fuk" and win the gift.</p>
-            </div>
-            <div class="buy-button-container">
-                <a href="./index.html">
-                    <button class="buy-button">Back</button>
-                </a>
+                        <p>Clarins Lunar new year event game, player needs to find all the "fuk" and win the gift.</p>
+                    </div>
+                    <div class="buy-button-container">
+                        <a href="./index.html">
+                            <button class="buy-button">Back</button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -60,23 +112,21 @@
 
     <script>
         document.getElementById('play-button').addEventListener('click', function () {
-            document.getElementById('play-button').addEventListener('click', function () {
-                document.getElementById('game-overlay').style.display = 'flex';
-                document.getElementById('game-frame').src = './games/cny/';
-            });
+            document.getElementById('game-overlay').style.display = 'flex';
+            document.getElementById('game-frame').src = './games/cny/';
+        });
 
-            document.getElementById('game-overlay').addEventListener('click', function (event) {
-                // Check if the click was outside the #game-container div
-                if (event.target.id === 'game-overlay') {
-                    document.getElementById('game-overlay').style.display = 'none';
-                    document.getElementById('game-frame').src = '';
-                }
-            });
+        document.getElementById('game-overlay').addEventListener('click', function (event) {
+            // Check if the click was outside the #game-container div
+            if (event.target.id === 'game-overlay') {
+                document.getElementById('game-overlay').style.display = 'none';
+                document.getElementById('game-frame').src = '';
+            }
+        });
 
-            // Prevent clicks on the #game-container div from propagating to the #game-overlay div
-            document.getElementById('game-container').addEventListener('click', function (event) {
-                event.stopPropagation();
-            });
+        // Prevent clicks on the #game-container div from propagating to the #game-overlay div
+        document.getElementById('game-container').addEventListener('click', function (event) {
+            event.stopPropagation();
         });
     </script>
 
@@ -88,6 +138,10 @@
                 speed: 500,
                 slidesToShow: 1,
                 slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 4000,
+                pauseOnHover: true,
+                adaptiveHeight: true,
                 prevArrow: '<button type="button" class="slick-prev"></button>',
                 nextArrow: '<button type="button" class="slick-next"></button>'
             });

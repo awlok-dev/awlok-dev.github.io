@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project - Hell Factory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
@@ -18,38 +21,43 @@
     </header>
 
     <section>
-        <div class="gallery">
-            <div class="slick-slider">
-                <div>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/R4R0KB33yGc?si=OKyFawHPGYdODWff"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
+        <div class="content-container">
+            <div class="gallery-container">
+                <div class="gallery">
+                    <div class="slick-slider">
+                        <div>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/R4R0KB33yGc?si=OKyFawHPGYdODWff"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+
+                        <div><img class="aspect-ratio" src="./assets/images/project_hell_factory/zFps01.jpg" alt="Screenshot 1"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_hell_factory/zFps02.jpg" alt="Screenshot 2"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_hell_factory/zFps03.jpg" alt="Screenshot 3"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_hell_factory/zombieFps.jpg" alt="Screenshot 4"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_hell_factory/zombieFps2.jpg" alt="Screenshot 5"></div>
+                    </div>
                 </div>
-
-                <div><img src="./assets/images/project_hell_factory/zFps01.jpg" alt="Screenshot 1"></div>
-                <div><img src="./assets/images/project_hell_factory/zFps02.jpg" alt="Screenshot 2"></div>
-                <div><img src="./assets/images/project_hell_factory/zFps03.jpg" alt="Screenshot 3"></div>
-                <div><img src="./assets/images/project_hell_factory/zombieFps.jpg" alt="Screenshot 4"></div>
-                <div><img src="./assets/images/project_hell_factory/zombieFps2.jpg" alt="Screenshot 5"></div>
-                <!-- Add more screenshots as needed -->
             </div>
-        </div>
+            
+            <div class="info-container">
+                <div class="game-details">
+                    <div class="game-description">
+                        <h2>About the Game</h2>
 
-        <div class="game-details">
-            <div class="game-description">
-                <h2>About the Game</h2>
+                        <p style="color: #64b5f6;">Platform: PC</p>
 
-                <p style="color: cyan;">Platform: PC</p>
-
-                <p>Hell Factory, A first person shooter game where you have to survive the zombie apocalypse. Escape the factory
-                    and survive the zombie horde.
-                </p>
-            </div>
-            <div class="buy-button-container">
-                <a href="./index.html">
-                    <button class="buy-button">Back</button>
-                </a>
+                        <p>Hell Factory, A first person shooter game where you have to survive the zombie apocalypse. Escape the factory
+                            and survive the zombie horde.
+                        </p>
+                    </div>
+                    <div class="buy-button-container">
+                        <a href="./index.html">
+                            <button class="buy-button">Back</button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -64,6 +72,10 @@
                 speed: 500,
                 slidesToShow: 1,
                 slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 4000,
+                pauseOnHover: true,
+                adaptiveHeight: true,
                 prevArrow: '<button type="button" class="slick-prev"></button>',
                 nextArrow: '<button type="button" class="slick-next"></button>'
             });

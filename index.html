@@ -41,21 +41,33 @@
 
     <i id="theme-button" class="material-icons">light_mode</i>
 
-    <section class="center-text" id="about">
+    <section class="about-section" id="about">
         <div class="about-container">
             <h2>About Me</h2>
-            <img class="center" src="./assets/images/icon.png" alt="About Me Icon">
-            <p class="center-text">I'm a passionate game developer, designer and 3D artist with expertise in Unity, Unreal Engine and Blender.</p>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="./assets/images/icon.png" alt="Alex Wong">
+                </div>
+                <div class="about-text">
+                    <h3>Hello, I'm <span class="highlight">Alex Wong</span></h3>
+                    <p>A passionate game developer, 3D artist, and VFX designer with 7+ years of experience creating
+                        immersive gaming experiences.</p>
+                    <p>I specialize in Unity Engine and Unreal Engine development, with expertise in game mechanics,
+                        visual effects, and 3D modeling using Blender and other industry-standard tools.</p>
+                    <p>My goal is to create engaging, visually stunning games that provide memorable experiences for
+                        players across all platforms.</p>
+                    <div class="skills">
+                        <span class="skill-tag">Unity</span>
+                        <span class="skill-tag">Unreal Engine</span>
+                        <span class="skill-tag">Blender</span>
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">VFX</span>
+                        <span class="skill-tag">Game Design</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-
-    <div class="paragraph">
-        <h1>Hello!</h1>
-        I'm <strong>Alex Wong</strong>, a game developer, designer and 3D artist.
-        <br>I have a passion for creating games and
-        A passionate and creative game developer with 6 years of experience in using Unity Engine, Blender, and other
-        tools to create engaging and immersive games.
-    </div>
 
     <div class="video-container">
         <h2 class="center-text">Portfolio Video</h2>
@@ -92,18 +104,16 @@
     -->
     <!-- Add more projects as needed -->
 
-    <!--Project Card Test-->
+    <!--Project Card Section-->
     <div class="center-content">
-        <h2 class="center-text" id="project-title">Projects</h2>
+        <h2 class="center-text" id="project-title">Featured Projects</h2>
         <div class="container">
             <div class="card active" data-url="project_page_phobos.html">
-                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="">
-
+                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="Phobos Oddity">
                 <div class="card-content">
-                    <div class="profile-image">
+                    <div class="game-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="6" x2="10" y1="11" y2="11" />
                             <line x1="8" x2="8" y1="9" y2="13" />
                             <line x1="15" x2="15.01" y1="12" y2="12" />
@@ -112,20 +122,17 @@
                                 d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
                         </svg>
                     </div>
-
                     <h3 class="title">Phobos Oddity - Hong Kong</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card" data-url="project_page_vampire.html">
-                <img class="background" src="./assets/images/project_vampire_thumbnail.jpg" alt="">
-
+                <img class="background" src="./assets/images/project_vampire_thumbnail.jpg" alt="Vampire Game">
                 <div class="card-content">
-                    <div class="profile-image">
+                    <div class="game-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="6" x2="10" y1="11" y2="11" />
                             <line x1="8" x2="8" y1="9" y2="13" />
                             <line x1="15" x2="15.01" y1="12" y2="12" />
@@ -134,20 +141,17 @@
                                 d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
                         </svg>
                     </div>
-
                     <h3 class="title">Vampire Lust And Bite</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card" data-url="project_page_goblin.html">
-                <img class="background" src="./assets/images/project_idle_goblin_thumbnail.png" alt="">
-
+                <img class="background" src="./assets/images/project_idle_goblin_thumbnail.png" alt="Goblin Idle Game">
                 <div class="card-content">
-                    <div class="profile-image">
+                    <div class="game-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="6" x2="10" y1="11" y2="11" />
                             <line x1="8" x2="8" y1="9" y2="13" />
                             <line x1="15" x2="15.01" y1="12" y2="12" />
@@ -156,20 +160,19 @@
                                 d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
                         </svg>
                     </div>
-
-                    <h3 class="title">Golbin Idle Game</h3>
+                    <h3 class="title">Goblin Idle Game</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
-            <div class="card" data-url="project_page_cny.html">
-                <img class="background" src="./assets/images/project_cny_thumbnail.png" alt="">
-
+            <!--NOTE: Add MGV project-->
+            <div class="card" data-url="project_page_samsung.html">
+                <img class="background" src="./assets/images/project_samsung_thumbnail.jpg"
+                    alt="Samsung Showroom Motion Game">
                 <div class="card-content">
-                    <div class="profile-image">
+                    <div class="game-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="6" x2="10" y1="11" y2="11" />
                             <line x1="8" x2="8" y1="9" y2="13" />
                             <line x1="15" x2="15.01" y1="12" y2="12" />
@@ -178,20 +181,205 @@
                                 d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
                         </svg>
                     </div>
+                    <h3 class="title">Samsung Showroom Motion Game</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
 
+            <div class="card" data-url="project_page_cityplaza_chirstmas.html">
+                <img class="background" src="./assets/images/project_cityplaza_xmas_thumbnail.jpg"
+                    alt="City Plaza Christmas 2024">
+                <div class="card-content">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+                    <h3 class="title">City Plaza Christmas 2024</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_hkjc_bookfair.html">
+                <img class="background" src="./assets/images/project_hkjc_bookfair_thumbnail.jpg"
+                    alt="HKJC Bookfair 2024">
+                <div class="card-content">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+                    <h3 class="title">HKJC Bookfair 2024</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_moko_chirstmas.html">
+                <img class="background" src="./assets/images/project_moko_xmas_thumbnail.jpg" alt="Moko Christmas 2024">
+                <div class="card-content">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+                    <h3 class="title">Moko Christmas 2024</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_chocolate_rain.html">
+                <img class="background" src="./assets/images/project_chocolate_rain_thumbnail.jpg"
+                    alt="ChocolateRain Interactive Animation">
+                <div class="card-content">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+                    <h3 class="title">ChocolateRain Interactive Animation</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_hkjc_wtsapp_sticker.html">
+                <img class="background" src="./assets/images/project_hkjc_wtsapp_sticker_pb_thumbnail.jpg"
+                    alt="HKJC Whatsapp Sticker Photobooth">
+                <div class="card-content">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+                            <circle cx="12" cy="13" r="3" />
+                        </svg>
+                    </div>
+                    <h3 class="title">HKJC Whatsapp Sticker Photobooth</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_central_market.html">
+                <img class="background" src="./assets/images/project_cm_interactive_table_thumbnail.jpg"
+                    alt="Central Market Interactive Table">
+                <div class="card-content">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4" />
+                            <path d="M12 8h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="title">Central Market Interactive Table</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_canvest_expo.html">
+                <img class="background" src="./assets/images/project_canvest_expo_thumbnail.jpg" alt="Canvest Expo">
+                <div class="card-content">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4" />
+                            <path d="M12 8h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="title">Canvest Expo Interactive Screen</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_virtual_dietitian.html">
+                <img class="background" src="./assets/images/project_less_salt_sugar_dietitian_thumbnail.jpg" alt="Less Salt Sugar Dietitian">
+                <div class="card-content">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4" />
+                            <path d="M12 8h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="title">Virtual Dietitian</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+
+            <div class="card" data-url="project_page_calligraphy.html">
+                <img class="background" src="./assets/images/project_calligraphy_thumbnail.jpg" alt="Calligraphy Game">
+                <div class="card-content">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
+                    <h3 class="title">Calligraphy Game</h3>
+                </div>
+                <div class="backdrop"></div>
+            </div>
+            <!--NOTE: Add MGV project-->
+
+            <div class="card" data-url="project_page_cny.html">
+                <img class="background" src="./assets/images/project_cny_thumbnail.png" alt="Clarins Event Game">
+                <div class="card-content">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="6" x2="10" y1="11" y2="11" />
+                            <line x1="8" x2="8" y1="9" y2="13" />
+                            <line x1="15" x2="15.01" y1="12" y2="12" />
+                            <line x1="18" x2="18.01" y1="10" y2="10" />
+                            <path
+                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
+                        </svg>
+                    </div>
                     <h3 class="title">Clarins Event Game</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card" data-url="project_page_fallhero.html">
-                <img class="background" src="./assets/images/project_fall_cube_thumbnail.jpg" alt="">
-
+                <img class="background" src="./assets/images/project_fall_cube_thumbnail.jpg" alt="Fall Hero Game">
                 <div class="card-content">
-                    <div class="profile-image">
+                    <div class="game-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="6" x2="10" y1="11" y2="11" />
                             <line x1="8" x2="8" y1="9" y2="13" />
                             <line x1="15" x2="15.01" y1="12" y2="12" />
@@ -200,20 +388,17 @@
                                 d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
                         </svg>
                     </div>
-
                     <h3 class="title">Fall Hero</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card" data-url="project_page_cannon.html">
-                <img class="background" src="./assets/images/project_cannon_thumbnail.jpg" alt="">
-
+                <img class="background" src="./assets/images/project_cannon_thumbnail.jpg" alt="Island Destroyer Game">
                 <div class="card-content">
-                    <div class="profile-image">
+                    <div class="game-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="6" x2="10" y1="11" y2="11" />
                             <line x1="8" x2="8" y1="9" y2="13" />
                             <line x1="15" x2="15.01" y1="12" y2="12" />
@@ -222,20 +407,18 @@
                                 d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
                         </svg>
                     </div>
-
                     <h3 class="title">Island Destroyer</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card" data-url="project_page_reality.html">
-                <img class="background" src="./assets/images/project_reality_thumbnail.jpg" alt="">
-
+                <img class="background" src="./assets/images/project_reality_thumbnail.jpg"
+                    alt="Reality Elderly Interaction Hub">
                 <div class="card-content">
-                    <div class="profile-image">
+                    <div class="game-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="6" x2="10" y1="11" y2="11" />
                             <line x1="8" x2="8" y1="9" y2="13" />
                             <line x1="15" x2="15.01" y1="12" y2="12" />
@@ -244,20 +427,17 @@
                                 d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
                         </svg>
                     </div>
-
                     <h3 class="title">"Reality" Elderly Interaction Hub</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card" data-url="project_page_spawn_war.html">
-                <img class="background" src="./assets/images/project_spawn_war_thumbnail.jpg" alt="">
-
+                <img class="background" src="./assets/images/project_spawn_war_thumbnail.jpg" alt="Spawn War Game">
                 <div class="card-content">
-                    <div class="profile-image">
+                    <div class="game-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="6" x2="10" y1="11" y2="11" />
                             <line x1="8" x2="8" y1="9" y2="13" />
                             <line x1="15" x2="15.01" y1="12" y2="12" />
@@ -266,20 +446,17 @@
                                 d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
                         </svg>
                     </div>
-
                     <h3 class="title">Spawn War</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card" data-url="project_page_lost_world.html">
-                <img class="background" src="./assets/images/project_lost_word_thumbnail.png" alt="">
-
+                <img class="background" src="./assets/images/project_lost_word_thumbnail.png" alt="Lost World Game">
                 <div class="card-content">
-                    <div class="profile-image">
+                    <div class="game-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="6" x2="10" y1="11" y2="11" />
                             <line x1="8" x2="8" y1="9" y2="13" />
                             <line x1="15" x2="15.01" y1="12" y2="12" />
@@ -288,20 +465,18 @@
                                 d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
                         </svg>
                     </div>
-
                     <h3 class="title">Lost World</h3>
                 </div>
                 <div class="backdrop"></div>
             </div>
 
             <div class="card" data-url="project_page_hell_factory.html">
-                <img class="background" src="./assets/images/project_hell_factory_thumbnail.jpg" alt="">
-
+                <img class="background" src="./assets/images/project_hell_factory_thumbnail.jpg"
+                    alt="Hell Factory Game">
                 <div class="card-content">
-                    <div class="profile-image">
+                    <div class="game-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-gamepad-2">
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="6" x2="10" y1="11" y2="11" />
                             <line x1="8" x2="8" y1="9" y2="13" />
                             <line x1="15" x2="15.01" y1="12" y2="12" />
@@ -310,7 +485,6 @@
                                 d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
                         </svg>
                     </div>
-
                     <h3 class="title">Hell Factory</h3>
                 </div>
                 <div class="backdrop"></div>
@@ -509,16 +683,39 @@
     </div>
 
     <section id="contact">
-        <h2>Contact</h2>
-        <p>Feel free to reach out to me! Email: alexwonglok@gmail.com</p>
-        <!-- Add more contact details or a contact form if desired -->
+        <div class="contact-container">
+            <h2>Get In Touch</h2>
+            <p>Interested in working together or have questions about my projects?</p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <h3>Email</h3>
+                    <p><a href="mailto:alexwonglok@gmail.com">alexwonglok@gmail.com</a></p>
+                </div>
+
+                <div class="contact-item">
+                    <ion-icon name="logo-instagram"></ion-icon>
+                    <h3>Instagram</h3>
+                    <p><a href="https://www.instagram.com/awlok.dev" target="_blank">@awlok.dev</a></p>
+                </div>
+
+                <div class="contact-item">
+                    <ion-icon name="location-outline"></ion-icon>
+                    <h3>Location</h3>
+                    <p>Hong Kong</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>Alex Wong Portfolio</p>
-        <a href="https://www.instagram.com/awlok.dev" target="_blank" class="social-icon">
-            <ion-icon name="logo-instagram"></ion-icon>
-        </a>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3>Alex Wong</h3>
+                <p>Game Developer & 3D Artist</p>
+            </div>
+        </div>
     </footer>
 </body>
 

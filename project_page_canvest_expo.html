@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project - Canvest Expo Interactive Screen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <link href="./project_page_style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="./assets/images/web_icon.png" />
+</head>
+
+<body>
+    <header>
+        <h1>Canvest Expo Interactive Screen</h1>
+    </header>
+
+    <section>
+        <div class="content-container">
+            <div class="gallery-container">
+                <div class="gallery">
+                    <div class="slick-slider">
+                        <div><img class="aspect-ratio" src="./assets/images/project_canvest_expo/1.jpg" alt="Screenshot 1"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_canvest_expo/2.jpg" alt="Screenshot 2"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-container">
+                <div class="game-details">
+                    <div class="game-description">
+                        <h2>About the Project</h2>
+
+                        <p style="color: #64b5f6;">Platform: PC</p>
+
+                        <p>Developed a interactive screen for Canvest Expo to showcase the products and services.</p>
+                    </div>
+                    <div class="buy-button-container">
+                        <a href="./index.html">
+                            <button class="buy-button">Back</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.slick-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 4000,
+                pauseOnHover: true,
+                adaptiveHeight: true,
+                prevArrow: '<button type="button" class="slick-prev"></button>',
+                nextArrow: '<button type="button" class="slick-next"></button>'
+            });
+        });
+    </script>
+</body>
+
+</html>

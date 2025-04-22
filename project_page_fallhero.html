@@ -5,11 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project - Fall Hero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
     <link href="./project_page_style.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="./assets/images/web_icon.png" />
+    <style>
+        #play-button {
+            display: block;
+            margin: 20px auto;
+            background-color: #64b5f6;
+            color: #0a0a0a;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        #play-button:hover {
+            background-color: #4ba3e2;
+        }
+    </style>
 </head>
 
 <body>
@@ -18,46 +41,51 @@
     </header>
 
     <section>
-        <div class="gallery">
-            <div class="slick-slider">
-                <div>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/XFYW0CVkO5I?si=_egA8RNyr4MuAEGh"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
+        <div class="content-container">
+            <div class="gallery-container">
+                <div class="gallery">
+                    <div class="slick-slider">
+                        <div>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/XFYW0CVkO5I?si=_egA8RNyr4MuAEGh"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_fall_cube/image_001_0000.jpg" alt="Screenshot 1"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_fall_cube/image_002_0000.jpg" alt="Screenshot 2"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_fall_cube/image_003_0000.jpg" alt="Screenshot 3"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_fall_cube/image_004_0000.jpg" alt="Screenshot 4"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_fall_cube/image_005_0000.jpg" alt="Screenshot 5"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_fall_cube/image_006_0000.jpg" alt="Screenshot 6"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_fall_cube/image_007_0000.jpg" alt="Screenshot 7"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_fall_cube/image_008_0000.jpg" alt="Screenshot 8"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_fall_cube/image_009_0000.jpg" alt="Screenshot 9"></div>
+                        <div><img class="aspect-ratio" src="./assets/images/project_fall_cube/image_010_0000.jpg" alt="Screenshot 10"></div>
+                    </div>
                 </div>
-                <div><img src="./assets/images/project_fall_cube/image_001_0000.jpg" alt="Screenshot 1"></div>
-                <div><img src="./assets/images/project_fall_cube/image_002_0000.jpg" alt="Screenshot 2"></div>
-                <div><img src="./assets/images/project_fall_cube/image_003_0000.jpg" alt="Screenshot 3"></div>
-                <div><img src="./assets/images/project_fall_cube/image_004_0000.jpg" alt="Screenshot 4"></div>
-                <div><img src="./assets/images/project_fall_cube/image_005_0000.jpg" alt="Screenshot 5"></div>
-                <div><img src="./assets/images/project_fall_cube/image_006_0000.jpg" alt="Screenshot 6"></div>
-                <div><img src="./assets/images/project_fall_cube/image_007_0000.jpg" alt="Screenshot 7"></div>
-                <div><img src="./assets/images/project_fall_cube/image_008_0000.jpg" alt="Screenshot 8"></div>
-                <div><img src="./assets/images/project_fall_cube/image_009_0000.jpg" alt="Screenshot 9"></div>
-                <div><img src="./assets/images/project_fall_cube/image_010_0000.jpg" alt="Screenshot 10"></div>
-                <!-- Add more screenshots as needed -->
-            </div>
-        </div>
-
-        <a href="https://play.google.com/store/apps/details?id=com.ParticleGamesStudio.FallHero" target="_blank">
-        <button id="play-button">Google Play Store</button>
-        </a>
-
-        <div class="game-details">
-            <div class="game-description">
-                <h2>About the Game</h2>
-
-                <p style="color: cyan;">Platform: Android</p>
-
-                <p>Fall Hero is a hyper casual game. Use various heroes to get through the obstacles and survive as long as possible.
-                <br>Challenge yourself to get highest score! Break your own record! Break your limits!</br>
-                </p>
-            </div>
-            <div class="buy-button-container">
-                <a href="./index.html">
-                    <button class="buy-button">Back</button>
+                
+                <a href="https://play.google.com/store/apps/details?id=com.ParticleGamesStudio.FallHero" target="_blank">
+                    <button id="play-button">Google Play Store</button>
                 </a>
+            </div>
+            
+            <div class="info-container">
+                <div class="game-details">
+                    <div class="game-description">
+                        <h2>About the Game</h2>
+
+                        <p style="color: #64b5f6;">Platform: Android</p>
+
+                        <p>Fall Hero is a hyper casual game. Use various heroes to get through the obstacles and survive as long as possible.
+                        <br>Challenge yourself to get highest score! Break your own record! Break your limits!</br>
+                        </p>
+                    </div>
+                    <div class="buy-button-container">
+                        <a href="./index.html">
+                            <button class="buy-button">Back</button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -72,6 +100,10 @@
                 speed: 500,
                 slidesToShow: 1,
                 slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 4000,
+                pauseOnHover: true,
+                adaptiveHeight: true,
                 prevArrow: '<button type="button" class="slick-prev"></button>',
                 nextArrow: '<button type="button" class="slick-next"></button>'
             });

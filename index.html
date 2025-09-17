@@ -6,40 +6,45 @@
     <meta name="description" content="Awlok portfolio.">
     <meta name="author" content="Alex Wong" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <link href="../lightbox.css" rel="stylesheet" type="text/css">
-    <link rel="icon" type="image/png" href="../assets/images/web_icon.png" />
-    <script src="../script.js" defer></script>
-    <title>Alex Wong - Portfolio</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="lightbox.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="assets/images/web_icon.png" />
+    <title>Alex Wong - Game Developer</title>
 </head>
 
 <body class="dark-mode">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="../particles.js"></script>
-    <script src="../app.js"></script>
-    <script src="../stats.js"></script>
-    <script src="../lightbox.js" defer></script>
-
+    <div class="bg-animation"></div>
     <div id="particles-js"></div>
-
-    <header>
-        <h1>Alex Wong</h1>
-        <p>Game Developer | 3D Artist | VFX Artist</p>
-
-        <nav>
-            <ul>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#project-title">Projects</a></li>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="assets/images/web_icon.png" alt="AW Logo" class="logo-icon">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#3dmodels">3D Models</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-        </nav>
-    </header>
+            <i id="theme-button" class="material-icons">light_mode</i>
+        </div>
+    </nav>
 
-    <i id="theme-button" class="material-icons">light_mode</i>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Alex Wong</h1>
+            <p>Crafting immersive digital worlds and unforgettable gaming experiences</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Projects</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
 
     <section class="about-section" id="about">
         <div class="about-container">
@@ -104,397 +109,283 @@
     -->
     <!-- Add more projects as needed -->
 
-    <!--Project Card Section-->
-    <div class="center-content">
-        <h2 class="center-text" id="project-title">Featured Projects</h2>
-        <div class="container">
-            <div class="card active" data-url="project_page_phobos.html">
-                <img class="background" src="./assets/images/project_phobos_thumbnail.png" alt="Phobos Oddity">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Phobos Oddity - Hong Kong</h3>
+    <section id="projects" class="fade-in">
+        <h2>Featured Projects</h2>
+        <div class="games-grid">
+            <div class="game-card" data-url="project_page_phobos.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_phobos_thumbnail.png'); background-size: cover; background-position: center;"></div>
+                <h3>Phobos Oddity - Hong Kong</h3>
+                <p>An immersive space exploration game featuring stunning visuals, realistic physics, and captivating storylines set in the mysterious Phobos moon.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">PC</span>
+                    <span class="tag">HDRP</span>
+                    <span class="tag">Horror</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_phobos.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_vampire.html">
-                <img class="background" src="./assets/images/project_vampire_thumbnail.jpg" alt="Vampire Game">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Vampire Lust And Bite</h3>
+            <div class="game-card" data-url="project_page_vampire.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_vampire_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Vampire Lust And Bite</h3>
+                <p>A dark fantasy action RPG with intense combat mechanics, supernatural abilities, and a compelling vampire narrative in gothic environments.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Visual Novel</span>
+                    <span class="tag">Android</span>
+                    <span class="tag">IOS</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_vampire.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_goblin.html">
-                <img class="background" src="./assets/images/project_idle_goblin_thumbnail.png" alt="Goblin Idle Game">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Goblin Idle Game</h3>
+            <div class="game-card" data-url="project_page_goblin.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_idle_goblin_thumbnail.png'); background-size: cover; background-position: center;"></div>
+                <h3>Goblin Idle Game</h3>
+                <p>An engaging idle clicker game featuring progressive goblin civilization building, resource management, and strategic upgrades.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">C#</span>
+                    <span class="tag">Idle Game</span>
+                    <span class="tag">Mobile</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_goblin.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <!--NOTE: Add MGV project-->
-            <div class="card" data-url="project_page_samsung.html">
-                <img class="background" src="./assets/images/project_samsung_thumbnail.jpg"
-                    alt="Samsung Showroom Motion Game">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Samsung Showroom Motion Game</h3>
+            <div class="game-card" data-url="project_page_samsung.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_samsung_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Samsung Showroom Motion Game</h3>
+                <p>An interactive motion-controlled experience for Samsung showrooms featuring gesture recognition and immersive product demonstrations.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">HDRP</span>
+                    <span class="tag">Motion</span>
+                    <span class="tag">Visual Effect</span>
+                    <span class="tag">Interactive</span>
+                    <span class="tag">Azure Kinect</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_samsung.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_cityplaza_chirstmas.html">
-                <img class="background" src="./assets/images/project_cityplaza_xmas_thumbnail.jpg"
-                    alt="City Plaza Christmas 2024">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">City Plaza Christmas 2024</h3>
+            <div class="game-card" data-url="project_page_cityplaza_chirstmas.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_cityplaza_xmas_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>City Plaza Christmas 2024</h3>
+                <p>A festive Christmas-themed interactive experience for City Plaza featuring holiday mini-games and seasonal celebrations.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Interactive</span>
+                    <span class="tag">HTC Vive</span>
+                    <span class="tag">Event</span>
+                    <span class="tag">Music</span>
+                    <span class="tag">Painting</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_cityplaza_chirstmas.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_hkjc_bookfair.html">
-                <img class="background" src="./assets/images/project_hkjc_bookfair_thumbnail.jpg"
-                    alt="HKJC Bookfair 2024">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">HKJC Bookfair 2024</h3>
+            <div class="game-card" data-url="project_page_hkjc_bookfair.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_hkjc_bookfair_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>HKJC Bookfair 2024</h3>
+                <p>Educational interactive experience for the Hong Kong Jockey Club Book Fair promoting reading and literary engagement.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">OpenCV</span>
+                    <span class="tag">Interactive</span>
+                    <span class="tag">Azure Kinect</span>
+                    <span class="tag">Event</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_hkjc_bookfair.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_moko_chirstmas.html">
-                <img class="background" src="./assets/images/project_moko_xmas_thumbnail.jpg" alt="Moko Christmas 2024">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Moko Christmas 2024</h3>
+            <div class="game-card" data-url="project_page_moko_chirstmas.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_moko_xmas_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Moko Christmas 2024</h3>
+                <p>A delightful Christmas-themed interactive installation for Moko shopping center with engaging holiday activities.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Event</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_moko_chirstmas.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_chocolate_rain.html">
-                <img class="background" src="./assets/images/project_chocolate_rain_thumbnail.jpg"
-                    alt="ChocolateRain Interactive Animation">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">ChocolateRain Interactive Animation</h3>
+            <div class="game-card" data-url="project_page_chocolate_rain.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_chocolate_rain_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>ChocolateRain Interactive Animation</h3>
+                <p>A unique interactive animation experience featuring dynamic visual effects and user-responsive chocolate-themed content.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">2D</span>
+                    <span class="tag">Animation</span>
+                    <span class="tag">Interactive</span>
+                    <span class="tag">Visual Effects</span>
+                    <span class="tag">Shaders</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_chocolate_rain.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_hkjc_wtsapp_sticker.html">
-                <img class="background" src="./assets/images/project_hkjc_wtsapp_sticker_pb_thumbnail.jpg"
-                    alt="HKJC Whatsapp Sticker Photobooth">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-                            <circle cx="12" cy="13" r="3" />
-                        </svg>
-                    </div>
-                    <h3 class="title">HKJC Whatsapp Sticker Photobooth</h3>
+            <div class="game-card" data-url="project_page_hkjc_wtsapp_sticker.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_hkjc_wtsapp_sticker_pb_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>HKJC Whatsapp Sticker Photobooth</h3>
+                <p>A fun interactive photobooth experience allowing users to create custom WhatsApp stickers with HKJC branding.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">ComfyUI</span>
+                    <span class="tag">Photobooth</span>
+                    <span class="tag">Event</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_hkjc_wtsapp_sticker.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_central_market.html">
-                <img class="background" src="./assets/images/project_cm_interactive_table_thumbnail.jpg"
-                    alt="Central Market Interactive Table">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M12 16v-4" />
-                            <path d="M12 8h.01" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Central Market Interactive Table</h3>
+            <div class="game-card" data-url="project_page_central_market.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_cm_interactive_table_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Central Market Interactive Table</h3>
+                <p>A sophisticated interactive table installation for Central Market featuring multi-touch capabilities and engaging content.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Interactive</span>
+                    <span class="tag">Multi-touch</span>
+                    <span class="tag">Information</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_central_market.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_canvest_expo.html">
-                <img class="background" src="./assets/images/project_canvest_expo_thumbnail.jpg" alt="Canvest Expo">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M12 16v-4" />
-                            <path d="M12 8h.01" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Canvest Expo Interactive Screen</h3>
+            <div class="game-card" data-url="project_page_canvest_expo.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_canvest_expo_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Canvest Expo Interactive Screen</h3>
+                <p>Professional interactive display solution for Canvest Expo featuring informational content and user engagement tools.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Interactive</span>
+                    <span class="tag">Expo</span>
+                    <span class="tag">Touch Screen</span>
+                    <span class="tag">Information</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_canvest_expo.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_virtual_dietitian.html">
-                <img class="background" src="./assets/images/project_less_salt_sugar_dietitian_thumbnail.jpg" alt="Less Salt Sugar Dietitian">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M12 16v-4" />
-                            <path d="M12 8h.01" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Virtual Dietitian</h3>
+            <div class="game-card" data-url="project_page_virtual_dietitian.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_less_salt_sugar_dietitian_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Virtual Dietitian</h3>
+                <p>An innovative health application featuring AI-powered dietary recommendations and interactive nutrition guidance.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">AI</span>
+                    <span class="tag">Live2D</span>
+                    <span class="tag">Information</span>
+                    <span class="tag">Interactive</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_virtual_dietitian.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_calligraphy.html">
-                <img class="background" src="./assets/images/project_calligraphy_thumbnail.jpg" alt="Calligraphy Game">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Calligraphy Game</h3>
+            <div class="game-card" data-url="project_page_calligraphy.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_calligraphy_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Calligraphy Game</h3>
+                <p>A beautiful digital calligraphy experience that teaches traditional brush techniques through interactive gameplay.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Art</span>
+                    <span class="tag">Touch Interface</span>
+                    <span class="tag">Shaders</span>
                 </div>
-                <div class="backdrop"></div>
-            </div>
-            <!--NOTE: Add MGV project-->
-
-            <div class="card" data-url="project_page_cny.html">
-                <img class="background" src="./assets/images/project_cny_thumbnail.png" alt="Clarins Event Game">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Clarins Event Game</h3>
-                </div>
-                <div class="backdrop"></div>
+                <a href="project_page_calligraphy.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_fallhero.html">
-                <img class="background" src="./assets/images/project_fall_cube_thumbnail.jpg" alt="Fall Hero Game">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Fall Hero</h3>
+            <div class="game-card" data-url="project_page_cny.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_cny_thumbnail.png'); background-size: cover; background-position: center;"></div>
+                <h3>Clarins Event Game</h3>
+                <p>A festive Chinese New Year themed game created for Clarins featuring traditional celebrations and engaging mini-games.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">WebGL</span>
+                    <span class="tag">Event Game</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_cny.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_cannon.html">
-                <img class="background" src="./assets/images/project_cannon_thumbnail.jpg" alt="Island Destroyer Game">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Island Destroyer</h3>
+            <div class="game-card" data-url="project_page_fallhero.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_fall_cube_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Fall Hero</h3>
+                <p>An action-packed falling cube game with physics-based gameplay, challenging levels, and competitive scoring systems.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Android</span>
+                    <span class="tag">Mobile Game</span>
+                    <span class="tag">Fun</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_fallhero.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_reality.html">
-                <img class="background" src="./assets/images/project_reality_thumbnail.jpg"
-                    alt="Reality Elderly Interaction Hub">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">"Reality" Elderly Interaction Hub</h3>
+            <div class="game-card" data-url="project_page_cannon.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_cannon_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Island Destroyer</h3>
+                <p>A strategic cannon shooting game featuring destructible environments, physics-based projectiles, and island conquest gameplay.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Physics</span>
+                    <span class="tag">Strategy</span>
+                    <span class="tag">Destruction</span>
+                    <span class="tag">Casual</span>
+                    <span class="tag">Mobile</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_cannon.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_spawn_war.html">
-                <img class="background" src="./assets/images/project_spawn_war_thumbnail.jpg" alt="Spawn War Game">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Spawn War</h3>
+            <div class="game-card" data-url="project_page_reality.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_reality_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>"Reality" Elderly Interaction Hub</h3>
+                <p>A compassionate interactive platform designed to enhance social interaction and cognitive engagement for elderly users.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">VR</span>
+                    <span class="tag">Interactive</span>
+                    <span class="tag">OpenPose</span>
+                    <span class="tag">Music</span>
+                    <span class="tag">Event</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_reality.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_lost_world.html">
-                <img class="background" src="./assets/images/project_lost_word_thumbnail.png" alt="Lost World Game">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Lost World</h3>
+            <div class="game-card" data-url="project_page_spawn_war.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_spawn_war_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Spawn War</h3>
+                <p>An intense real-time strategy game featuring unit spawning mechanics, tactical combat, and competitive multiplayer battles.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">RTS</span>
+                    <span class="tag">Strategy</span>
+                    <span class="tag">Combat</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_spawn_war.html" class="btn btn-primary">View Project</a>
             </div>
 
-            <div class="card" data-url="project_page_hell_factory.html">
-                <img class="background" src="./assets/images/project_hell_factory_thumbnail.jpg"
-                    alt="Hell Factory Game">
-                <div class="card-content">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="6" x2="10" y1="11" y2="11" />
-                            <line x1="8" x2="8" y1="9" y2="13" />
-                            <line x1="15" x2="15.01" y1="12" y2="12" />
-                            <line x1="18" x2="18.01" y1="10" y2="10" />
-                            <path
-                                d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z" />
-                        </svg>
-                    </div>
-                    <h3 class="title">Hell Factory</h3>
+            <div class="game-card" data-url="project_page_lost_world.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_lost_word_thumbnail.png'); background-size: cover; background-position: center;"></div>
+                <h3>Lost World</h3>
+                <p>An exploration adventure game set in mysterious lost civilizations with puzzle-solving and discovery-based gameplay.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">ARPG</span>
+                    <span class="tag">Visual Effect</span>
                 </div>
-                <div class="backdrop"></div>
+                <a href="project_page_lost_world.html" class="btn btn-primary">View Project</a>
             </div>
+
+            <div class="game-card" data-url="project_page_hell_factory.html">
+                <div class="game-image" style="background-image: url('./assets/images/project_hell_factory_thumbnail.jpg'); background-size: cover; background-position: center;"></div>
+                <h3>Hell Factory</h3>
+                <p>A dark industrial-themed game featuring factory management, resource optimization, and atmospheric horror elements.</p>
+                <div class="tech-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Horror</span>
+                    <span class="tag">Zombie</span>
+                    <span class="tag">FPS</span>
+                </div>
+                <a href="project_page_hell_factory.html" class="btn btn-primary">View Project</a>
+            </div>
+
         </div>
-    </div>
+    </section>
 
-    <!--- Gallery --->
-    <div class="gallery-container">
-        <h2 class="center-text" id="gallery">Gallery</h2>
+    <section id="gallery" class="fade-in">
+        <h2>Gallery</h2>
         <div class="gallery">
             <!-- Replace these image URLs with your own -->
             <div class="gallery-item">
@@ -650,10 +541,10 @@
             </a>
             <!-- Add more items as needed -->
         </div>
-    </div>
+    </section>
 
-    <div class="sketchfab-container">
-        <h2 class="center-text" id="3dmodels">3D Models</h2>
+    <section id="3dmodels" class="fade-in">
+        <h2>3D Models</h2>
         <div class="sketchfab-grid">
             <iframe title="Final Fantasy 7 Buster Sword" frameborder="0" allowfullscreen mozallowfullscreen="true"
                 webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking
@@ -680,43 +571,48 @@
                 execution-while-out-of-viewport execution-while-not-rendered web-share width="640" height="360"
                 src="https://sketchfab.com/models/af5ed08436ee4cb4ae2624a4c5f06a4a/embed?ui_theme=dark"> </iframe>
         </div>
-    </div>
+    </section>
 
-    <section id="contact">
+    <section id="contact" class="fade-in">
+        <h2>Let's Create Together</h2>
         <div class="contact-container">
-            <h2>Get In Touch</h2>
-            <p>Interested in working together or have questions about my projects?</p>
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3>Email</h3>
+                <a href="mailto:alexwonglok@gmail.com">alexwonglok@gmail.com</a>
+            </div>
 
-            <div class="contact-info">
-                <div class="contact-item">
-                    <ion-icon name="mail-outline"></ion-icon>
-                    <h3>Email</h3>
-                    <p><a href="mailto:alexwonglok@gmail.com">alexwonglok@gmail.com</a></p>
-                </div>
+            <div class="contact-card">
+                <div class="contact-icon">📱</div>
+                <h3>Instagram</h3>
+                <a href="https://www.instagram.com/awlok.dev" target="_blank">@awlok.dev</a>
+            </div>
 
-                <div class="contact-item">
-                    <ion-icon name="logo-instagram"></ion-icon>
-                    <h3>Instagram</h3>
-                    <p><a href="https://www.instagram.com/awlok.dev" target="_blank">@awlok.dev</a></p>
-                </div>
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3>Location</h3>
+                <span>Hong Kong</span>
+            </div>
 
-                <div class="contact-item">
-                    <ion-icon name="location-outline"></ion-icon>
-                    <h3>Location</h3>
-                    <p>Hong Kong</p>
-                </div>
+            <div class="contact-card">
+                <div class="contact-icon">🎮</div>
+                <h3>Portfolio</h3>
+                <a href="https://awlok-dev.github.io/">awlok-dev.github.io</a>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <h3>Alex Wong</h3>
-                <p>Game Developer & 3D Artist</p>
-            </div>
-        </div>
+        <p>Alex Wong - Game Developer Portfolio</p>
     </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="particles.js"></script>
+    <script src="app.js"></script>
+    <script src="stats.js"></script>
+    <script src="lightbox.js" defer></script>
+    <script src="script.js" defer></script>
 </body>
 
 </html>

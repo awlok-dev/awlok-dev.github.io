@@ -374,6 +374,7 @@ h2 {
 
 .about-image {
     flex: 0 0 200px;
+    position: relative;
 }
 
 .about-image img {
@@ -390,6 +391,16 @@ h2 {
     transform: scale(1.05);
     border-color: rgba(0, 198, 255, 0.6);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 198, 255, 0.3);
+}
+
+.about-image .image-placeholder {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 5px solid rgba(0, 198, 255, 0.3);
 }
 
 .about-text {
@@ -476,10 +487,21 @@ h2 {
 /* Lazy loading styles */
 .gallery-item img.lazy-load {
     opacity: 0;
+    filter: blur(10px);
+    transform: scale(0.95);
+    transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease;
 }
 
 .gallery-item img.lazy-load.loaded {
     opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+}
+
+.gallery-item img.lazy-load.loading {
+    opacity: 0.3;
+    filter: blur(5px);
+    transform: scale(0.98);
 }
 
 .image-placeholder {
@@ -488,43 +510,52 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(5px);
 }
 
-.image-placeholder::before {
-    content: '🖼️';
-    font-size: 2rem;
-    opacity: 0.3;
-    color: #999;
+.image-placeholder .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 .image-placeholder.hidden {
-    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
-@keyframes shimmer {
-    0% {
-        background-position: -200% 0;
-    }
-    100% {
-        background-position: 200% 0;
-    }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* Dark mode placeholder */
 .dark-mode .image-placeholder {
-    background: linear-gradient(90deg, #2a2a2a 25%, #1a1a1a 50%, #2a2a2a 75%);
-    background-size: 200% 100%;
+    background: rgba(0, 0, 0, 0.3);
 }
 
-.dark-mode .image-placeholder::before {
-    color: #666;
+.dark-mode .image-placeholder .loading-spinner {
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top: 3px solid var(--primary-color);
+}
+
+/* Light mode placeholder */
+.light-mode .image-placeholder {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.light-mode .image-placeholder .loading-spinner {
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top: 3px solid var(--primary-color);
 }
 
 .gallery-item video {

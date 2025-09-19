@@ -440,9 +440,75 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }));
 
-    // Lazy Loading Implementation
+    // Enhanced Sequential Lazy Loading Implementation - loads images one by one
     function initLazyLoading() {
         const lazyImages = document.querySelectorAll('img.lazy-load');
+        let loadingQueue = [];
+        let isLoading = false;
+        
+        // Function to load next image in queue
+        function loadNextImage() {
+            if (loadingQueue.length === 0 || isLoading) return;
+            
+            isLoading = true;
+            const img = loadingQueue.shift();
+            const placeholder = img.nextElementSibling;
+            const spinner = placeholder ? placeholder.querySelector('.loading-spinner') : null;
+            
+            // Add loading state to image
+            img.classList.add('loading');
+            
+            // Load the image
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            
+            // Handle load event
+            img.addEventListener('load', () => {
+                // Remove loading state and add loaded state
+                img.classList.remove('loading');
+                img.classList.add('loaded');
+                
+                // Hide placeholder with smooth transition
+                if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                    setTimeout(() => {
+                        placeholder.classList.add('hidden');
+                    }, 100);
+                }
+                
+                // Mark as not loading and process next image
+                isLoading = false;
+                setTimeout(() => {
+                    loadNextImage();
+                }, 200); // Small delay between image loads for smooth sequential effect
+            });
+            
+            // Handle error event
+            img.addEventListener('error', () => {
+                img.classList.remove('loading');
+                img.classList.add('loaded');
+                
+                if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                    // Replace spinner with error message
+                    if (spinner) {
+                        spinner.style.display = 'none';
+                    }
+                    const errorMsg = document.createElement('div');
+                    errorMsg.innerHTML = '<span style="font-size: 1rem; color: #ff6b6b; text-align: center;">Failed to load image</span>';
+                    placeholder.appendChild(errorMsg);
+                    
+                    // Hide error message after a delay
+                    setTimeout(() => {
+                        placeholder.classList.add('hidden');
+                    }, 2000);
+                }
+                
+                // Mark as not loading and process next image
+                isLoading = false;
+                setTimeout(() => {
+                    loadNextImage();
+                }, 200);
+            });
+        }
         
         // Check if browser supports Intersection Observer
         if ('IntersectionObserver' in window) {
@@ -450,34 +516,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const img = entry.target;
-                        const placeholder = img.nextElementSibling;
                         
-                        // Load the image
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                        
-                        // Handle load event
-                        img.addEventListener('load', () => {
-                            img.classList.add('loaded');
-                            if (placeholder && placeholder.classList.contains('image-placeholder')) {
-                                placeholder.classList.add('hidden');
+                        // Add to loading queue instead of loading immediately
+                        if (!loadingQueue.includes(img) && img.dataset.src) {
+                            loadingQueue.push(img);
+                            
+                            // Start loading if not already loading
+                            if (!isLoading) {
+                                loadNextImage();
                             }
-                        });
-                        
-                        // Handle error event
-                        img.addEventListener('error', () => {
-                            img.classList.add('loaded');
-                            if (placeholder && placeholder.classList.contains('image-placeholder')) {
-                                placeholder.innerHTML = '<span style="font-size: 1rem; color: #ff6b6b;">Failed to load</span>';
-                            }
-                        });
+                        }
                         
                         observer.unobserve(img);
                     }
                 });
             }, {
                 root: null,
-                rootMargin: '50px',
+                rootMargin: '100px', // Increased margin for better sequential loading
                 threshold: 0.1
             });
             
@@ -485,26 +540,61 @@ document.addEventListener("DOMContentLoaded", function() {
                 imageObserver.observe(img);
             });
         } else {
-            // Fallback for older browsers
-            lazyImages.forEach(img => {
+            // Fallback for older browsers - still sequential but immediate
+            let currentIndex = 0;
+            
+            function loadNextSequentially() {
+                if (currentIndex >= lazyImages.length) return;
+                
+                const img = lazyImages[currentIndex];
                 const placeholder = img.nextElementSibling;
+                const spinner = placeholder ? placeholder.querySelector('.loading-spinner') : null;
+                
+                img.classList.add('loading');
                 img.src = img.dataset.src;
                 img.removeAttribute('data-src');
                 
                 img.addEventListener('load', () => {
+                    img.classList.remove('loading');
                     img.classList.add('loaded');
                     if (placeholder && placeholder.classList.contains('image-placeholder')) {
-                        placeholder.classList.add('hidden');
+                        setTimeout(() => {
+                            placeholder.classList.add('hidden');
+                        }, 100);
                     }
+                    
+                    currentIndex++;
+                    setTimeout(() => {
+                        loadNextSequentially();
+                    }, 200);
                 });
                 
                 img.addEventListener('error', () => {
+                    img.classList.remove('loading');
                     img.classList.add('loaded');
                     if (placeholder && placeholder.classList.contains('image-placeholder')) {
-                        placeholder.innerHTML = '<span style="font-size: 1rem; color: #ff6b6b;">Failed to load</span>';
+                        if (spinner) {
+                            spinner.style.display = 'none';
+                        }
+                        const errorMsg = document.createElement('div');
+                        errorMsg.innerHTML = '<span style="font-size: 1rem; color: #ff6b6b;">Failed to load</span>';
+                        placeholder.appendChild(errorMsg);
+                        setTimeout(() => {
+                            placeholder.classList.add('hidden');
+                        }, 2000);
                     }
+                    
+                    currentIndex++;
+                    setTimeout(() => {
+                        loadNextSequentially();
+                    }, 200);
                 });
-            });
+            }
+            
+            // Start sequential loading after a short delay
+            setTimeout(() => {
+                loadNextSequentially();
+            }, 500);
         }
     }
 

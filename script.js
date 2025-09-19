@@ -439,4 +439,109 @@ document.addEventListener("DOMContentLoaded", function() {
             hero.style.transform = `translateY(${speed}px)`;
         }
     }));
+
+    // Lazy Loading Implementation
+    function initLazyLoading() {
+        const lazyImages = document.querySelectorAll('img.lazy-load');
+        
+        // Check if browser supports Intersection Observer
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        const placeholder = img.nextElementSibling;
+                        
+                        // Load the image
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        
+                        // Handle load event
+                        img.addEventListener('load', () => {
+                            img.classList.add('loaded');
+                            if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                                placeholder.classList.add('hidden');
+                            }
+                        });
+                        
+                        // Handle error event
+                        img.addEventListener('error', () => {
+                            img.classList.add('loaded');
+                            if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                                placeholder.innerHTML = '<span style="font-size: 1rem; color: #ff6b6b;">Failed to load</span>';
+                            }
+                        });
+                        
+                        observer.unobserve(img);
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '50px',
+                threshold: 0.1
+            });
+            
+            lazyImages.forEach(img => {
+                imageObserver.observe(img);
+            });
+        } else {
+            // Fallback for older browsers
+            lazyImages.forEach(img => {
+                const placeholder = img.nextElementSibling;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                
+                img.addEventListener('load', () => {
+                    img.classList.add('loaded');
+                    if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                        placeholder.classList.add('hidden');
+                    }
+                });
+                
+                img.addEventListener('error', () => {
+                    img.classList.add('loaded');
+                    if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                        placeholder.innerHTML = '<span style="font-size: 1rem; color: #ff6b6b;">Failed to load</span>';
+                    }
+                });
+            });
+        }
+    }
+
+    // Preload critical images for better performance
+    function preloadCriticalImages() {
+        const criticalImages = [
+            'assets/images/web_icon.png',
+            './assets/images/icon.png'
+        ];
+        
+        criticalImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    }
+
+    // Image optimization: Progressive JPEG detection and WebP support
+    function checkWebPSupport() {
+        return new Promise((resolve) => {
+            const webP = new Image();
+            webP.onload = webP.onerror = () => {
+                resolve(webP.height === 2);
+            };
+            webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+        });
+    }
+
+    // Initialize lazy loading and performance optimizations
+    preloadCriticalImages();
+    initLazyLoading();
+    
+    // Check WebP support for future optimization
+    checkWebPSupport().then(supportsWebP => {
+        if (supportsWebP) {
+            console.log('WebP is supported - consider using WebP format for better compression');
+        } else {
+            console.log('WebP not supported - using fallback formats');
+        }
+    });
 });

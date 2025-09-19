@@ -6,6 +6,7 @@
     <meta name="description" content="Awlok portfolio.">
     <meta name="author" content="Alex Wong" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="0.0.1">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="style.css" rel="stylesheet" type="text/css">
@@ -21,7 +22,7 @@
     <nav>
         <div class="nav-container">
             <div class="logo">
-                <img src="assets/images/web_icon.png" alt="AW Logo" class="logo-icon">
+                <img src="assets/images/web_icon.png" alt="AW Logo" class="logo-icon" loading="eager">
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
@@ -51,7 +52,7 @@
             <h2>About Me</h2>
             <div class="about-content">
                 <div class="about-image">
-                    <img src="./assets/images/icon.png" alt="Alex Wong">
+                    <img src="./assets/images/icon.png" alt="Alex Wong" loading="lazy">
                 </div>
                 <div class="about-text">
                     <h3>Hello, I'm <span class="highlight">Alex Wong</span></h3>
@@ -82,32 +83,6 @@
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
     </div>
-    <!--
-    <div class="center-content">
-        <h2 class="center-text" id="project-title">Projects</h2>
-        <section id="projects" class="project-grid">
-            <div class="project">
-                <a href="project1.html">
-                    <img class="project-image" src="assets/images/project_phobos_thumbnail.png" alt="Project 1">
-                    <h3>Project 1</h3>
-                </a>
-            </div>
-            <div class="project">
-                <a href="project2.html">
-                    <img src="project2.jpg" alt="Project 2">
-                    <h3>Project 2</h3>
-                </a>
-            </div>
-
-            <div class="project">
-                <a href="project3.html">
-                    <img src="project3.jpg" alt="Project 3">
-                    <h3>Project 3</h3>
-                </a>
-            </div>
-    </div>
-    -->
-    <!-- Add more projects as needed -->
 
     <section id="projects" class="fade-in">
         <h2>Featured Projects</h2>
@@ -446,97 +421,113 @@
 
             <a href="./assets/images/gallery/ff7_buster_sword_1.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/ff7_buster_sword_1.png" alt="Image">
+                    <img data-src="./assets/images/gallery/ff7_buster_sword_1.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/ff7_buster_sword_2.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/ff7_buster_sword_2.png" alt="Image">
+                    <img data-src="./assets/images/gallery/ff7_buster_sword_2.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/ff7_buster_sword_3.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/ff7_buster_sword_3.png" alt="Image">
+                    <img data-src="./assets/images/gallery/ff7_buster_sword_3.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/katana_1.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/katana_1.png" alt="Image">
+                    <img data-src="./assets/images/gallery/katana_1.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/katana_1_2.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/katana_1_2.png" alt="Image">
+                    <img data-src="./assets/images/gallery/katana_1_2.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/lance_1.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/lance_1.png" alt="Image">
+                    <img data-src="./assets/images/gallery/lance_1.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/lance_2.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/lance_2.png" alt="Image">
+                    <img data-src="./assets/images/gallery/lance_2.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/lance_3.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/lance_3.png" alt="Image">
+                    <img data-src="./assets/images/gallery/lance_3.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/fantasy_crystal.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/fantasy_crystal.png" alt="Image">
+                    <img data-src="./assets/images/gallery/fantasy_crystal.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/hallyway.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/hallyway.png" alt="Image">
+                    <img data-src="./assets/images/gallery/hallyway.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/hallyway_2.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/hallyway_2.png" alt="Image">
+                    <img data-src="./assets/images/gallery/hallyway_2.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/backhole_deepspace.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/backhole_deepspace.png" alt="Image">
+                    <img data-src="./assets/images/gallery/backhole_deepspace.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/cdplayer-3am.jpg" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/cdplayer-3am.jpg" alt="Image">
+                    <img data-src="./assets/images/gallery/cdplayer-3am.jpg" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/cyberpunk-scene-1x1.jpg" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/cyberpunk-scene-1x1.jpg" alt="Image">
+                    <img data-src="./assets/images/gallery/cyberpunk-scene-1x1.jpg" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/neon_icon_2.jpg" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/neon_icon_2.jpg" alt="Image">
+                    <img data-src="./assets/images/gallery/neon_icon_2.jpg" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
 
             <a href="./assets/images/gallery/pixel_plant.png" data-lightbox="models" data-title="Image">
                 <div class="gallery-item">
-                    <img src="./assets/images/gallery/pixel_plant.png" alt="Image">
+                    <img data-src="./assets/images/gallery/pixel_plant.png" alt="Image" class="lazy-load" loading="lazy">
+                    <div class="image-placeholder"></div>
                 </div>
             </a>
             <!-- Add more items as needed -->
@@ -589,9 +580,9 @@
             </div>
 
             <div class="contact-card">
-                <div class="contact-icon">📍</div>
-                <h3>Location</h3>
-                <span>Hong Kong</span>
+                <div class="contact-icon">💼</div>
+                <h3>LinkedIn</h3>
+                <a href="https://www.linkedin.com/in/alex-wong-2990a32a6/" target="_blank">/in/alex-wong-2990a32a6</a>
             </div>
 
             <div class="contact-card">

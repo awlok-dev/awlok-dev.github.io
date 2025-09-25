@@ -6,7 +6,7 @@
     <meta name="description" content="Awlok portfolio.">
     <meta name="author" content="Alex Wong" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="version" content="0.0.2">
+    <meta name="version" content="0.0.3">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="style.css" rel="stylesheet" type="text/css">
@@ -32,7 +32,52 @@
                 <li><a href="#3dmodels">3D Models</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <i id="theme-button" class="material-icons">light_mode</i>
+            <div class="nav-actions">
+                <i id="theme-button" class="material-icons">light_mode</i>
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle mobile menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav" id="mobile-nav">
+            <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+            <div class="mobile-nav-content">
+                <div class="mobile-nav-header">
+                    <div class="mobile-logo">
+                        <img src="assets/images/web_icon.png" alt="AW Logo" class="mobile-logo-icon">
+                        <span class="mobile-logo-text">Alex Wong</span>
+                    </div>
+                    <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Close mobile menu">
+                        <i class="material-icons">close</i>
+                    </button>
+                </div>
+                <ul class="mobile-nav-links">
+                    <li><a href="#home" class="mobile-nav-link">Home</a></li>
+                    <li><a href="#about" class="mobile-nav-link">About</a></li>
+                    <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+                    <li><a href="#gallery" class="mobile-nav-link">Gallery</a></li>
+                    <li><a href="#3dmodels" class="mobile-nav-link">3D Models</a></li>
+                    <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+                </ul>
+                <div class="mobile-nav-footer">
+                    <div class="mobile-theme-toggle">
+                        <span class="theme-label">Theme</span>
+                        <button id="mobile-theme-button" class="mobile-theme-btn">
+                            <i class="material-icons">light_mode</i>
+                        </button>
+                    </div>
+                    <div class="mobile-contact-info">
+                        <a href="mailto:alexwonglok@gmail.com" class="mobile-contact-link">
+                            <i class="material-icons">email</i>
+                            alexwonglok@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
 

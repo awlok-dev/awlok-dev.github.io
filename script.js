@@ -14,10 +14,10 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Scroll animations
+    // Scroll animations with mobile optimization
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.05, // Lower threshold for mobile
+        rootMargin: '0px 0px -20px 0px' // Reduced margin for mobile
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -30,7 +30,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelectorAll('.fade-in').forEach(el => {
         observer.observe(el);
+        
+        // Fallback for mobile devices - force visibility after a delay
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                if (!el.classList.contains('visible')) {
+                    el.classList.add('visible');
+                }
+            }, 1000);
+        }
     });
+
+    // Additional mobile-specific fix for projects section
+    function ensureProjectsVisibility() {
+        const projectsSection = document.getElementById('projects');
+        if (projectsSection && window.innerWidth <= 768) {
+            projectsSection.style.opacity = '1';
+            projectsSection.style.transform = 'translateY(0)';
+            projectsSection.style.visibility = 'visible';
+            projectsSection.classList.add('visible');
+        }
+    }
+
+    // Call immediately and on resize
+    ensureProjectsVisibility();
+    window.addEventListener('resize', ensureProjectsVisibility);
 
     // Navbar background on scroll
     window.addEventListener('scroll', () => {
@@ -95,6 +119,147 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    // Mobile Navigation functionality
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileNavClose = document.getElementById('mobile-nav-close');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const mobileThemeButton = document.getElementById('mobile-theme-button');
+
+    // Function to open mobile menu
+    function openMobileMenu() {
+        mobileNav.classList.add('active');
+        mobileMenuBtn.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        
+        // Add keyboard focus trap
+        const focusableElements = mobileNav.querySelectorAll('button, a, [tabindex]:not([tabindex="-1"])');
+        if (focusableElements.length > 0) {
+            focusableElements[0].focus();
+        }
+    }
+
+    // Function to close mobile menu
+    function closeMobileMenu() {
+        mobileNav.classList.remove('active');
+        mobileMenuBtn.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+        
+        // Return focus to menu button
+        mobileMenuBtn.focus();
+    }
+
+    // Mobile menu button click
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (mobileNav.classList.contains('active')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+    }
+
+    // Close button click
+    if (mobileNavClose) {
+        mobileNavClose.addEventListener('click', closeMobileMenu);
+    }
+
+    // Overlay click to close
+    if (mobileNavOverlay) {
+        mobileNavOverlay.addEventListener('click', closeMobileMenu);
+    }
+
+    // Close menu when clicking nav links
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            closeMobileMenu();
+            // Small delay to allow smooth scrolling to work
+            setTimeout(() => {
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }, 300);
+        });
+    });
+
+    // Keyboard accessibility - ESC to close menu
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+
+    // Handle window resize - close menu on resize to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && mobileNav.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+
+    // Touch/swipe functionality for mobile nav
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function handleTouchStart(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }
+
+    function handleTouchEnd(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }
+
+    function handleSwipe() {
+        const swipeThreshold = 100; // Minimum distance for a swipe
+        const swipeDistance = touchEndX - touchStartX;
+
+        // Swipe right to close menu (when swiping on the content panel)
+        if (swipeDistance > swipeThreshold && mobileNav.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    }
+
+    // Add touch listeners to mobile nav content
+    if (mobileNav) {
+        const mobileNavContent = mobileNav.querySelector('.mobile-nav-content');
+        if (mobileNavContent) {
+            mobileNavContent.addEventListener('touchstart', handleTouchStart, { passive: true });
+            mobileNavContent.addEventListener('touchend', handleTouchEnd, { passive: true });
+        }
+    }
+
+    // Sync mobile theme button with main theme
+    function syncThemeButtons() {
+        const mainThemeBtn = document.getElementById('theme-button');
+        if (mainThemeBtn && mobileThemeButton) {
+            const iconText = mainThemeBtn.textContent;
+            mobileThemeButton.innerHTML = `<i class="material-icons">${iconText}</i>`;
+        }
+    }
+
+    // Mobile theme button functionality
+    if (mobileThemeButton) {
+        mobileThemeButton.addEventListener('click', () => {
+            // Trigger the main theme button click
+            const mainThemeBtn = document.getElementById('theme-button');
+            if (mainThemeBtn) {
+                mainThemeBtn.click();
+                // Sync the mobile button after theme change
+                setTimeout(syncThemeButtons, 100);
+            }
+        });
+    }
+
+    // Initial sync of theme buttons
+    syncThemeButtons();
+
     // Theme toggle functionality
     const themeButton = document.getElementById('theme-button');
     if (themeButton) {
@@ -110,6 +275,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 body.classList.add('dark-mode');
                 icon.textContent = 'light_mode';
                 if (particles) particles.style.backgroundColor = 'black';
+                // Sync mobile theme button
+                if (mobileThemeButton) {
+                    mobileThemeButton.innerHTML = '<i class="material-icons">light_mode</i>';
+                }
 
                 // Update particles for dark mode
                 if (window.particlesJS) {
@@ -190,6 +359,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 body.classList.add('light-mode');
                 icon.textContent = 'dark_mode';
                 if (particles) particles.style.backgroundColor = 'white';
+                // Sync mobile theme button
+                if (mobileThemeButton) {
+                    mobileThemeButton.innerHTML = '<i class="material-icons">dark_mode</i>';
+                }
 
                 // Update particles for light mode
                 if (window.particlesJS) {

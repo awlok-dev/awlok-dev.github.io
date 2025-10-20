@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<!--
+    Visual Novel Story Editor
+    
+    A web-based editor for creating and managing Unity visual novel story chapters.
+    Supports dialogue nodes, character positions, branching choices, and audio settings.
+    
+    Files:
+    - vn_editor.html: Main HTML structure (this file)
+    - vn_editor_style.css: All CSS styling
+    - vn_editor.js: All JavaScript logic
+    
+    Data is saved to browser localStorage and can be exported/imported as JSON.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Novel Story Editor</title>
+    <link rel="stylesheet" href="vn_editor_style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📖 Visual Novel Story Editor</h1>
+            <div class="header-actions">
+                <label class="import-btn" style="cursor: pointer;">
+                    📂 Import Chapter
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importJSON(event)">
+                </label>
+            <button class="export-btn" onclick="exportJSON()">💾 Export Chapter</button>
+                <button class="export-btn" onclick="manageBgCache()" title="View cached background images">🖼️ BG Cache</button>
+                <button class="character-library-btn" onclick="openCharacterLibrary()" title="Manage character library">👥 Characters</button>
+                <button class="clear-data-btn" onclick="clearAllData()">🗑️ Clear All Data</button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="sidebar-left">
+                    <div class="chapter-info">
+                        <div class="info-row">
+                            <label>Story:</label>
+                            <input type="text" id="storyName" placeholder="StoryName" readonly>
+            </div>
+                        <div class="info-row">
+                            <label>Chapter:</label>
+                            <input type="text" id="chapterName" placeholder="Chapter" readonly>
+                </div>
+                        <div class="info-row">
+                            <label>File:</label>
+                            <input type="text" id="fileName" placeholder="SO_StoryName_Chapter" readonly>
+            </div>
+                        <button id="editNameBtn" class="edit-name-btn" onclick="toggleEditNames()">Edit</button>
+            </div>
+                    <h2>Dialogue Nodes</h2>
+                </div>
+                <div class="sidebar-right">
+                    <button class="browse-btn" onclick="openChapterBrowser()">📚 Browse Chapters</button>
+                    <button class="save-chapter-btn" onclick="saveCurrentChapter()">💾 Save Chapter</button>
+                    <button class="clear-btn" onclick="clearAllNodes()">🗑️ Clear All</button>
+                    <button class="add-node-btn" onclick="addNode()">+ Add Node</button>
+        </div>
+            </div>
+            
+            <div class="content-area">
+                <div class="node-table-container">
+                    <table class="node-table" id="nodeTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;"></th>
+                                <th style="width: 60px;">#</th>
+                                <th>Dialogue</th>
+                                <th style="width: 140px;">Speaking</th>
+                                <th style="width: 100px;">Camera</th>
+                                <th style="width: 220px;">Characters</th>
+                                <th style="width: 180px;">Info</th>
+                                <th style="width: 110px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="nodeTableBody">
+                            <tr>
+                                <td colspan="8" class="empty-state">
+                                    <h3>No Nodes Yet</h3>
+                                    <p>Click "Add Node" to create your first dialogue node.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Node Editor Modal -->
+    <div class="editor-modal" id="editorModal">
+        <div class="editor-modal-content">
+            <div class="editor-modal-header">
+                <h2 id="editorModalTitle">Edit Node</h2>
+                <button class="close-modal-btn" onclick="closeEditor()">×</button>
+            </div>
+            <div id="editorArea"></div>
+        </div>
+    </div>
+
+    <!-- Choice Modal -->
+    <div class="modal" id="choiceModal">
+        <div class="modal-content">
+            <div class="modal-header">Add/Edit Choice</div>
+            <div class="form-group">
+                <label>Choice Text</label>
+                <textarea id="choiceText" placeholder="What is the choice option?" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Next Chapter Name</label>
+                <input type="text" id="choiceNextChapter" placeholder="e.g., Chapter_02, Ending_Good">
+                <small style="color: #718096; font-size: 11px;">Enter the ScriptableObject asset name for the next chapter. Leave empty to continue in current chapter.</small>
+            </div>
+            <div class="checkbox-field">
+                <input type="checkbox" id="choiceEnabled" checked>
+                <label>Enabled</label>
+            </div>
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeChoiceModal()">Cancel</button>
+                <button class="save-btn" onclick="saveChoice()">Save Choice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chapter Browser Modal -->
+    <div class="modal" id="chapterBrowserModal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">Chapter Browser</div>
+            <p style="color: #718096; margin-bottom: 20px;">Select a chapter to load, or create a new one. Changes are automatically saved to browser storage.</p>
+            
+            <div class="chapter-browser-list" id="chapterBrowserList">
+                <!-- Chapters will be rendered here -->
+                </div>
+
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeChapterBrowser()">Close</button>
+                        </div>
+                    </div>
+                    </div>
+
+    <!-- Image Lightbox Modal -->
+    <div class="image-lightbox" id="imageLightbox" onclick="closeLightbox(event)">
+        <div class="image-lightbox-content" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeLightbox(event)">×</button>
+            <img id="lightboxImage" src="" alt="Background preview">
+            <div class="lightbox-info">Click outside or press ESC to close</div>
+        </div>
+    </div>
+
+    <!-- Character Library Modal -->
+    <div class="modal" id="characterLibraryModal">
+        <div class="modal-content" style="max-width: 1200px; max-height: 90vh;">
+            <div class="modal-header">Character Library</div>
+            <p style="color: #718096; margin-bottom: 20px;">Manage your character database. Create, edit, and organize characters for your visual novel.</p>
+            
+            <div class="character-library-actions">
+                <button class="add-character-btn" onclick="createNewCharacter()">+ Create New Character</button>
+                <button class="bulk-import-btn" onclick="openBulkImportModal()">📁 Bulk Import from Folder</button>
+                <label class="import-character-btn" style="cursor: pointer;">
+                    📂 Import JSON
+                    <input type="file" id="importCharacterFile" accept=".json" style="display: none;" onchange="importCharacterJSON(event)">
+                </label>
+            </div>
+
+            <div class="character-library-list" id="characterLibraryList">
+                <!-- Characters will be rendered here -->
+            </div>
+
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeCharacterLibrary()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Character Editor Modal -->
+    <div class="modal" id="characterEditorModal">
+        <div class="modal-content" style="max-width: 1400px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header" id="characterEditorTitle">Create Character</div>
+            
+            <div id="characterEditorArea">
+                <!-- Character editor content will be rendered here -->
+            </div>
+
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeCharacterEditor()">Cancel</button>
+                <button class="save-btn" onclick="saveCharacter()">Save Character</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Folder Import Modal -->
+    <div class="modal" id="bulkImportModal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">Bulk Import from Folder Structure</div>
+            <p style="color: #718096; margin-bottom: 15px;">
+                Import a complete character from an organized folder structure, just like VNCharacterCreator in Unity!
+            </p>
+
+            <div class="form-group">
+                <label>Expected Folder Structure:</label>
+                <div style="background: #252d3d; padding: 15px; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 12px; color: #a0aec0; margin-bottom: 15px;">
+                    CharacterName/<br>
+                    ├─ 0_OutfitName1/<br>
+                    │   ├─ 0_PoseName1/<br>
+                    │   │   ├─ expression_0.png<br>
+                    │   │   ├─ expression_1.png<br>
+                    │   │   └─ ...<br>
+                    │   └─ 1_PoseName2/<br>
+                    │       └─ ...<br>
+                    └─ 1_OutfitName2/<br>
+                        └─ ...
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Select Character Folder:</label>
+                <input type="file" id="bulkImportFolderInput" webkitdirectory directory multiple style="display: block; margin-bottom: 10px;">
+                <small style="color: #718096; font-size: 11px;">
+                    Select the root character folder. The folder name will be used as the character name.
+                </small>
+            </div>
+
+            <div id="bulkImportPreview" style="display: none; margin-top: 20px;">
+                <div class="section-header">Import Preview</div>
+                <div id="bulkImportPreviewContent" style="background: #252d3d; padding: 15px; border-radius: 6px; max-height: 300px; overflow-y: auto;">
+                    <!-- Preview content will be rendered here -->
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeBulkImportModal()">Cancel</button>
+                <button class="save-btn" id="bulkImportConfirmBtn" onclick="confirmBulkImport()" style="display: none;">Import Character</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Character Picker Modal (for node editor) -->
+    <div class="modal" id="characterPickerModal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">Select Character</div>
+            <p style="color: #718096; margin-bottom: 20px;">Choose a character from your library. Both Character ID and Name will be displayed automatically.</p>
+            
+            <div class="form-group">
+                <label>Character ID</label>
+                <input type="text" id="pickerCharacterIdDisplay" placeholder="Select a character from the library below" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label>Character Name</label>
+                <input type="text" id="pickerCharacterNameDisplay" placeholder="Character name will appear here" readonly>
+                <small style="color: #718096; font-size: 11px;">Both fields are automatically filled when you select a character from the library below.</small>
+            </div>
+
+            <div class="character-picker-list" id="characterPickerList">
+                <!-- Characters will be rendered here -->
+            </div>
+
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeCharacterPicker()">Cancel</button>
+                <button class="save-btn" onclick="applyCharacterPick()">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="vn_editor.js"></script>
+</body>
+</html>

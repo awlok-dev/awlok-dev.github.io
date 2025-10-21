@@ -51,6 +51,10 @@
                             <label>File:</label>
                             <input type="text" id="fileName" placeholder="SO_StoryName_Chapter" readonly>
             </div>
+                        <div class="info-row">
+                            <label>Next Chapter:</label>
+                            <input type="text" id="nextChapter" placeholder="Leave empty to end story" readonly>
+            </div>
                         <button id="editNameBtn" class="edit-name-btn" onclick="toggleEditNames()">Edit</button>
             </div>
                     <h2>Dialogue Nodes</h2>
@@ -115,6 +119,14 @@
                 <label>Next Chapter Name</label>
                 <input type="text" id="choiceNextChapter" placeholder="e.g., Chapter_02, Ending_Good">
                 <small style="color: #718096; font-size: 11px;">Enter the ScriptableObject asset name for the next chapter. Leave empty to continue in current chapter.</small>
+            </div>
+            <div class="form-group">
+                <label>Choice Commands</label>
+                <div class="choice-command-list" id="choiceCommandList"></div>
+                <button class="add-choice-command-btn" onclick="addChoiceCommand()">+ Add Command</button>
+                <small style="color: #718096; font-size: 11px; margin-top: 5px; display: block;">
+                    Commands will be executed when this choice is selected. Format: "commandname parameter1 parameter2"
+                </small>
             </div>
             <div class="checkbox-field">
                 <input type="checkbox" id="choiceEnabled" checked>

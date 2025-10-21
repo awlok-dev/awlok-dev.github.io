@@ -13,6 +13,7 @@
             storyName: "StoryName",      // Story folder name in Unity
             chapterName: "Chapter",      // Chapter display name
             fileName: "SO_StoryName_Chapter",      // JSON file / SO asset name
+            nextChapter: "",             // Next chapter to follow after this one
             nodes: []
         };
         
@@ -55,6 +56,7 @@
                 choicesDelay: 0.5,
                 showGameEvents: false,
                 gameEventList: { onLineEnterEvent: [] },
+                commands: [], // Commands to execute when this line is displayed
                 showSoundOptions: false,
                 bgmAction: "None",
                 backgroundMusic: "",
@@ -117,6 +119,7 @@
             const storyInput = document.getElementById('storyName');
             const chapterInput = document.getElementById('chapterName');
             const fileInput = document.getElementById('fileName');
+            const nextChapterInput = document.getElementById('nextChapter');
             const btn = document.getElementById('editNameBtn');
             
             if (storyInput.readOnly) {
@@ -127,6 +130,7 @@
                 storyInput.readOnly = false;
                 chapterInput.readOnly = false;
                 fileInput.readOnly = false;
+                nextChapterInput.readOnly = false;
                 storyInput.focus();
                 storyInput.select();
                 btn.textContent = 'Save';
@@ -136,6 +140,7 @@
                 storyInput.readOnly = true;
                 chapterInput.readOnly = true;
                 fileInput.readOnly = true;
+                nextChapterInput.readOnly = true;
                 btn.textContent = 'Edit';
                 btn.className = 'edit-name-btn';
                 
@@ -160,6 +165,7 @@
                 chapter.storyName = storyInput.value.trim();
                 chapter.chapterName = chapterInput.value.trim();
                 chapter.fileName = fileInput.value.trim();
+                chapter.nextChapter = nextChapterInput.value.trim();
                 autoSaveChapter();
             }
         }
@@ -169,6 +175,7 @@
             const storyNameInput = document.getElementById('storyName');
             const chapterNameInput = document.getElementById('chapterName');
             const fileNameInput = document.getElementById('fileName');
+            const nextChapterInput = document.getElementById('nextChapter');
             
             function handleKeydown(e) {
                 if (!this.readOnly) {
@@ -180,6 +187,7 @@
                         storyNameInput.value = originalStoryName;
                         chapterNameInput.value = originalChapterName;
                         fileNameInput.value = originalFileName;
+                        nextChapterInput.value = chapter.nextChapter || '';
                         toggleEditNames();
                     }
                 }
@@ -188,6 +196,7 @@
             storyNameInput.addEventListener('keydown', handleKeydown);
             chapterNameInput.addEventListener('keydown', handleKeydown);
             fileNameInput.addEventListener('keydown', handleKeydown);
+            nextChapterInput.addEventListener('keydown', handleKeydown);
         });
 
         function clearAllNodes() {
@@ -308,6 +317,9 @@
                 }
                 if (node.showSoundOptions && (node.backgroundMusic || node.soundEffect || node.characterVoice)) {
                     tags.push('<span class="tag">🔊</span>');
+                }
+                if (node.commands && node.commands.length > 0) {
+                    tags.push(`<span class="tag">⚡ ${node.commands.length} command(s)</span>`);
                 }
                 infoTd.innerHTML = tags.join('');
                 tr.appendChild(infoTd);
@@ -520,6 +532,17 @@
                     <button class="add-choice-btn" onclick="openChoiceModal()">+ Add Choice</button>
                 </div>
 
+                <!-- Commands Section -->
+                <div class="section-header">Commands</div>
+                <div class="form-group">
+                    <label>Line Commands</label>
+                    <div class="command-list" id="commandList"></div>
+                    <button class="add-command-btn" onclick="addCommand()">+ Add Command</button>
+                    <small style="color: #718096; font-size: 11px; margin-top: 5px; display: block;">
+                        Commands will be executed when this dialogue line is displayed. Format: "commandname parameter1 parameter2"
+                    </small>
+                </div>
+
                 <!-- Audio Section -->
                 <div class="section-header">Audio Settings</div>
                 <div class="checkbox-field">
@@ -582,6 +605,9 @@
             if (node.hasChoices) {
             renderChoices();
         }
+
+            // Render commands
+            renderCommands();
 
             // Setup background dropzone and load preview
             setTimeout(() => {
@@ -1062,7 +1088,12 @@
             document.getElementById('choiceText').value = '';
             document.getElementById('choiceNextChapter').value = '';
             document.getElementById('choiceEnabled').checked = true;
+            
+            // Reset choice commands for new choice
+            currentChoiceCommands = [];
+            
             document.getElementById('choiceModal').classList.add('active');
+            renderChoiceCommands();
         }
 
         function closeChoiceModal() {
@@ -1078,7 +1109,11 @@
             document.getElementById('choiceNextChapter').value = choice.nextChapterName || '';
             document.getElementById('choiceEnabled').checked = choice.isEnabled !== false;
             
+            // Load existing choice commands
+            currentChoiceCommands = choice.onChoiceSelectedCommands ? [...choice.onChoiceSelectedCommands] : [];
+            
             document.getElementById('choiceModal').classList.add('active');
+            renderChoiceCommands();
         }
 
         function saveChoice() {
@@ -1091,6 +1126,9 @@
                 return;
             }
 
+            // Get choice commands from the modal
+            const choiceCommands = getChoiceCommandsFromModal();
+
             // Choice structure matches Unity's DialogueChoice
             // nextChapterName: The name of the SO_StoryChapter asset (e.g., "Chapter_02")
             // Unity will resolve this string to the actual ScriptableObject reference
@@ -1098,6 +1136,7 @@
                 choiceText: text,
                 nextChapterName: nextChapterName || "",  // Empty = continue in current chapter
                 onChoiceSelectedEvents: [],
+                onChoiceSelectedCommands: choiceCommands, // Commands to execute when this choice is selected
                 isEnabled: isEnabled
             };
 
@@ -1120,6 +1159,146 @@
             node.choiceList.choices.splice(index, 1);
             renderChoices();
             autoSaveChapter();
+        }
+
+        // ============ Command Management Functions ============
+
+        function renderCommands() {
+            const node = chapter.nodes[currentNodeIndex];
+            const commandList = document.getElementById('commandList');
+            if (!commandList) return;
+            
+            commandList.innerHTML = '';
+            
+            if (!node.commands || node.commands.length === 0) {
+                commandList.innerHTML = '<div style="color: #718096; font-style: italic; padding: 10px; text-align: center;">No commands added yet</div>';
+                return;
+            }
+            
+            node.commands.forEach((command, index) => {
+                const div = document.createElement('div');
+                div.className = 'command-item';
+                
+                const content = document.createElement('div');
+                content.className = 'command-content';
+                
+                const text = document.createElement('div');
+                text.className = 'command-text';
+                text.textContent = command || '(empty command)';
+                
+                content.appendChild(text);
+                
+                const actions = document.createElement('div');
+                actions.className = 'command-actions';
+                actions.innerHTML = `
+                    <button onclick="editCommand(${index})" title="Edit">✏️</button>
+                    <button onclick="deleteCommand(${index})" title="Delete">🗑️</button>
+                `;
+                
+                div.appendChild(content);
+                div.appendChild(actions);
+                commandList.appendChild(div);
+            });
+        }
+
+        function addCommand() {
+            const command = prompt('Enter command (format: commandname parameter1 parameter2):', '');
+            if (command !== null && command.trim() !== '') {
+                const node = chapter.nodes[currentNodeIndex];
+                if (!node.commands) {
+                    node.commands = [];
+                }
+                node.commands.push(command.trim());
+                renderCommands();
+                autoSaveChapter();
+            }
+        }
+
+        function editCommand(index) {
+            const node = chapter.nodes[currentNodeIndex];
+            const currentCommand = node.commands[index] || '';
+            const newCommand = prompt('Edit command:', currentCommand);
+            if (newCommand !== null) {
+                node.commands[index] = newCommand.trim();
+                renderCommands();
+                autoSaveChapter();
+            }
+        }
+
+        function deleteCommand(index) {
+            if (!confirm('Delete this command?')) return;
+            const node = chapter.nodes[currentNodeIndex];
+            node.commands.splice(index, 1);
+            renderCommands();
+            autoSaveChapter();
+        }
+
+        // ============ Choice Command Management Functions ============
+
+        let currentChoiceCommands = []; // Temporary storage for choice commands in modal
+
+        function renderChoiceCommands() {
+            const commandList = document.getElementById('choiceCommandList');
+            if (!commandList) return;
+            
+            commandList.innerHTML = '';
+            
+            if (currentChoiceCommands.length === 0) {
+                commandList.innerHTML = '<div style="color: #718096; font-style: italic; padding: 10px; text-align: center;">No commands added yet</div>';
+                return;
+            }
+            
+            currentChoiceCommands.forEach((command, index) => {
+                const div = document.createElement('div');
+                div.className = 'command-item';
+                
+                const content = document.createElement('div');
+                content.className = 'command-content';
+                
+                const text = document.createElement('div');
+                text.className = 'command-text';
+                text.textContent = command || '(empty command)';
+                
+                content.appendChild(text);
+                
+                const actions = document.createElement('div');
+                actions.className = 'command-actions';
+                actions.innerHTML = `
+                    <button onclick="editChoiceCommand(${index})" title="Edit">✏️</button>
+                    <button onclick="deleteChoiceCommand(${index})" title="Delete">🗑️</button>
+                `;
+                
+                div.appendChild(content);
+                div.appendChild(actions);
+                commandList.appendChild(div);
+            });
+        }
+
+        function addChoiceCommand() {
+            const command = prompt('Enter command (format: commandname parameter1 parameter2):', '');
+            if (command !== null && command.trim() !== '') {
+                currentChoiceCommands.push(command.trim());
+                renderChoiceCommands();
+            }
+        }
+
+        function editChoiceCommand(index) {
+            const currentCommand = currentChoiceCommands[index] || '';
+            const newCommand = prompt('Edit command:', currentCommand);
+            if (newCommand !== null) {
+                currentChoiceCommands[index] = newCommand.trim();
+                renderChoiceCommands();
+            }
+        }
+
+        function deleteChoiceCommand(index) {
+            if (!confirm('Delete this command?')) return;
+            currentChoiceCommands.splice(index, 1);
+            renderChoiceCommands();
+        }
+
+        function getChoiceCommandsFromModal() {
+            return [...currentChoiceCommands]; // Return a copy
         }
 
         // Import/Export functions
@@ -2506,6 +2685,7 @@
                 storyName: "StoryName",
                 chapterName: "Chapter",
                 fileName: "SO_StoryName_Chapter",
+                nextChapter: "",
                 nodes: []
             };
             currentChapterId = null; // No ID until saved
@@ -2516,10 +2696,12 @@
             const storyInput = document.getElementById('storyName');
             const chapterInput = document.getElementById('chapterName');
             const fileInput = document.getElementById('fileName');
+            const nextChapterInput = document.getElementById('nextChapter');
             const nameBtn = document.getElementById('editNameBtn');
             storyInput.value = chapter.storyName;
             chapterInput.value = chapter.chapterName;
             fileInput.value = chapter.fileName;
+            nextChapterInput.value = chapter.nextChapter;
             storyInput.readOnly = true;
             chapterInput.readOnly = true;
             fileInput.readOnly = true;
@@ -2553,13 +2735,16 @@
                 const storyInput = document.getElementById('storyName');
                 const chapterInput = document.getElementById('chapterName');
                 const fileInput = document.getElementById('fileName');
+                const nextChapterInput = document.getElementById('nextChapter');
                 const nameBtn = document.getElementById('editNameBtn');
                 storyInput.value = chapter.storyName || "StoryName";
                 chapterInput.value = chapter.chapterName || "Chapter";
                 fileInput.value = chapter.fileName || chapter.chapterName || "Chapter_01";
+                nextChapterInput.value = chapter.nextChapter || "";
                 storyInput.readOnly = true;
                 chapterInput.readOnly = true;
                 fileInput.readOnly = true;
+                nextChapterInput.readOnly = true;
                 nameBtn.textContent = 'Edit';
                 nameBtn.className = 'edit-name-btn';
                 
@@ -2619,6 +2804,7 @@
                     storyName: "StoryName",
                     chapterName: "Chapter",
                     fileName: "SO_StoryName_Chapter",
+                    nextChapter: "",
                     nodes: []
                 };
                 currentChapterId = null;
@@ -2628,6 +2814,7 @@
                 document.getElementById('storyName').value = chapter.storyName;
                 document.getElementById('chapterName').value = chapter.chapterName;
                 document.getElementById('fileName').value = chapter.fileName;
+                document.getElementById('nextChapter').value = chapter.nextChapter;
                 closeEditor();
                 renderNodeTable();
                 updateChapterTitleBar();
@@ -2745,6 +2932,7 @@
         document.getElementById('storyName').value = chapter.storyName;
         document.getElementById('chapterName').value = chapter.chapterName || "Chapter";
         document.getElementById('fileName').value = chapter.fileName || chapter.chapterName || "Chapter_01";
+        document.getElementById('nextChapter').value = chapter.nextChapter || "";
         renderNodeTable();
         updateChapterTitleBar();
 

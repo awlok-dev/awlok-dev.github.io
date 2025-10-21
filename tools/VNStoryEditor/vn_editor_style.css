@@ -352,6 +352,11 @@
             white-space: nowrap;
         }
 
+        .node-table .tag:contains("command") {
+            background: #f6ad55;
+            color: #2d3748;
+        }
+
         .node-table .actions {
             display: flex;
             gap: 5px;
@@ -714,6 +719,70 @@
 
         .add-choice-btn:hover {
             background: #e53e3e;
+        }
+
+        /* Command Styles */
+        .command-list, .choice-command-list {
+            margin-top: 10px;
+        }
+
+        .command-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #252d3d;
+            border: 1px solid #2d3748;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .command-item:hover {
+            background: #2d3748;
+        }
+
+        .command-content {
+            flex: 1;
+        }
+
+        .command-text {
+            color: #e2e8f0;
+            font-size: 13px;
+            word-break: break-all;
+        }
+
+        .command-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .command-actions button {
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .command-actions button:hover {
+            background: #2d3748;
+        }
+
+        .add-command-btn, .add-choice-command-btn {
+            background: #5a67d8;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .add-command-btn:hover, .add-choice-command-btn:hover {
+            background: #4c51bf;
         }
 
         .checkbox-field {

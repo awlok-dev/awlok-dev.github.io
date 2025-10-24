@@ -1490,6 +1490,13 @@
                 characterId: "",
                 characterName: "",
                 nameColor: { r: 1, g: 1, b: 1, a: 1 },
+                heightMultiplier: 1.0,
+                verticalOffset: 0.0,
+                scaleSettings: {
+                    farScaleMultiplier: 1.0,
+                    middleScaleMultiplier: 1.0,
+                    closeScaleMultiplier: 1.0
+                },
                 outfits: []
             };
         }
@@ -1669,6 +1676,17 @@
             const char = currentEditingCharacter;
             const colorHex = rgbaToHex(char.nameColor);
 
+            // Initialize body parameters if they don't exist
+            if (!char.heightMultiplier) char.heightMultiplier = 1.0;
+            if (!char.verticalOffset) char.verticalOffset = 0.0;
+            if (!char.scaleSettings) {
+                char.scaleSettings = {
+                    farScaleMultiplier: 1.0,
+                    middleScaleMultiplier: 1.0,
+                    closeScaleMultiplier: 1.0
+                };
+            }
+
             editorArea.innerHTML = `
                 <div class="character-editor-grid">
                     <!-- Basic Info -->
@@ -1691,6 +1709,68 @@
                         </div>
                     </div>
 
+                    <!-- Character Body Parameters -->
+                    <div class="section-header">
+                        Character Body Parameters
+                        <button class="reset-body-params-btn" onclick="resetBodyParameters()" title="Reset to default values">🔄 Reset</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Height Multiplier</label>
+                        <div class="range-input-wrapper">
+                            <input type="range" id="heightMultiplier" min="0.5" max="2.0" step="0.01" 
+                                   value="${char.heightMultiplier}" 
+                                   onchange="updateCharacterBodyParam('heightMultiplier', parseFloat(this.value))">
+                            <div class="range-value">${char.heightMultiplier.toFixed(2)}</div>
+                        </div>
+                        <small style="color: #718096; font-size: 11px;">Base height scaling (1.0 = normal height)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Vertical Offset</label>
+                        <div class="range-input-wrapper">
+                            <input type="range" id="verticalOffset" min="-2.0" max="2.0" step="0.01" 
+                                   value="${char.verticalOffset}" 
+                                   onchange="updateCharacterBodyParam('verticalOffset', parseFloat(this.value))">
+                            <div class="range-value">${char.verticalOffset.toFixed(2)}</div>
+                        </div>
+                        <small style="color: #718096; font-size: 11px;">Vertical position adjustment</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Camera Range Scale Multipliers</label>
+                        <div class="scale-settings-grid">
+                            <div class="scale-setting">
+                                <label>Far Range</label>
+                                <div class="range-input-wrapper">
+                                    <input type="range" id="farScaleMultiplier" min="0.5" max="2.0" step="0.01" 
+                                           value="${char.scaleSettings.farScaleMultiplier}" 
+                                           onchange="updateCharacterBodyParam('scaleSettings.farScaleMultiplier', parseFloat(this.value))">
+                                    <div class="range-value">${char.scaleSettings.farScaleMultiplier.toFixed(2)}</div>
+                                </div>
+                            </div>
+                            <div class="scale-setting">
+                                <label>Middle Range</label>
+                                <div class="range-input-wrapper">
+                                    <input type="range" id="middleScaleMultiplier" min="0.5" max="2.0" step="0.01" 
+                                           value="${char.scaleSettings.middleScaleMultiplier}" 
+                                           onchange="updateCharacterBodyParam('scaleSettings.middleScaleMultiplier', parseFloat(this.value))">
+                                    <div class="range-value">${char.scaleSettings.middleScaleMultiplier.toFixed(2)}</div>
+                                </div>
+                            </div>
+                            <div class="scale-setting">
+                                <label>Close Range</label>
+                                <div class="range-input-wrapper">
+                                    <input type="range" id="closeScaleMultiplier" min="0.5" max="2.0" step="0.01" 
+                                           value="${char.scaleSettings.closeScaleMultiplier}" 
+                                           onchange="updateCharacterBodyParam('scaleSettings.closeScaleMultiplier', parseFloat(this.value))">
+                                    <div class="range-value">${char.scaleSettings.closeScaleMultiplier.toFixed(2)}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <small style="color: #718096; font-size: 11px;">Fine-tune scaling for different camera ranges</small>
+                    </div>
+
                     <!-- Outfits Section -->
                     <div class="section-header">Outfits</div>
                     <div id="outfitsContainer"></div>
@@ -1702,6 +1782,9 @@
             document.getElementById('charColor').addEventListener('input', function() {
                 document.querySelector('.color-preview').textContent = this.value;
             });
+
+            // Setup range input listeners for real-time value updates
+            setupRangeInputListeners();
 
             // Render outfits
             renderOutfits();
@@ -1883,6 +1966,88 @@
             currentEditingCharacter.outfits[outfitIndex].poses[poseIndex][field] = value;
         }
 
+        function updateCharacterBodyParam(fieldPath, value) {
+            if (!currentEditingCharacter) return;
+            
+            // Handle nested properties like scaleSettings.farScaleMultiplier
+            if (fieldPath.includes('.')) {
+                const parts = fieldPath.split('.');
+                let obj = currentEditingCharacter;
+                for (let i = 0; i < parts.length - 1; i++) {
+                    if (!obj[parts[i]]) {
+                        obj[parts[i]] = {};
+                    }
+                    obj = obj[parts[i]];
+                }
+                obj[parts[parts.length - 1]] = value;
+            } else {
+                currentEditingCharacter[fieldPath] = value;
+            }
+            
+            // Update the range value display with 2 decimal places
+            const rangeValueElement = document.querySelector(`#${fieldPath.replace('.', '')} + .range-value`);
+            if (rangeValueElement) {
+                rangeValueElement.textContent = value.toFixed(2);
+            }
+        }
+
+        function resetBodyParameters() {
+            if (!currentEditingCharacter) return;
+            
+            // Reset to default values
+            currentEditingCharacter.heightMultiplier = 1.0;
+            currentEditingCharacter.verticalOffset = 0.0;
+            currentEditingCharacter.scaleSettings = {
+                farScaleMultiplier: 1.0,
+                middleScaleMultiplier: 1.0,
+                closeScaleMultiplier: 1.0
+            };
+            
+            // Update all range inputs and displays
+            const heightInput = document.getElementById('heightMultiplier');
+            const verticalInput = document.getElementById('verticalOffset');
+            const farInput = document.getElementById('farScaleMultiplier');
+            const middleInput = document.getElementById('middleScaleMultiplier');
+            const closeInput = document.getElementById('closeScaleMultiplier');
+            
+            if (heightInput) {
+                heightInput.value = 1.0;
+                heightInput.nextElementSibling.textContent = '1.00';
+            }
+            if (verticalInput) {
+                verticalInput.value = 0.0;
+                verticalInput.nextElementSibling.textContent = '0.00';
+            }
+            if (farInput) {
+                farInput.value = 1.0;
+                farInput.nextElementSibling.textContent = '1.00';
+            }
+            if (middleInput) {
+                middleInput.value = 1.0;
+                middleInput.nextElementSibling.textContent = '1.00';
+            }
+            if (closeInput) {
+                closeInput.value = 1.0;
+                closeInput.nextElementSibling.textContent = '1.00';
+            }
+            
+            // Show confirmation
+            alert('Body parameters reset to default values!');
+        }
+
+        function setupRangeInputListeners() {
+            // Setup real-time value updates for all range inputs
+            const rangeInputs = document.querySelectorAll('input[type="range"]');
+            rangeInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const valueDisplay = this.parentElement.querySelector('.range-value');
+                    if (valueDisplay) {
+                        valueDisplay.textContent = parseFloat(this.value).toFixed(2);
+                    }
+                });
+            });
+        }
+
         function saveCharacter() {
             if (!currentEditingCharacter) return;
 
@@ -1943,6 +2108,13 @@
                 characterId: character.characterId,
                 characterName: character.characterName,
                 nameColor: character.nameColor,
+                heightMultiplier: character.heightMultiplier || 1.0,
+                verticalOffset: character.verticalOffset || 0.0,
+                scaleSettings: character.scaleSettings || {
+                    farScaleMultiplier: 1.0,
+                    middleScaleMultiplier: 1.0,
+                    closeScaleMultiplier: 1.0
+                },
                 outfits: character.outfits.map(outfit => ({
                     outfitID: outfit.outfitID,
                     outfitName: outfit.outfitName,

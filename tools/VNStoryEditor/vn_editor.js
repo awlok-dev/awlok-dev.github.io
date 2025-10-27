@@ -28,10 +28,15 @@
         const CameraRanges = ["Far", "Middle", "Close", "Stay"];
         const SoundActions = ["None", "Play", "Stop"];
         const ExpressionSymbols = ["None", "Heart", "Anger", "Sweat", "Question", "Exclamation", "Music", "Sleep"];
+        const CGActions = ["None", "Show", "Hide"];
 
         // Background image cache for performance optimization
         const BACKGROUND_ROOT_PATH = 'Textures/Background/';
         const BACKGROUND_CACHE_KEY = 'vn_background_cache';
+        
+        // CG image cache for performance optimization
+        const CG_ROOT_PATH = 'Textures/CG/';
+        const CG_CACHE_KEY = 'vn_cg_cache';
 
         // Character Library Management
         const CHARACTER_LIBRARY_KEY = 'vn_character_library';
@@ -67,7 +72,9 @@
                 useSpecificNameColor: false,
                 specificNameColor: { r: 0, g: 0, b: 0, a: 1 },
                 useSpecificDialogueColor: false,
-                specificDialogueColor: { r: 0, g: 0, b: 0, a: 1 }
+                specificDialogueColor: { r: 0, g: 0, b: 0, a: 1 },
+                cgAction: "None",
+                cgSprite: ""
             };
         }
 
@@ -314,6 +321,9 @@
                 }
                 if (node.backgroundSprite) {
                     tags.push('<span class="tag">BG</span>');
+                }
+                if (node.cgAction && node.cgAction !== 'None') {
+                    tags.push(`<span class="tag">🎨 ${node.cgAction}</span>`);
                 }
                 if (node.showSoundOptions && (node.backgroundMusic || node.soundEffect || node.characterVoice)) {
                     tags.push('<span class="tag">🔊</span>');
@@ -596,6 +606,45 @@
                                placeholder="e.g., Audio/Voice/Char01_Line05">
                     </div>
                 </div>
+
+                <!-- CG Section -->
+                <div class="section-header">CG (Computer Graphics)</div>
+                <div class="form-group">
+                    <label>CG Action</label>
+                    <select id="cgAction" onchange="updateNodeField('cgAction', this.value); renderEditor();">
+                        ${CGActions.map(a => `<option value="${a}" ${node.cgAction === a ? 'selected' : ''}>${a}</option>`).join('')}
+                    </select>
+                </div>
+                ${node.cgAction === 'Show' ? `
+                    <div class="form-group">
+                        <label>CG Sprite</label>
+                        <div class="background-sprite-container">
+                            <div>
+                                <div class="background-dropzone" id="cgDropzone" onclick="document.getElementById('cgFileInput').click()">
+                                    <input type="file" id="cgFileInput" accept="image/*" onchange="handleCGFile(event)">
+                                    <div class="dropzone-content">
+                                        <div class="icon">🎨</div>
+                                        <div class="text">Drop CG image here or click to browse</div>
+                                        <div class="hint">Supports: PNG, JPG, JPEG, WebP</div>
+                                    </div>
+                                </div>
+                                <div class="background-path-display" id="cgPathDisplay">
+                                    ${node.cgSprite ? 'Textures/CG/' + node.cgSprite : 'No CG selected'}
+                                </div>
+                                <div class="background-actions">
+                                    <button class="manual-input-btn" onclick="manualCGInput()">✏️ Manual Input</button>
+                                    <button class="clear-bg-btn" onclick="clearCG()">🗑️ Clear</button>
+                                </div>
+                            </div>
+                            <div class="background-preview-container">
+                                <div class="background-preview" id="cgPreview">
+                                    <img id="cgPreviewImg" alt="CG preview">
+                                    <div class="placeholder">CG preview will appear here</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ` : ''}
             `;
 
             // Update character field listeners
@@ -613,6 +662,10 @@
             setTimeout(() => {
                 setupBackgroundDropzone();
                 loadBackgroundPreviewFromCache(node.backgroundSprite);
+                
+                // Setup CG dropzone and load preview
+                setupCGDropzone();
+                loadCGPreviewFromCache(node.cgSprite);
             }, 0);
         }
 
@@ -780,6 +833,56 @@
             }
         }
 
+        // CG Cache Functions
+        function getCGCache() {
+            try {
+                const cache = localStorage.getItem(CG_CACHE_KEY);
+                return cache ? JSON.parse(cache) : {};
+            } catch (e) {
+                console.error('Error reading CG cache:', e);
+                return {};
+            }
+        }
+
+        function saveCGToCache(fileName, dataUrl) {
+            try {
+                const cache = getCGCache();
+                cache[fileName] = {
+                    dataUrl: dataUrl,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem(CG_CACHE_KEY, JSON.stringify(cache));
+            } catch (e) {
+                console.error('Error saving to CG cache:', e);
+                // If localStorage is full, try to clean old entries
+                cleanOldCGCache();
+            }
+        }
+
+        function getCGFromCache(fileName) {
+            const cache = getCGCache();
+            return cache[fileName]?.dataUrl || null;
+        }
+
+        function cleanOldCGCache() {
+            try {
+                const cache = getCGCache();
+                const entries = Object.entries(cache);
+                
+                // Sort by timestamp and keep only the 50 most recent
+                entries.sort((a, b) => b[1].timestamp - a[1].timestamp);
+                const newCache = {};
+                
+                entries.slice(0, 50).forEach(([key, value]) => {
+                    newCache[key] = value;
+                });
+                
+                localStorage.setItem(CG_CACHE_KEY, JSON.stringify(newCache));
+            } catch (e) {
+                console.error('Error cleaning CG cache:', e);
+            }
+        }
+
         function manageBgCache() {
             const cache = getBackgroundCache();
             const entries = Object.entries(cache);
@@ -842,6 +945,34 @@
             });
 
             dropzone.addEventListener('drop', handleBackgroundDrop, false);
+        }
+
+        function setupCGDropzone() {
+            const dropzone = document.getElementById('cgDropzone');
+            if (!dropzone) return;
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => {
+                    dropzone.classList.add('dragover');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => {
+                    dropzone.classList.remove('dragover');
+                }, false);
+            });
+
+            dropzone.addEventListener('drop', handleCGDrop, false);
         }
 
         function handleBackgroundDrop(e) {
@@ -939,6 +1070,157 @@
             };
 
             img.src = dataUrl;
+        }
+
+        // ============ CG Functions ============
+
+        function handleCGDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                processCGFile(files[0]);
+            }
+        }
+
+        function handleCGFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                processCGFile(file);
+            }
+        }
+
+        function processCGFile(file) {
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file (PNG, JPG, JPEG, WebP)');
+                return;
+            }
+
+            // Get filename without extension
+            const fileName = file.name;
+            const fileNameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
+
+            // Set the CG sprite path (just the filename, Unity will handle the full path)
+            const node = chapter.nodes[currentNodeIndex];
+            if (node) {
+                node.cgSprite = fileNameWithoutExt;
+                
+                // Update display
+                updateCGDisplay(fileNameWithoutExt);
+                
+                // Convert to data URL and save to cache
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    saveCGToCache(fileNameWithoutExt, dataUrl);
+                    loadCGPreviewFromDataUrl(dataUrl);
+                };
+                reader.onerror = function() {
+                    alert('Error reading file. Please try again.');
+                };
+                reader.readAsDataURL(file);
+                
+                autoSaveChapter();
+            }
+        }
+
+        function updateCGDisplay(fileName) {
+            const pathDisplay = document.getElementById('cgPathDisplay');
+            if (pathDisplay) {
+                pathDisplay.textContent = fileName ? CG_ROOT_PATH + fileName : 'No CG selected';
+            }
+        }
+
+        function loadCGPreviewFromDataUrl(dataUrl) {
+            const preview = document.getElementById('cgPreview');
+            const img = document.getElementById('cgPreviewImg');
+            const placeholder = preview?.querySelector('.placeholder');
+            
+            if (!preview || !img) return;
+
+            // Show loading state
+            if (placeholder) {
+                placeholder.innerHTML = '<div class="loading">Loading preview...</div>';
+                placeholder.style.display = 'block';
+            }
+
+            // Load image from data URL
+            img.onload = function() {
+                img.classList.add('loaded');
+                if (placeholder) {
+                    placeholder.style.display = 'none';
+                }
+            };
+
+            img.onerror = function() {
+                if (placeholder) {
+                    placeholder.innerHTML = '<div class="placeholder">Failed to load preview</div>';
+                    placeholder.style.display = 'block';
+                }
+                img.classList.remove('loaded');
+            };
+
+            // Add click handler to open lightbox
+            img.onclick = function() {
+                if (this.src) {
+                    openLightbox(this.src);
+                }
+            };
+
+            img.src = dataUrl;
+        }
+
+        function loadCGPreviewFromCache(fileName) {
+            if (!fileName) {
+                clearCGPreview();
+                return;
+            }
+
+            const dataUrl = getCGFromCache(fileName);
+            if (dataUrl) {
+                loadCGPreviewFromDataUrl(dataUrl);
+            } else {
+                clearCGPreview();
+            }
+        }
+
+        function clearCGPreview() {
+            const preview = document.getElementById('cgPreview');
+            const img = document.getElementById('cgPreviewImg');
+            const placeholder = preview?.querySelector('.placeholder');
+            
+            if (preview && img) {
+                img.classList.remove('loaded');
+                img.src = '';
+                if (placeholder) {
+                    placeholder.innerHTML = 'CG preview will appear here';
+                    placeholder.style.display = 'block';
+                }
+            }
+        }
+
+        function clearCG() {
+            const node = chapter.nodes[currentNodeIndex];
+            if (node) {
+                node.cgSprite = '';
+                updateCGDisplay('');
+                clearCGPreview();
+                autoSaveChapter();
+            }
+        }
+
+        function manualCGInput() {
+            const fileName = prompt('Enter CG filename (without extension):');
+            if (fileName !== null && fileName.trim() !== '') {
+                const node = chapter.nodes[currentNodeIndex];
+                if (node) {
+                    node.cgSprite = fileName.trim();
+                    updateCGDisplay(fileName.trim());
+                    loadCGPreviewFromCache(fileName.trim());
+                    autoSaveChapter();
+                }
+            }
         }
 
         // ============ Image Lightbox Functions ============
@@ -1392,7 +1674,7 @@
 
                     // Ensure all nodes have proper structure
                     chapterData.nodes = chapterData.nodes.map(node => {
-                        return {
+                        const mergedNode = {
                             ...createEmptyNode(),
                             ...node,
                             leftCharacter: { ...createEmptyCharacterState(), ...(node.leftCharacter || {}) },
@@ -1400,6 +1682,16 @@
                             rightCharacter: { ...createEmptyCharacterState(), ...(node.rightCharacter || {}) },
                             choiceList: { choices: (node.choiceList?.choices || []) }
                         };
+                        
+                        // Ensure CG fields are properly initialized (migration for older data)
+                        if (!mergedNode.cgAction) {
+                            mergedNode.cgAction = 'None';
+                        }
+                        if (!mergedNode.cgSprite) {
+                            mergedNode.cgSprite = '';
+                        }
+                        
+                        return mergedNode;
                     });
 
                     // Import background images to cache
@@ -2899,6 +3191,20 @@
             const loadedChapter = loadChapterFromStorage(chapterId);
             if (loadedChapter) {
                 chapter = loadedChapter;
+                
+                // Migrate CG fields for older chapters
+                if (chapter.nodes) {
+                    chapter.nodes = chapter.nodes.map(node => {
+                        if (!node.cgAction) {
+                            node.cgAction = 'None';
+                        }
+                        if (!node.cgSprite) {
+                            node.cgSprite = '';
+                        }
+                        return node;
+                    });
+                }
+                
                 currentChapterId = chapterId;
                 currentNodeIndex = null;
                 hasUnsavedChanges = false;
@@ -3088,6 +3394,20 @@
             );
             currentChapterId = sortedChapters[0].id;
             chapter = sortedChapters[0].data;
+            
+            // Migrate CG fields for older chapters
+            if (chapter.nodes) {
+                chapter.nodes = chapter.nodes.map(node => {
+                    if (!node.cgAction) {
+                        node.cgAction = 'None';
+                    }
+                    if (!node.cgSprite) {
+                        node.cgSprite = '';
+                    }
+                    return node;
+                });
+            }
+            
             hasUnsavedChanges = false;
         } else {
             // Start with empty chapter (not saved)

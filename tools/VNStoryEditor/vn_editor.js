@@ -74,7 +74,8 @@
                 useSpecificDialogueColor: false,
                 specificDialogueColor: { r: 0, g: 0, b: 0, a: 1 },
                 cgAction: "None",
-                cgSprite: ""
+                cgSprite: "",
+                dialogueDelay: 0.0
             };
         }
 
@@ -330,6 +331,9 @@
                 }
                 if (node.commands && node.commands.length > 0) {
                     tags.push(`<span class="tag">⚡ ${node.commands.length} command(s)</span>`);
+                }
+                if (node.dialogueDelay && node.dialogueDelay > 0) {
+                    tags.push(`<span class="tag">⏱️ ${node.dialogueDelay}s</span>`);
                 }
                 infoTd.innerHTML = tags.join('');
                 tr.appendChild(infoTd);
@@ -643,6 +647,45 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                ` : ''}
+
+                <!-- Optional Configuration -->
+                <div class="section-header">Optional Configuration</div>
+                <div class="form-group">
+                    <label>Dialogue Delay (seconds)</label>
+                    <input type="number" id="dialogueDelay" value="${node.dialogueDelay || 0}" 
+                           onchange="updateNodeField('dialogueDelay', parseFloat(this.value))" 
+                           step="0.1" min="0"
+                           placeholder="Additional delay for dialogue display">
+                    <small style="color: #718096; font-size: 11px;">Additional delay in seconds for dialogue display (useful for pacing)</small>
+                </div>
+
+                <div class="checkbox-field">
+                    <input type="checkbox" id="useSpecificNameColor" ${node.useSpecificNameColor ? 'checked' : ''} 
+                           onchange="updateNodeField('useSpecificNameColor', this.checked); renderEditor();">
+                    <label>Use Specific Name Color</label>
+                </div>
+                ${node.useSpecificNameColor ? `
+                    <div class="form-group">
+                        <label>Specific Name Color</label>
+                        <input type="color" id="specificNameColor" 
+                               value="${rgbToHex(node.specificNameColor)}" 
+                               onchange="updateNodeField('specificNameColor', hexToRgb(this.value))">
+                    </div>
+                ` : ''}
+
+                <div class="checkbox-field">
+                    <input type="checkbox" id="useSpecificDialogueColor" ${node.useSpecificDialogueColor ? 'checked' : ''} 
+                           onchange="updateNodeField('useSpecificDialogueColor', this.checked); renderEditor();">
+                    <label>Use Specific Dialogue Color</label>
+                </div>
+                ${node.useSpecificDialogueColor ? `
+                    <div class="form-group">
+                        <label>Specific Dialogue Color</label>
+                        <input type="color" id="specificDialogueColor" 
+                               value="${rgbToHex(node.specificDialogueColor)}" 
+                               onchange="updateNodeField('specificDialogueColor', hexToRgb(this.value))">
                     </div>
                 ` : ''}
             `;
@@ -2901,6 +2944,21 @@
                 b: parseInt(result[3], 16) / 255,
                 a: 1
             } : { r: 1, g: 1, b: 1, a: 1 };
+        }
+
+        function hexToRgb(hex) {
+            return hexToRgba(hex);
+        }
+
+        function rgbToHex(rgb) {
+            if (!rgb) return '#000000';
+            const r = Math.round((rgb.r || 0) * 255);
+            const g = Math.round((rgb.g || 0) * 255);
+            const b = Math.round((rgb.b || 0) * 255);
+            return '#' + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
         }
 
         // ============ LocalStorage Management ============

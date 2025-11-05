@@ -38,6 +38,10 @@
         const CG_ROOT_PATH = 'Textures/CG/';
         const CG_CACHE_KEY = 'vn_cg_cache';
 
+        // Dialogue Image cache for performance optimization
+        const DIALOGUE_IMAGE_ROOT_PATH = 'Textures/DialogueImage/';
+        const DIALOGUE_IMAGE_CACHE_KEY = 'vn_dialogue_image_cache';
+
         // Character Library Management
         const CHARACTER_LIBRARY_KEY = 'vn_character_library';
         let characterLibrary = {}; // { characterId: characterData }
@@ -54,6 +58,7 @@
                 speakingCharacterId: "",
                 dialogue: "",
                 backgroundSprite: "",
+                dialogueImageSprite: "",
                 isNarration: false,
                 cameraRange: "Far",
                 hasChoices: false,
@@ -521,6 +526,35 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Dialogue Image Sprite</label>
+                    <div class="background-sprite-container">
+                        <div>
+                            <div class="background-dropzone" id="dialogueImgDropzone" onclick="document.getElementById('dialogueImgFileInput').click()">
+                                <input type="file" id="dialogueImgFileInput" accept="image/*" onchange="handleDialogueImageFile(event)">
+                                <div class="dropzone-content">
+                                    <div class="icon">🖼️</div>
+                                    <div class="text">Drop image here or click to browse</div>
+                                    <div class="hint">Supports: PNG, JPG, JPEG, WebP. Hides characters when set.</div>
+                                </div>
+                            </div>
+                            <div class="background-path-display" id="dialogueImgPathDisplay">
+                                ${node.dialogueImageSprite ? 'Textures/DialogueImage/' + node.dialogueImageSprite : 'No dialogue image selected'}
+                            </div>
+                            <div class="background-actions">
+                                <button class="manual-input-btn" onclick="manualDialogueImageInput()">✏️ Manual Input</button>
+                                <button class="clear-bg-btn" onclick="clearDialogueImage()">🗑️ Clear</button>
+                            </div>
+                        </div>
+                        <div class="background-preview-container">
+                            <div class="background-preview" id="dialogueImgPreview">
+                                <img id="dialogueImgPreviewImg" alt="Dialogue image preview">
+                                <div class="placeholder">Preview will appear here</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label>Camera Range</label>
                     <select id="cameraRange" onchange="updateNodeField('cameraRange', this.value)">
                         ${CameraRanges.map(r => `<option value="${r}" ${node.cameraRange === r ? 'selected' : ''}>${r}</option>`).join('')}
@@ -705,6 +739,10 @@
             setTimeout(() => {
                 setupBackgroundDropzone();
                 loadBackgroundPreviewFromCache(node.backgroundSprite);
+                
+                // Setup dialogue image dropzone and load preview
+                setupDialogueImageDropzone();
+                loadDialogueImagePreviewFromCache(node.dialogueImageSprite);
                 
                 // Setup CG dropzone and load preview
                 setupCGDropzone();
@@ -1261,6 +1299,201 @@
                     node.cgSprite = fileName.trim();
                     updateCGDisplay(fileName.trim());
                     loadCGPreviewFromCache(fileName.trim());
+                    autoSaveChapter();
+                }
+            }
+        }
+
+        // ============ Dialogue Image Functions ============
+
+        // Dialogue Image Cache Functions
+        function getDialogueImageCache() {
+            try {
+                const stored = localStorage.getItem(DIALOGUE_IMAGE_CACHE_KEY);
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) {
+                console.error('Error loading dialogue image cache:', e);
+                return {};
+            }
+        }
+
+        function saveDialogueImageToCache(fileName, dataUrl) {
+            try {
+                const cache = getDialogueImageCache();
+                cache[fileName] = {
+                    dataUrl: dataUrl,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem(DIALOGUE_IMAGE_CACHE_KEY, JSON.stringify(cache));
+                cleanOldDialogueImageCache();
+            } catch (e) {
+                console.error('Error saving dialogue image to cache:', e);
+            }
+        }
+
+        function getDialogueImageFromCache(fileName) {
+            const cache = getDialogueImageCache();
+            return cache[fileName]?.dataUrl;
+        }
+
+        function cleanOldDialogueImageCache() {
+            try {
+                const cache = getDialogueImageCache();
+                const now = Date.now();
+                const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 days
+                
+                let cleaned = false;
+                for (const fileName in cache) {
+                    if (now - cache[fileName].timestamp > maxAge) {
+                        delete cache[fileName];
+                        cleaned = true;
+                    }
+                }
+                
+                if (cleaned) {
+                    localStorage.setItem(DIALOGUE_IMAGE_CACHE_KEY, JSON.stringify(cache));
+                }
+            } catch (e) {
+                console.error('Error cleaning dialogue image cache:', e);
+            }
+        }
+
+        function setupDialogueImageDropzone() {
+            const dropzone = document.getElementById('dialogueImgDropzone');
+            if (!dropzone) return;
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.add('dragover'));
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.remove('dragover'));
+            });
+
+            dropzone.addEventListener('drop', handleDialogueImageDrop);
+        }
+
+        function handleDialogueImageDrop(e) {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processDialogueImageFile(files[0]);
+            }
+        }
+
+        function handleDialogueImageFile(event) {
+            const file = event.target.files[0];
+            if (file) processDialogueImageFile(file);
+        }
+
+        function processDialogueImageFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file (PNG, JPG, JPEG, or WebP)');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const dataUrl = e.target.result;
+                const fileNameWithoutExt = file.name.replace(/\.[^/.]+$/, '');
+                
+                // Save to cache
+                saveDialogueImageToCache(fileNameWithoutExt, dataUrl);
+                
+                // Update node
+                const node = chapter.nodes[currentNodeIndex];
+                if (node) {
+                    node.dialogueImageSprite = fileNameWithoutExt;
+                    updateDialogueImageDisplay(fileNameWithoutExt);
+                    loadDialogueImagePreviewFromDataUrl(dataUrl);
+                    autoSaveChapter();
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateDialogueImageDisplay(fileName) {
+            const display = document.getElementById('dialogueImgPathDisplay');
+            if (display) {
+                display.textContent = fileName ? DIALOGUE_IMAGE_ROOT_PATH + fileName : 'No dialogue image selected';
+            }
+        }
+
+        function loadDialogueImagePreviewFromDataUrl(dataUrl) {
+            const preview = document.getElementById('dialogueImgPreview');
+            const img = document.getElementById('dialogueImgPreviewImg');
+            const placeholder = preview?.querySelector('.placeholder');
+            
+            if (!preview || !img) return;
+            
+            img.onload = () => {
+                img.classList.add('loaded');
+                if (placeholder) placeholder.style.display = 'none';
+                
+                img.onclick = () => openLightbox(dataUrl);
+            };
+            
+            img.onerror = () => {
+                console.error('Failed to load dialogue image preview');
+                clearDialogueImagePreview();
+            };
+            
+            img.src = dataUrl;
+        }
+
+        function loadDialogueImagePreviewFromCache(fileName) {
+            if (!fileName) {
+                clearDialogueImagePreview();
+                return;
+            }
+            
+            const dataUrl = getDialogueImageFromCache(fileName);
+            if (dataUrl) {
+                loadDialogueImagePreviewFromDataUrl(dataUrl);
+            } else {
+                clearDialogueImagePreview();
+            }
+        }
+
+        function clearDialogueImagePreview() {
+            const preview = document.getElementById('dialogueImgPreview');
+            const img = document.getElementById('dialogueImgPreviewImg');
+            const placeholder = preview?.querySelector('.placeholder');
+            
+            if (preview && img) {
+                img.classList.remove('loaded');
+                img.src = '';
+                if (placeholder) {
+                    placeholder.innerHTML = 'Preview will appear here';
+                    placeholder.style.display = 'block';
+                }
+            }
+        }
+
+        function clearDialogueImage() {
+            const node = chapter.nodes[currentNodeIndex];
+            if (node) {
+                node.dialogueImageSprite = '';
+                updateDialogueImageDisplay('');
+                clearDialogueImagePreview();
+                autoSaveChapter();
+            }
+        }
+
+        function manualDialogueImageInput() {
+            const fileName = prompt('Enter dialogue image filename (without extension):');
+            if (fileName !== null && fileName.trim() !== '') {
+                const node = chapter.nodes[currentNodeIndex];
+                if (node) {
+                    node.dialogueImageSprite = fileName.trim();
+                    updateDialogueImageDisplay(fileName.trim());
+                    loadDialogueImagePreviewFromCache(fileName.trim());
                     autoSaveChapter();
                 }
             }

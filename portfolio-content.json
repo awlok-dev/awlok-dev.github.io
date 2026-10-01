@@ -1,0 +1,1529 @@
+{
+  "projects": [
+    {
+      "id": "phobos",
+      "title": "Phobos Oddity - Hong Kong",
+      "url": "project_page_phobos.html",
+      "image": "assets/images/project_phobos_thumbnail.png",
+      "tags": [
+        "Unity",
+        "PC",
+        "HDRP",
+        "Horror"
+      ],
+      "category": "games",
+      "platform": "PC",
+      "description": "Phobos Oddity – Hong Kong brings together local culture and psychological horror. Explore the dim corners of public housing estates and mysterious temples, uncover cult conspiracies, and face the unknown. Each chapter builds its own unsettling atmosphere.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/XjdxsJTjQwI?si=DbTXsHYQugCgBsYp"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_phobos/image1.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_phobos/image2.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_phobos/image3.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_phobos/image4.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_phobos/image5.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_phobos/image6.gif"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_phobos/image7.gif"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_phobos/image8.gif"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_phobos/image9.gif"
+        }
+      ],
+      "links": [],
+      "summary": "A psychological horror game set in the housing estates and hidden corners of Hong Kong.",
+      "thumbnail": "assets/portfolio/project_phobos_thumbnail.webp"
+    },
+    {
+      "id": "vampire",
+      "title": "Vampire Lust And Bite",
+      "url": "project_page_vampire.html",
+      "image": "assets/images/project_vampire_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "Visual Novel",
+        "Android",
+        "IOS"
+      ],
+      "category": "games",
+      "platform": "Android, iOS",
+      "description": "Vampire Lust And Bite, a visual novel game about a love story between human and vampires.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/Zdepj_bHJNk?si=8Myy4FHkrQpzskN9"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vampire/Screenshot_2021-02-04-21-11-03-025_vampire.romance.love.choice.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vampire/Screenshot_2021-02-04-21-11-24-859_vampire.romance.love.choice.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vampire/Screenshot_2021-02-04-21-12-33-729_vampire.romance.love.choice.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vampire/Screenshot_2021-02-04-21-13-14-615_vampire.romance.love.choice.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vampire/Screenshot_2021-02-04-21-14-22-015_vampire.romance.love.choice.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vampire/Screenshot_2021-02-04-21-14-48-678_vampire.romance.love.choice.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vampire/Screenshot_2021-02-04-21-17-16-748_vampire.romance.love.choice.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vampire/Screenshot_2021-02-04-21-17-55-089_vampire.romance.love.choice.jpg"
+        }
+      ],
+      "links": [],
+      "summary": "A mobile visual novel exploring a love story between humans and vampires.",
+      "thumbnail": "assets/portfolio/project_vampire_thumbnail.webp"
+    },
+    {
+      "id": "goblin",
+      "title": "Goblin Idle Game",
+      "url": "project_page_goblin.html",
+      "image": "assets/images/project_idle_goblin_thumbnail.png",
+      "tags": [
+        "Unity",
+        "C#",
+        "Idle Game",
+        "Mobile"
+      ],
+      "category": "games",
+      "platform": "Android, iOS",
+      "description": "This project is a casual idle game, send your adventurers to goblin's dungeon to hunt the treasures.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/RJCQ2e9amKc?si=EILbydtJChfi14G1"
+        },
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/4TL0MXY6IUY?si=AxyY1VDTbPxzlqDV"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/1.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/2.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/3.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/4.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/5.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/6.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/7.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/8.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/9.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/10.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/11.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_idle_golbin/12.png"
+        }
+      ],
+      "links": [],
+      "summary": "A mobile idle adventure about sending adventurers into goblin dungeons in search of treasure.",
+      "thumbnail": "assets/portfolio/project_idle_goblin_thumbnail.webp"
+    },
+    {
+      "id": "samsung",
+      "title": "Samsung Showroom Motion Game",
+      "url": "project_page_samsung.html",
+      "image": "assets/images/project_samsung_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "HDRP",
+        "Motion",
+        "Visual Effect",
+        "Interactive",
+        "Azure Kinect"
+      ],
+      "category": "interactive",
+      "platform": "PC",
+      "description": "An interactive motion-sensing experience developed for Samsung's showroom displays. This project uses Azure Kinect sensor to detect visitors' movements and gestures, instantly translating them into captivating visual effects on Samsung screens. Players can wave their hands to control particle systems, strike poses to trigger animations, and create dynamic content that showcases the responsiveness and visual capabilities of Samsung displays. Perfect for demonstrating the high refresh rates and color accuracy of Samsung products while creating a memorable, engaging experience for showroom visitors.",
+      "media": [
+        {
+          "type": "image",
+          "src": "assets/images/project_samsung/1.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_samsung/2.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_samsung/3.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_samsung/4.jpg"
+        },
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/Dl6uVqu6qL8?si=WJmvBF5Nb0LdAN9l"
+        }
+      ],
+      "links": [],
+      "summary": "A motion-controlled showroom experience that turns movement into real-time visual effects.",
+      "thumbnail": "assets/portfolio/project_samsung_thumbnail.webp"
+    },
+    {
+      "id": "cityplaza_chirstmas",
+      "title": "City Plaza Christmas 2024",
+      "url": "project_page_cityplaza_chirstmas.html",
+      "image": "assets/images/project_cityplaza_xmas_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "Interactive",
+        "HTC Vive",
+        "Event",
+        "Music",
+        "Painting"
+      ],
+      "category": "interactive",
+      "platform": "PC",
+      "description": "A festive Christmas event created for City Plaza, a premier shopping mall in Hong Kong. The interactive installation featured three distinct games: a dancing game, a rhythm game, and a digital graffiti experience. Visitors could engage with colorful interfaces to express themselves through movement, test their musical timing, and create virtual street art, all while enjoying a unique blend of technology and holiday cheer throughout the shopping experience.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/9YwbQU9T4RA?si=3CAtUuVeDpIpEMRP"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cityplaza_chirstmas/1.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cityplaza_chirstmas/2.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cityplaza_chirstmas/3.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cityplaza_chirstmas/4.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cityplaza_chirstmas/5.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cityplaza_chirstmas/6.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cityplaza_chirstmas/7.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cityplaza_chirstmas/8.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cityplaza_chirstmas/9.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cityplaza_chirstmas/10.jpg"
+        }
+      ],
+      "links": [],
+      "summary": "Dance, rhythm and digital graffiti experiences for Cityplaza’s Christmas event.",
+      "thumbnail": "assets/portfolio/project_cityplaza_xmas_thumbnail.webp"
+    },
+    {
+      "id": "hkjc_bookfair",
+      "title": "HKJC Bookfair 2024",
+      "url": "project_page_hkjc_bookfair.html",
+      "image": "assets/images/project_hkjc_bookfair_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "OpenCV",
+        "Interactive",
+        "Azure Kinect",
+        "Event"
+      ],
+      "category": "interactive",
+      "platform": "PC",
+      "description": "HKJC Bookfair 2024",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/mtXyN8CXGzk?si=n2oWWfF-BhC0dr4G"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/1.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/2.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/3.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/4.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/5.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/6.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/7.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/8.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/9.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/10.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/11.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/12.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_bookfair/13.jpg"
+        }
+      ],
+      "links": [],
+      "summary": "An interactive event experience for the Hong Kong Jockey Club at Book Fair 2024.",
+      "thumbnail": "assets/portfolio/project_hkjc_bookfair_thumbnail.webp"
+    },
+    {
+      "id": "moko_chirstmas",
+      "title": "Moko Christmas 2024",
+      "url": "project_page_moko_chirstmas.html",
+      "image": "assets/images/project_moko_xmas_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "Event"
+      ],
+      "category": "interactive",
+      "platform": "PC",
+      "description": "A festive Christmas event created for Moko, a shopping mall in Hong Kong. The interactive installation featured 1 game, which is a gift unboxing game. Provide a special experience for children and families to enjoy during the Christmas season.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/MQgozmGo0fQ?si=Xva6k5kjpeu01JE1"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_moko_chirstmas/1.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_moko_chirstmas/2.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_moko_chirstmas/3.jpg"
+        }
+      ],
+      "links": [],
+      "summary": "An interactive gift-unboxing game for a festive family experience at MOKO.",
+      "thumbnail": "assets/portfolio/project_moko_xmas_thumbnail.webp"
+    },
+    {
+      "id": "chocolate_rain",
+      "title": "ChocolateRain Interactive Animation",
+      "url": "project_page_chocolate_rain.html",
+      "image": "assets/images/project_chocolate_rain_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "2D",
+        "Animation",
+        "Interactive",
+        "Visual Effects",
+        "Shaders"
+      ],
+      "category": "interactive",
+      "platform": "PC",
+      "description": "An interactive animation event game which allows players to control the story book pages with sensor.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/Ux15dxaRLWQ?si=hJ3Rd4vzMUykMvwC"
+        },
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/xCkB-Me-u60?si=5tZhL__JTDnagK1j"
+        },
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/ZNl1Uvies1Q?si=nWWGb7YbfhGOznxm"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_chocolate_rain/1.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_chocolate_rain/2.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_chocolate_rain/3.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_chocolate_rain/4.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_chocolate_rain/5.jpg"
+        }
+      ],
+      "links": [],
+      "summary": "A sensor-controlled storybook brought to life through interactive animation.",
+      "thumbnail": "assets/portfolio/project_chocolate_rain_thumbnail.webp"
+    },
+    {
+      "id": "hkjc_wtsapp_sticker",
+      "title": "HKJC Whatsapp Sticker Photobooth",
+      "url": "project_page_hkjc_wtsapp_sticker.html",
+      "image": "assets/images/project_hkjc_wtsapp_sticker_pb_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "ComfyUI",
+        "Photobooth",
+        "Event"
+      ],
+      "category": "interactive",
+      "platform": "PC",
+      "description": "The photobooth is a simple and fun way to create custom animated WhatsApp stickers with Hong Kong Jockey Club themes.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube-nocookie.com/embed/9G9gneqJvHc"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hkjc_wtsapp_sticker/1.jpg"
+        }
+      ],
+      "links": [],
+      "summary": "A photobooth for creating custom animated WhatsApp stickers with HKJC themes.",
+      "thumbnail": "assets/portfolio/project_hkjc_wtsapp_sticker_pb_thumbnail.webp"
+    },
+    {
+      "id": "central_market",
+      "title": "Central Market Interactive Table",
+      "url": "project_page_central_market.html",
+      "image": "assets/images/project_cm_interactive_table_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "Interactive",
+        "Multi-touch",
+        "Information"
+      ],
+      "category": "interactive",
+      "platform": "PC",
+      "description": "Developed a interactive table for Central Market to showcase the landmark and history of Kowloon City.",
+      "media": [
+        {
+          "type": "image",
+          "src": "assets/images/project_central_market/1.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_central_market/2.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_central_market/3.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_central_market/4.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_central_market/5.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_central_market/6.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_central_market/7.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_central_market/8.jpg"
+        },
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/fyCMU0wtAg8?si=-qj6VfB6vmBcMNqM"
+        }
+      ],
+      "links": [],
+      "summary": "An interactive table exploring the landmarks and history of Kowloon City.",
+      "thumbnail": "assets/portfolio/project_cm_interactive_table_thumbnail.webp"
+    },
+    {
+      "id": "canvest_expo",
+      "title": "Canvest Expo Interactive Screen",
+      "url": "project_page_canvest_expo.html",
+      "image": "assets/images/project_canvest_expo_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "Interactive",
+        "Expo",
+        "Touch Screen",
+        "Information"
+      ],
+      "category": "interactive",
+      "platform": "PC",
+      "description": "Developed a interactive screen for Canvest Expo to showcase the products and services.",
+      "media": [
+        {
+          "type": "image",
+          "src": "assets/images/project_canvest_expo/1.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_canvest_expo/2.jpg"
+        },
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/kjJv3D6cceE?si=bmnDg-eIDVTdIGLM"
+        }
+      ],
+      "links": [],
+      "summary": "An interactive exhibition screen presenting Canvest’s products and services.",
+      "thumbnail": "assets/portfolio/project_canvest_expo_thumbnail.webp"
+    },
+    {
+      "id": "virtual_dietitian",
+      "title": "Virtual Dietitian",
+      "url": "project_page_virtual_dietitian.html",
+      "image": "assets/images/project_less_salt_sugar_dietitian_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "AI",
+        "Live2D",
+        "Information",
+        "Interactive"
+      ],
+      "category": "interactive",
+      "platform": "PC",
+      "description": "A virtual dietitian that teaches people how to eat healthier.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/prypYtvsrKc?si=Gd4X8xzxHTN_hkd8"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_virtual_dietitian/1.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_virtual_dietitian/2.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_virtual_dietitian/3.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_virtual_dietitian/4.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_virtual_dietitian/5.jpg"
+        }
+      ],
+      "links": [],
+      "summary": "An interactive virtual dietitian that introduces healthier eating habits.",
+      "thumbnail": "assets/portfolio/project_less_salt_sugar_dietitian_thumbnail.webp"
+    },
+    {
+      "id": "calligraphy",
+      "title": "Calligraphy Game",
+      "url": "project_page_calligraphy.html",
+      "image": "assets/images/project_calligraphy_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "Art",
+        "Touch Interface",
+        "Shaders"
+      ],
+      "category": "interactive",
+      "platform": "PC",
+      "description": "The Calligraphy Game simulates the real calligraphy. Players can draw anything they want with multiple brushes and colors.",
+      "media": [],
+      "links": [],
+      "summary": "A digital calligraphy experience with a selection of brushes and colours.",
+      "thumbnail": "assets/portfolio/project_calligraphy_thumbnail.webp"
+    },
+    {
+      "id": "cny",
+      "title": "Clarins Event Game",
+      "url": "project_page_cny.html",
+      "image": "assets/images/project_cny_thumbnail.png",
+      "tags": [
+        "Unity",
+        "WebGL",
+        "Event Game"
+      ],
+      "category": "games",
+      "platform": "Android, iOS, Web",
+      "description": "Clarins Lunar new year event game, player needs to find all the \"fuk\" and win the gift.",
+      "media": [
+        {
+          "type": "image",
+          "src": "assets/images/project_cny/1.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cny/2.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cny/3.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cny/4.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cny/5.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cny/6.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cny/7.png"
+        },
+        {
+          "type": "embed",
+          "src": "games/cny/"
+        }
+      ],
+      "links": [],
+      "summary": "A Lunar New Year hidden-object game created for a Clarins event.",
+      "thumbnail": "assets/portfolio/project_cny_thumbnail.webp"
+    },
+    {
+      "id": "fallhero",
+      "title": "Fall Hero",
+      "url": "project_page_fallhero.html",
+      "image": "assets/images/project_fall_cube_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "Android",
+        "Mobile Game",
+        "Fun"
+      ],
+      "category": "games",
+      "platform": "Android",
+      "description": "Fall Hero is a hyper casual game. Use various heroes to get through the obstacles and survive as long as possible. Challenge yourself to get highest score! Break your own record! Break your limits!",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/XFYW0CVkO5I?si=_egA8RNyr4MuAEGh"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_fall_cube/image_001_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_fall_cube/image_002_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_fall_cube/image_003_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_fall_cube/image_004_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_fall_cube/image_005_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_fall_cube/image_006_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_fall_cube/image_007_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_fall_cube/image_008_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_fall_cube/image_009_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_fall_cube/image_010_0000.jpg"
+        }
+      ],
+      "links": [
+        {
+          "url": "https://play.google.com/store/apps/details?id=com.ParticleGamesStudio.FallHero",
+          "label": "Google Play Store"
+        }
+      ],
+      "summary": "A mobile arcade game about dodging obstacles and chasing a new high score.",
+      "thumbnail": "assets/portfolio/project_fall_cube_thumbnail.webp"
+    },
+    {
+      "id": "cannon",
+      "title": "Island Destroyer",
+      "url": "project_page_cannon.html",
+      "image": "assets/images/project_cannon_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "Physics",
+        "Strategy",
+        "Destruction",
+        "Casual",
+        "Mobile"
+      ],
+      "category": "games",
+      "platform": "Android",
+      "description": "Island Destroyer is a hyper casual game, player needs to destroy the targets on the island with your cannon. Be careful the traps and obstacles that block the cannon!",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/cvQ3iZEuYO8?si=12BoZwAY4hzkqFP6"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_001_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_002_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_003_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_004_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_005_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_006_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_007_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_008_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_009_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_010_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_011_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_019_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_021_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_022_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_023_0000.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_cannon/image_024_0000.jpg"
+        }
+      ],
+      "links": [],
+      "summary": "A mobile cannon game about destroying island targets while avoiding obstacles.",
+      "thumbnail": "assets/portfolio/project_cannon_thumbnail.webp"
+    },
+    {
+      "id": "reality",
+      "title": "\"Reality\" Elderly Interaction Hub",
+      "url": "project_page_reality.html",
+      "image": "assets/images/project_reality_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "VR",
+        "Interactive",
+        "OpenPose",
+        "Music",
+        "Event"
+      ],
+      "category": "interactive",
+      "platform": "VR",
+      "description": "This project is a real life event, the game called \"Reality Elderly Interaction Hub\" which is a VR game with openpose to detect physical pose in real time. The game is designed to help elderly to do exercise and have fun at the same time.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/L6A2MEiELKc?si=wlRFtuL5_jaEl9tD"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_1.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_2.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_3.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_4.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_5.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_6.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_7.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_8.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_9.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_10.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Screenshot_11.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Picture_1.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Picture_2.jpeg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_reality/Picture_3.jpeg"
+        }
+      ],
+      "links": [],
+      "summary": "A VR exercise experience using real-time pose detection for elderly participants.",
+      "thumbnail": "assets/portfolio/project_reality_thumbnail.webp"
+    },
+    {
+      "id": "spawn_war",
+      "title": "Spawn War",
+      "url": "project_page_spawn_war.html",
+      "image": "assets/images/project_spawn_war_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "RTS",
+        "Strategy",
+        "Combat"
+      ],
+      "category": "games",
+      "platform": "PC",
+      "description": "Spawn War is my first RTS game that I made. It is a simple RTS game where you can spawn units and send them to attack the enemy base. The game is still in development and I will add more features in the future.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/8qFGL-5t_Fw?si=Uti9J4IUSPzTOBHK"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_spawn_war/spawnwar01.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_spawn_war/spawnwar02.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_spawn_war/spawnwar03.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_spawn_war/spawnwar04.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_spawn_war/spawnwar05.jpg"
+        }
+      ],
+      "links": [],
+      "summary": "An RTS prototype with unit spawning and battles to destroy the enemy base.",
+      "thumbnail": "assets/portfolio/project_spawn_war_thumbnail.webp"
+    },
+    {
+      "id": "lost_world",
+      "title": "Lost World",
+      "url": "project_page_lost_world.html",
+      "image": "assets/images/project_lost_word_thumbnail.png",
+      "tags": [
+        "Unity",
+        "ARPG",
+        "Visual Effect"
+      ],
+      "category": "games",
+      "platform": "PC",
+      "description": "Lost World is a ARPG game that I made. It is a simple ARPG game where you can fight monsters and level up your character. The game is still in development and I will add more features in the future.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/RtwtBJva_3E?si=QhY-pAaQn29lz4Hg"
+        },
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/0VG03zi7n1E?si=X19MPFVu9hPKqtTp"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_lost_world/screenshot_1.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_lost_world/screenshot_2.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_lost_world/screenshot_3.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_lost_world/screenshot_4.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_lost_world/screenshot_5.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_lost_world/screenshot_6.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_lost_world/screenshot_7.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_lost_world/screenshot_8.png"
+        }
+      ],
+      "links": [],
+      "summary": "An action RPG prototype with monster combat and character progression.",
+      "thumbnail": "assets/portfolio/project_lost_word_thumbnail.webp"
+    },
+    {
+      "id": "hell_factory",
+      "title": "Hell Factory",
+      "url": "project_page_hell_factory.html",
+      "image": "assets/images/project_hell_factory_thumbnail.jpg",
+      "tags": [
+        "Unity",
+        "Horror",
+        "Zombie",
+        "FPS"
+      ],
+      "category": "games",
+      "platform": "PC",
+      "description": "Hell Factory, A first person shooter game where you have to survive the zombie apocalypse. Escape the factory and survive the zombie horde.",
+      "media": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube.com/embed/R4R0KB33yGc?si=OKyFawHPGYdODWff"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hell_factory/zFps01.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hell_factory/zFps02.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hell_factory/zFps03.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hell_factory/zombieFps.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_hell_factory/zombieFps2.jpg"
+        }
+      ],
+      "links": [],
+      "summary": "A first-person survival shooter set in a factory overrun by zombies.",
+      "thumbnail": "assets/portfolio/project_hell_factory_thumbnail.webp"
+    },
+    {
+      "id": "vsport_hub",
+      "title": "VSport Hub",
+      "url": "project_page_vsport_hub.html",
+      "image": "assets/images/project_vsport_hub/Screenshot_1.png",
+      "tags": [
+        "Web",
+        "Mobile",
+        "Interactive"
+      ],
+      "category": "interactive",
+      "platform": "Web, Mobile",
+      "summary": "A virtual sports platform for activities, competitions and progress tracking.",
+      "description": "VSport Hub is a virtual sports platform that allows users to participate in virtual sports activities and events. Users can join competitions, track their progress and connect with other sports enthusiasts.",
+      "media": [
+        {
+          "type": "image",
+          "src": "assets/images/project_vsport_hub/Screenshot_1.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vsport_hub/Screenshot_2.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vsport_hub/Screenshot_3.png"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vsport_hub/Screenshot_4.jpg"
+        },
+        {
+          "type": "image",
+          "src": "assets/images/project_vsport_hub/Screenshot_5.jpg"
+        }
+      ],
+      "links": [],
+      "thumbnail": "assets/portfolio/Screenshot_1.webp"
+    }
+  ],
+  "artworks": [
+    {
+      "id": "vfx_transition_test",
+      "title": "Transition study",
+      "category": "vfx",
+      "kind": "video",
+      "src": "assets/videos/vfx_transition_test.mp4",
+      "thumbnail": "assets/portfolio/vfx_transition_test.webp",
+      "tags": [
+        "Real-time VFX",
+        "Motion study"
+      ]
+    },
+    {
+      "id": "vfx_sword_slash_001",
+      "title": "Sword slash / 01",
+      "category": "vfx",
+      "kind": "video",
+      "src": "assets/videos/vfx_sword_slash_001.mp4",
+      "thumbnail": "assets/portfolio/vfx_sword_slash_001.webp",
+      "tags": [
+        "Real-time VFX",
+        "Motion study"
+      ]
+    },
+    {
+      "id": "vfx_sword_slash_002",
+      "title": "Sword slash / 02",
+      "category": "vfx",
+      "kind": "video",
+      "src": "assets/videos/vfx_sword_slash_002.mp4",
+      "thumbnail": "assets/portfolio/vfx_sword_slash_002.webp",
+      "tags": [
+        "Real-time VFX",
+        "Motion study"
+      ],
+      "webm": "assets/portfolio/vfx_sword_slash_002.webm"
+    },
+    {
+      "id": "vfx_sword_rain_magic",
+      "title": "Sword rain",
+      "category": "vfx",
+      "kind": "video",
+      "src": "assets/videos/vfx_sword_rain_magic.mp4",
+      "thumbnail": "assets/portfolio/vfx_sword_rain_magic.webp",
+      "tags": [
+        "Real-time VFX",
+        "Motion study"
+      ]
+    },
+    {
+      "id": "vfx_rock_magic",
+      "title": "Rock magic",
+      "category": "vfx",
+      "kind": "video",
+      "src": "assets/videos/vfx_rock_magic.mp4",
+      "thumbnail": "assets/portfolio/vfx_rock_magic.webp",
+      "tags": [
+        "Real-time VFX",
+        "Motion study"
+      ]
+    },
+    {
+      "id": "scifi_street_animation",
+      "title": "Sci-fi street",
+      "category": "art",
+      "kind": "video",
+      "src": "assets/videos/scifi_street_animation.mp4",
+      "thumbnail": "assets/portfolio/scifi_street_animation.webp",
+      "tags": [
+        "Animation",
+        "Motion study"
+      ]
+    },
+    {
+      "id": "spawn_cube",
+      "title": "Cube spawn",
+      "category": "vfx",
+      "kind": "video",
+      "src": "assets/videos/spawn_cube.mp4",
+      "thumbnail": "assets/portfolio/spawn_cube.webp",
+      "tags": [
+        "Real-time VFX",
+        "Motion study"
+      ],
+      "webm": "assets/portfolio/spawn_cube.webm"
+    },
+    {
+      "id": "turret",
+      "title": "Turret animation",
+      "category": "art",
+      "kind": "video",
+      "src": "assets/videos/turret.mp4",
+      "thumbnail": "assets/portfolio/turret.webp",
+      "tags": [
+        "Animation",
+        "Motion study"
+      ]
+    },
+    {
+      "id": "vfx_ice_skill_001",
+      "title": "Ice magic",
+      "category": "vfx",
+      "kind": "video",
+      "src": "assets/videos/vfx_ice_skill_001.mp4",
+      "thumbnail": "assets/portfolio/vfx_ice_skill_001.webp",
+      "tags": [
+        "Real-time VFX",
+        "Motion study"
+      ]
+    },
+    {
+      "id": "vfx_tornado_001",
+      "title": "Tornado",
+      "category": "vfx",
+      "kind": "video",
+      "src": "assets/videos/vfx_tornado_001.mp4",
+      "thumbnail": "assets/portfolio/vfx_tornado_001.webp",
+      "tags": [
+        "Real-time VFX",
+        "Motion study"
+      ]
+    },
+    {
+      "id": "vfx_dark_hole_001",
+      "title": "Dark hole",
+      "category": "vfx",
+      "kind": "video",
+      "src": "assets/videos/vfx_dark_hole_001.mp4",
+      "thumbnail": "assets/portfolio/vfx_dark_hole_001.webp",
+      "tags": [
+        "Real-time VFX",
+        "Motion study"
+      ]
+    },
+    {
+      "id": "led_screen_shader",
+      "title": "LED screen shader",
+      "category": "vfx",
+      "kind": "video",
+      "src": "assets/videos/led_screen_shader.mp4",
+      "thumbnail": "assets/portfolio/led_screen_shader.webp",
+      "tags": [
+        "Real-time VFX",
+        "Motion study"
+      ]
+    },
+    {
+      "id": "hallyway_2",
+      "title": "Hallway / 02",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/hallyway_2.png",
+      "thumbnail": "assets/portfolio/hallyway_2.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "lance_2",
+      "title": "Lance / profile",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/lance_2.png",
+      "thumbnail": "assets/portfolio/lance_2.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "cdplayer-3am",
+      "title": "3 AM / CD player",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/cdplayer-3am.jpg",
+      "thumbnail": "assets/portfolio/cdplayer-3am.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "lance_1",
+      "title": "Lance / full view",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/lance_1.png",
+      "thumbnail": "assets/portfolio/lance_1.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ],
+      "model": "5d4d41d86e184230b56fa09f8cf59817"
+    },
+    {
+      "id": "ff7_buster_sword_2",
+      "title": "Buster Sword / detail",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/ff7_buster_sword_2.png",
+      "thumbnail": "assets/portfolio/ff7_buster_sword_2.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "ff7_buster_sword_1",
+      "title": "Buster Sword / full view",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/ff7_buster_sword_1.png",
+      "thumbnail": "assets/portfolio/ff7_buster_sword_1.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ],
+      "model": "b4d6b9bbf1784c5f94546c5762cd8c15"
+    },
+    {
+      "id": "katana_1_2",
+      "title": "Old katana / detail",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/katana_1_2.png",
+      "thumbnail": "assets/portfolio/katana_1_2.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "led_screen_shader_01",
+      "title": "LED shader / 01",
+      "category": "vfx",
+      "kind": "image",
+      "src": "assets/images/gallery/led_screen_shader_01.jpg",
+      "thumbnail": "assets/portfolio/led_screen_shader_01.webp",
+      "tags": [
+        "Shader study",
+        "Real-time"
+      ]
+    },
+    {
+      "id": "backhole_deepspace",
+      "title": "Deep space",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/backhole_deepspace.png",
+      "thumbnail": "assets/portfolio/backhole_deepspace.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "katana_1",
+      "title": "Old katana / full view",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/katana_1.png",
+      "thumbnail": "assets/portfolio/katana_1.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ],
+      "model": "371c082857294daa96f28e531da26027"
+    },
+    {
+      "id": "fantasy_crystal",
+      "title": "Fantasy crystal",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/fantasy_crystal.png",
+      "thumbnail": "assets/portfolio/fantasy_crystal.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "led_screen_shader_03",
+      "title": "LED shader / 03",
+      "category": "vfx",
+      "kind": "image",
+      "src": "assets/images/gallery/led_screen_shader_03.jpg",
+      "thumbnail": "assets/portfolio/led_screen_shader_03.webp",
+      "tags": [
+        "Shader study",
+        "Real-time"
+      ]
+    },
+    {
+      "id": "pixel_plant",
+      "title": "Pixel plant",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/pixel_plant.png",
+      "thumbnail": "assets/portfolio/pixel_plant.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "ff7_buster_sword_3",
+      "title": "Buster Sword / blade",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/ff7_buster_sword_3.png",
+      "thumbnail": "assets/portfolio/ff7_buster_sword_3.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "hallyway",
+      "title": "Hallway / 01",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/hallyway.png",
+      "thumbnail": "assets/portfolio/hallyway.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "led_screen_shader_02",
+      "title": "LED shader / close-up",
+      "category": "vfx",
+      "kind": "image",
+      "src": "assets/images/gallery/led_screen_shader_02.jpg",
+      "thumbnail": "assets/portfolio/led_screen_shader_02.webp",
+      "tags": [
+        "Shader study",
+        "Real-time"
+      ]
+    },
+    {
+      "id": "lance_3",
+      "title": "Lance / detail",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/lance_3.png",
+      "thumbnail": "assets/portfolio/lance_3.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "cyberpunk-scene-1x1",
+      "title": "Cyberpunk street",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/cyberpunk-scene-1x1.jpg",
+      "thumbnail": "assets/portfolio/cyberpunk-scene-1x1.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    },
+    {
+      "id": "neon_icon_2",
+      "title": "Neon study",
+      "category": "art",
+      "kind": "image",
+      "src": "assets/images/gallery/neon_icon_2.jpg",
+      "thumbnail": "assets/portfolio/neon_icon_2.webp",
+      "tags": [
+        "3D artwork",
+        "Blender"
+      ]
+    }
+  ],
+  "models": [
+    {
+      "title": "Buster Sword",
+      "id": "b4d6b9bbf1784c5f94546c5762cd8c15"
+    },
+    {
+      "title": "Lance",
+      "id": "5d4d41d86e184230b56fa09f8cf59817"
+    },
+    {
+      "title": "Old Katana",
+      "id": "371c082857294daa96f28e531da26027"
+    },
+    {
+      "title": "Low Poly Bundle – Modern",
+      "id": "9657a8755d12443e95b669ae5fd32bcf"
+    },
+    {
+      "title": "Road Sign Pack",
+      "id": "af5ed08436ee4cb4ae2624a4c5f06a4a"
+    }
+  ]
+}

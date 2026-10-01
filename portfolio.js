@@ -25,22 +25,108 @@
     if (!event.target.closest('.site-header')) closeMenu();
   });
 
-  // Manual scene selection keeps artwork still until the visitor chooses a scene.
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const heroVideo = document.querySelector('.hero-video');
+  const motionButton = document.querySelector('.hero-motion');
+  const hero = document.querySelector('.hero');
+  let heroInView = true;
+  let previewPaused = false;
+  function syncHeroVideo(explicit = false) {
+    if (!heroVideo) return;
+    const active = !heroVideo.closest('.hero-slide').hidden;
+    if (!active || !heroInView || document.hidden || document.body.classList.contains('modal-open') || previewPaused || (!explicit && (reducedMotion.matches || navigator.connection?.saveData))) {
+      heroVideo.pause();
+      return;
+    }
+    if (!heroVideo.dataset.loaded) {
+      heroVideo.querySelectorAll('source').forEach(source => { source.src = source.dataset.src; });
+      heroVideo.dataset.loaded = 'true';
+      heroVideo.load();
+    }
+    heroVideo.play().catch(() => { /* The poster and play button remain available. */ });
+  }
+  if (heroVideo && motionButton) {
+    motionButton.hidden = false;
+    const updateMotionButton = () => {
+      const playing = !heroVideo.paused;
+      motionButton.textContent = playing ? 'PAUSE PREVIEW Ⅱ' : 'PLAY PREVIEW ▶';
+      motionButton.setAttribute('aria-label', playing ? 'Pause VFX preview' : 'Play VFX preview');
+      motionButton.setAttribute('aria-pressed', String(playing));
+    };
+    heroVideo.addEventListener('play', updateMotionButton);
+    heroVideo.addEventListener('pause', updateMotionButton);
+    motionButton.addEventListener('click', () => {
+      previewPaused = !heroVideo.paused;
+      syncHeroVideo(true);
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        heroInView = entries[0].isIntersecting;
+        syncHeroVideo();
+      }, { threshold: 0.15 }).observe(hero);
+    }
+    document.addEventListener('visibilitychange', () => syncHeroVideo());
+    reducedMotion.addEventListener('change', () => syncHeroVideo());
+  }
+
+  // Each skill and project can also be selected with the arrow, Home and End keys.
   function setupSelector(control, panel) {
     const controls = [...document.querySelectorAll(control)];
     const panels = [...document.querySelectorAll(panel)];
-    controls.forEach(link => link.addEventListener('click', event => {
-      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
-      controls.forEach(item => item.setAttribute('aria-current', String(item === link)));
-      panels.forEach(item => { item.hidden = item.id !== link.getAttribute('aria-controls'); });
-    }));
-    // Let a direct scene link select the matching panel on arrival.
+    controls.forEach((link, index) => {
+      link.addEventListener('click', event => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        controls.forEach(item => item.setAttribute('aria-current', String(item === link)));
+        panels.forEach(item => { item.hidden = item.id !== link.getAttribute('aria-controls'); });
+        if (link.hasAttribute('data-hero')) syncHeroVideo();
+      });
+      link.addEventListener('keydown', event => {
+        let next;
+        if (event.key === 'ArrowRight') next = (index + 1) % controls.length;
+        if (event.key === 'ArrowLeft') next = (index - 1 + controls.length) % controls.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = controls.length - 1;
+        if (next === undefined) return;
+        event.preventDefault();
+        controls[next].click();
+        controls[next].focus({ preventScroll: true });
+      });
+    });
     const initial = controls.find(item => item.getAttribute('href') === location.hash);
     if (initial) initial.click();
   }
   setupSelector('[data-hero]', '.hero-slide');
   setupSelector('[data-project]', '.project-feature');
+
+  // Progressive enhancement: content is visible without JS or observer support.
+  if ('IntersectionObserver' in window && !reducedMotion.matches) {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -35px 0px' });
+    const targets = document.querySelectorAll('.section-heading, .project-feature, .project-selectors, .vfx-stage, .art-piece, .model-list, .work-card, .contact-inner, .project-heading, .project-cover, .project-story, .project-gallery > a');
+    targets.forEach(target => {
+      target.classList.add('scroll-reveal');
+      // Sibling artwork arrives in a short sequence rather than all at once.
+      if (target.matches('.art-piece, .work-card, .project-gallery > a')) {
+        const index = [...target.parentElement.children].indexOf(target);
+        target.style.setProperty('--reveal-delay', `${(index % 3) * 85}ms`);
+      }
+      revealObserver.observe(target);
+    });
+    document.addEventListener('focusin', event => {
+      event.target.closest('.scroll-reveal')?.classList.add('is-visible');
+    });
+    reducedMotion.addEventListener('change', () => {
+      if (!reducedMotion.matches) return;
+      targets.forEach(target => target.classList.add('is-visible'));
+      revealObserver.disconnect();
+    });
+  }
 
   const player = document.querySelector('#vfx-player');
   const play = document.querySelector('.vfx-play');
@@ -141,6 +227,7 @@
     if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || !dialog?.showModal) return;
     event.preventDefault();
     player?.pause();
+    heroVideo?.pause();
     trigger = link;
     const { media, src, title, caption, model, webm } = link.dataset;
     document.querySelector('#dialog-title').textContent = title;

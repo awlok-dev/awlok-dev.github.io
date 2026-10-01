@@ -25,14 +25,70 @@
     if (!event.target.closest('.site-header')) closeMenu();
   });
 
+  // Manual scene selection keeps artwork still until the visitor chooses a scene.
+  function setupSelector(control, panel) {
+    const controls = [...document.querySelectorAll(control)];
+    const panels = [...document.querySelectorAll(panel)];
+    controls.forEach(link => link.addEventListener('click', event => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      controls.forEach(item => item.setAttribute('aria-current', String(item === link)));
+      panels.forEach(item => { item.hidden = item.id !== link.getAttribute('aria-controls'); });
+    }));
+    // Let a direct scene link select the matching panel on arrival.
+    const initial = controls.find(item => item.getAttribute('href') === location.hash);
+    if (initial) initial.click();
+  }
+  setupSelector('[data-hero]', '.hero-slide');
+  setupSelector('[data-project]', '.project-feature');
+
+  const player = document.querySelector('#vfx-player');
+  const play = document.querySelector('.vfx-play');
+  if (player && play) {
+    const playClip = () => {
+      play.hidden = true;
+      player.play().catch(() => { play.hidden = false; });
+    };
+    play.addEventListener('click', playClip);
+    player.addEventListener('play', () => { play.hidden = true; });
+    document.querySelectorAll('[data-clip]').forEach(link => link.addEventListener('click', event => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      player.pause();
+      player.replaceChildren();
+      player.removeAttribute('src');
+      player.poster = link.dataset.poster;
+      const sources = link.dataset.webm ? [[link.dataset.webm, 'video/webm'], [link.dataset.clip, 'video/mp4']] : [[link.dataset.clip, 'video/mp4']];
+      sources.forEach(([src, type]) => {
+        const source = document.createElement('source');
+        source.src = src;
+        source.type = type;
+        player.append(source);
+      });
+      player.setAttribute('aria-label', `${link.dataset.title} visual effect`);
+      play.setAttribute('aria-label', `Play ${link.dataset.title} visual effect`);
+      document.querySelector('#vfx-current').textContent = link.dataset.title;
+      document.querySelectorAll('[data-clip]').forEach(item => item.setAttribute('aria-current', String(item === link)));
+      player.load();
+      playClip();
+    }));
+    // Stop playback when the visitor leaves the player or switches browser tabs.
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        if (!entries[0].isIntersecting) player.pause();
+      }, { threshold: 0.1 }).observe(player);
+    }
+    document.addEventListener('visibilitychange', () => { if (document.hidden) player.pause(); });
+  }
+
   const cards = [...document.querySelectorAll('.work-card')];
   const filters = [...document.querySelectorAll('[data-filter]')];
   const more = document.querySelector('#load-more');
   let selected = 'all';
-  let visible = 6;
+  let visible = 9;
   function filterWork(category, updateUrl = true) {
     selected = ['all', 'games', 'interactive', 'vfx', 'art'].includes(category) ? category : 'all';
-    visible = 6;
+    visible = 9;
     filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === selected)));
     renderWork();
     if (updateUrl) {
@@ -56,7 +112,7 @@
     filters.forEach(button => button.addEventListener('click', () => filterWork(button.dataset.filter)));
     more.addEventListener('click', () => {
       const next = cards.filter(card => selected === 'all' || card.dataset.category === selected)[visible];
-      visible += 6;
+      visible += 9;
       renderWork();
       next?.querySelector('a')?.focus({ preventScroll: true });
     });
@@ -65,7 +121,7 @@
       filterWork(link.dataset.filterLink);
     }));
     // Preserve incoming links to the previous portfolio sections.
-    const aliases = { '#projects': '#work', '#gallery': '#work', '#home': '#top' };
+    const aliases = { '#gallery': '#work', '#home': '#top' };
     if (aliases[location.hash]) {
       const target = aliases[location.hash];
       history.replaceState(null, '', location.pathname + location.search + target);
@@ -84,6 +140,7 @@
     const link = event.target.closest('a[data-media]');
     if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || !dialog?.showModal) return;
     event.preventDefault();
+    player?.pause();
     trigger = link;
     const { media, src, title, caption, model, webm } = link.dataset;
     document.querySelector('#dialog-title').textContent = title;

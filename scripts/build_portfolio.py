@@ -1,9 +1,13 @@
 """Rebuild the static portfolio with Python 3 (no third-party dependencies)."""
 import json
+from hashlib import sha256
 from html import escape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+def asset_url(name):
+    return name + '?v=' + sha256((ROOT / name).read_bytes()).hexdigest()[:12]
+
 DATA = json.loads((ROOT / 'portfolio-content.json').read_text())
 CATEGORIES = {'games': 'Game development', 'interactive': 'Interactive', 'vfx': 'VFX & shaders', 'art': '3D art'}
 
@@ -15,7 +19,7 @@ def head(title, description, path='index.html', image='assets/portfolio/hero.web
 <title>{e(title)}</title><meta name="description" content="{e(description)}"><meta name="author" content="Alex Wong"><meta name="theme-color" content="#070b12">
 <link rel="canonical" href="https://awlok-dev.github.io/{'' if path == 'index.html' else e(path)}">
 <meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(description)}"><meta property="og:url" content="https://awlok-dev.github.io/{'' if path == 'index.html' else e(path)}"><meta property="og:image" content="https://awlok-dev.github.io/{e(image)}"><meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/images/web_icon.png"><link rel="stylesheet" href="portfolio.css"><script src="portfolio.js" defer></script></head><body id="top">
+<link rel="icon" href="assets/images/web_icon.png"><link rel="stylesheet" href="{asset_url('portfolio.css')}"><script src="{asset_url('portfolio.js')}" defer></script></head><body id="top">
 <a class="skip-link" href="#main">Skip to content</a>'''
 
 def header(home=False):

@@ -97,127 +97,134 @@
     if (initial) initial.click();
   }
   setupSelector('[data-hero]', '.hero-slide');
-  setupSelector('[data-project]', '.project-feature');
-
-  // Progressive enhancement: content is visible without JS or observer support.
-  if ('IntersectionObserver' in window && !reducedMotion.matches) {
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -35px 0px' });
-    const targets = document.querySelectorAll('.section-heading, .project-feature, .project-selectors, .vfx-stage, .art-piece, .model-list, .work-card, .contact-inner, .project-heading, .project-cover, .project-story, .project-gallery > a');
-    targets.forEach(target => {
-      target.classList.add('scroll-reveal');
-      // Sibling artwork arrives in a short sequence rather than all at once.
-      if (target.matches('.art-piece, .work-card, .project-gallery > a')) {
-        const index = [...target.parentElement.children].indexOf(target);
-        target.style.setProperty('--reveal-delay', `${(index % 3) * 85}ms`);
+  // A single circular browser per discipline, including every work in that category.
+  document.querySelectorAll('[data-collection]').forEach(collection => {
+    const panels = [...collection.querySelectorAll('.collection-panel')];
+    const thumbs = [...collection.querySelectorAll('[data-select]')];
+    const strip = collection.querySelector('.collection-thumbnails');
+    const count = collection.querySelector('[data-collection-count]');
+    let category = 'all';
+    let current = 0;
+    const matching = () => panels.filter(panel => category === 'all' || panel.dataset.category === category);
+    const pauseVideos = () => collection.querySelectorAll('video').forEach(video => video.pause());
+    function playVideo(video) {
+      if (!video.dataset.loaded) {
+        video.querySelectorAll('source').forEach(source => { source.src = source.dataset.src; });
+        video.dataset.loaded = 'true';
+        video.load();
       }
-      revealObserver.observe(target);
-    });
-    document.addEventListener('focusin', event => {
-      event.target.closest('.scroll-reveal')?.classList.add('is-visible');
-    });
-    reducedMotion.addEventListener('change', () => {
-      if (!reducedMotion.matches) return;
-      targets.forEach(target => target.classList.add('is-visible'));
-      revealObserver.disconnect();
-    });
-  }
-
-  const player = document.querySelector('#vfx-player');
-  const play = document.querySelector('.vfx-play');
-  if (player && play) {
-    const playClip = () => {
-      play.hidden = true;
-      player.play().catch(() => { play.hidden = false; });
-    };
-    play.addEventListener('click', playClip);
-    player.addEventListener('play', () => { play.hidden = true; });
-    document.querySelectorAll('[data-clip]').forEach(link => link.addEventListener('click', event => {
+      const button = video.parentElement.querySelector('.collection-play');
+      button.hidden = true;
+      video.play().catch(() => { button.hidden = false; });
+    }
+    function select(index, interact = false) {
+      const items = matching();
+      if (!items.length) return;
+      current = (index % items.length + items.length) % items.length;
+      pauseVideos();
+      const active = items[current];
+      panels.forEach(panel => { panel.hidden = panel !== active; });
+      thumbs.forEach(thumb => {
+        thumb.hidden = category !== 'all' && thumb.dataset.category !== category;
+        thumb.setAttribute('aria-current', String(thumb.dataset.select === active.id));
+      });
+      count.textContent = `${String(current + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+      const selectedThumb = thumbs.find(thumb => thumb.dataset.select === active.id);
+      if (interact && strip.scrollTo) {
+        const box = selectedThumb.getBoundingClientRect();
+        const frame = strip.getBoundingClientRect();
+        strip.scrollTo({ left: strip.scrollLeft + box.left - frame.left - (frame.width - box.width) / 2, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+      }
+      const video = active.querySelector('video');
+      if (video && interact) playVideo(video);
+    }
+    thumbs.forEach(thumb => thumb.addEventListener('click', event => {
       if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
-      player.pause();
-      player.replaceChildren();
-      player.removeAttribute('src');
-      player.poster = link.dataset.poster;
-      const sources = link.dataset.webm ? [[link.dataset.webm, 'video/webm'], [link.dataset.clip, 'video/mp4']] : [[link.dataset.clip, 'video/mp4']];
-      sources.forEach(([src, type]) => {
-        const source = document.createElement('source');
-        source.src = src;
-        source.type = type;
-        player.append(source);
-      });
-      player.setAttribute('aria-label', `${link.dataset.title} visual effect`);
-      play.setAttribute('aria-label', `Play ${link.dataset.title} visual effect`);
-      document.querySelector('#vfx-current').textContent = link.dataset.title;
-      document.querySelectorAll('[data-clip]').forEach(item => item.setAttribute('aria-current', String(item === link)));
-      player.load();
-      playClip();
+      select(matching().findIndex(panel => panel.id === thumb.dataset.select), true);
     }));
-    // Stop playback when the visitor leaves the player or switches browser tabs.
+    collection.querySelectorAll('[data-step]').forEach(button => button.addEventListener('click', () => select(current + Number(button.dataset.step), true)));
+    collection.querySelectorAll('[data-project-filter]').forEach(button => button.addEventListener('click', () => {
+      category = button.dataset.projectFilter;
+      collection.querySelectorAll('[data-project-filter]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      select(0, true);
+    }));
+    strip.addEventListener('keydown', event => {
+      let next;
+      if (event.key === 'ArrowRight') next = current + 1;
+      if (event.key === 'ArrowLeft') next = current - 1;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = matching().length - 1;
+      if (next === undefined) return;
+      event.preventDefault();
+      select(next, true);
+      thumbs.find(thumb => thumb.getAttribute('aria-current') === 'true').focus({ preventScroll: true });
+    });
+    collection.querySelectorAll('.collection-play').forEach(button => button.addEventListener('click', () => playVideo(button.parentElement.querySelector('video'))));
+    collection.querySelectorAll('video').forEach(video => video.addEventListener('play', () => { video.parentElement.querySelector('.collection-play').hidden = true; }));
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(entries => {
-        if (!entries[0].isIntersecting) player.pause();
-      }, { threshold: 0.1 }).observe(player);
+      new IntersectionObserver(entries => { if (!entries[0].isIntersecting) pauseVideos(); }, { threshold: 0 }).observe(collection);
     }
-    document.addEventListener('visibilitychange', () => { if (document.hidden) player.pause(); });
-  }
+    document.addEventListener('visibilitychange', () => { if (document.hidden) pauseVideos(); });
+    const requested = panels.findIndex(panel => '#' + panel.id === location.hash);
+    select(requested >= 0 ? requested : 0);
+  });
 
-  const cards = [...document.querySelectorAll('.work-card')];
-  const filters = [...document.querySelectorAll('[data-filter]')];
-  const more = document.querySelector('#load-more');
-  let selected = 'all';
-  let visible = 9;
-  function filterWork(category, updateUrl = true) {
-    selected = ['all', 'games', 'interactive', 'vfx', 'art'].includes(category) ? category : 'all';
-    visible = 9;
-    filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === selected)));
-    renderWork();
-    if (updateUrl) {
-      const url = new URL(location.href);
-      if (selected === 'all') url.searchParams.delete('filter');
-      else url.searchParams.set('filter', selected);
-      history.replaceState(null, '', url);
-    }
-  }
-  function renderWork() {
-    let count = 0;
-    cards.forEach(card => {
-      const matches = selected === 'all' || card.dataset.category === selected;
-      if (matches) count++;
-      card.hidden = !matches || count > visible;
+  // Titles animate only once their heading is well inside the viewport, then reset
+  // after leaving it completely, so scrolling back replays the full sequence.
+  if ('IntersectionObserver' in window && !reducedMotion.matches) {
+    const headings = [...document.querySelectorAll('.section-heading')];
+    headings.forEach(heading => {
+      const title = heading.querySelector('h2');
+      if (!title) return;
+      const label = title.textContent.trim();
+      title.setAttribute('aria-label', label);
+      title.replaceChildren();
+      let index = 0;
+      label.split(/\s+/).forEach((word, wordIndex) => {
+        if (wordIndex) title.append(' ');
+        const group = document.createElement('span');
+        group.className = 'title-word';
+        group.setAttribute('aria-hidden', 'true');
+        [...word].forEach(char => {
+          const letter = document.createElement('span');
+          letter.className = 'title-letter' + (char === '.' ? ' heading-dot' : '');
+          letter.style.setProperty('--letter-index', index++);
+          letter.textContent = char;
+          group.append(letter);
+        });
+        title.append(group);
+      });
+      heading.classList.add('animated-heading');
     });
-    document.querySelector('#work-count').textContent = `${Math.min(count, visible)} / ${count} works`;
-    more.hidden = count <= visible;
-  }
-  if (cards.length) {
-    filters.forEach(button => button.addEventListener('click', () => filterWork(button.dataset.filter)));
-    more.addEventListener('click', () => {
-      const next = cards.filter(card => selected === 'all' || card.dataset.category === selected)[visible];
-      visible += 9;
-      renderWork();
-      next?.querySelector('a')?.focus({ preventScroll: true });
-    });
-    filterWork(new URL(location.href).searchParams.get('filter') || 'all', false);
-    document.querySelectorAll('[data-filter-link]').forEach(link => link.addEventListener('click', () => {
-      filterWork(link.dataset.filterLink);
-    }));
-    // Preserve incoming links to the previous portfolio sections.
-    const aliases = { '#gallery': '#work', '#home': '#top' };
-    if (aliases[location.hash]) {
-      const target = aliases[location.hash];
-      history.replaceState(null, '', location.pathname + location.search + target);
-      document.querySelector(target)?.scrollIntoView();
-    }
-  } else {
-    document.querySelectorAll('[data-filter-link]').forEach(link => {
-      link.href = `index.html?filter=${encodeURIComponent(link.dataset.filterLink)}#work`;
+    const titleObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('heading-active'); });
+    }, { threshold: 0.35, rootMargin: '0px 0px -90px 0px' });
+    const resetObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (!entry.isIntersecting) entry.target.classList.remove('heading-active'); });
+    }, { threshold: 0 });
+    headings.forEach(heading => { titleObserver.observe(heading); resetObserver.observe(heading); });
+    const targets = document.querySelectorAll('.collection-thumbnails, .model-list, .contact-inner, .project-heading, .project-cover, .project-story, .project-gallery > a');
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+        else entry.target.classList.remove('is-visible');
+      });
+    }, { threshold: 0.08 });
+    targets.forEach(target => { target.classList.add('scroll-reveal'); revealObserver.observe(target); });
+    document.addEventListener('focusin', event => event.target.closest('.scroll-reveal')?.classList.add('is-visible'));
+    reducedMotion.addEventListener('change', () => {
+      if (!reducedMotion.matches) return;
+      headings.forEach(heading => heading.classList.remove('animated-heading'));
+      targets.forEach(target => target.classList.add('is-visible'));
+      titleObserver.disconnect(); resetObserver.disconnect(); revealObserver.disconnect();
     });
   }
+  const aliases = { '#gallery': '#art', '#home': '#top', '#work': '#projects' };
+  const oldFilter = new URL(location.href).searchParams.get('filter');
+  const destination = oldFilter === 'vfx' ? '#vfx' : oldFilter === 'art' ? '#art' : aliases[location.hash];
+  if (destination) document.querySelector(destination)?.scrollIntoView();
+  if (['games', 'interactive'].includes(oldFilter)) document.querySelector(`[data-project-filter="${oldFilter}"]`)?.click();
 
   const dialog = document.querySelector('#media-dialog');
   const container = dialog?.querySelector('.dialog-media');
@@ -226,7 +233,7 @@
     const link = event.target.closest('a[data-media]');
     if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || !dialog?.showModal) return;
     event.preventDefault();
-    player?.pause();
+    document.querySelectorAll('[data-inline-video]').forEach(video => video.pause());
     heroVideo?.pause();
     trigger = link;
     const { media, src, title, caption, model, webm } = link.dataset;

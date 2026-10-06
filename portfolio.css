@@ -33,3 +33,66 @@
 @media(max-width:760px){.collection .section-heading{align-items:end;gap:10px}.collection-controls{gap:6px}.collection-arrow{width:38px;height:38px;font-size:23px}.collection-count{font-size:9px;min-width:47px;margin-right:2px;letter-spacing:.5px}.collection .section-heading h2{font-size:46px}.collection .section-heading .eyebrow{max-width:200px;font-size:7px;letter-spacing:.5px}.project-filters button{font-size:13px;padding:9px 12px}.project-filters button span{font-size:9px;margin-left:5px}.collection-thumbnails{gap:9px}.collection-thumb{flex-basis:calc((100% - 9px)/2)}.collection-thumb img{height:100px}.collection-thumb>span{font-size:12px;padding:9px;gap:8px}.collection-thumb b{font-size:22px}.collection-screen{aspect-ratio:4/3}.collection-caption h3{font-size:27px}.collection-caption .text-link{font-size:11px;max-width:100px}.collection-play span{width:58px;height:58px;font-size:20px}.collection-play small{font-size:12px}.collection-panel.project-feature{min-height:0}.animated-heading h2::after{width:60px;height:3px}}
 @media(max-width:380px){.collection .section-heading h2{font-size:39px}.collection-count{display:none}.collection-arrow{height:34px;width:34px}.project-filters{gap:5px}.project-filters button{padding:9px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){.animated-heading .title-letter,.animated-heading .eyebrow{opacity:1!important;transform:none!important;filter:none!important}.animated-heading h2::after{transform:scaleX(1)!important}}
+
+/* Responsive layout: keep controls reachable and text inside its column. */
+.project-feature{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}
+.feature-copy,.project-heading>*,.project-story>*,.collection-caption>div,.section-heading>div:first-child{min-width:0}
+.feature-copy h3,.project-heading h1,.collection-caption h3,.collection-thumb>span,.project-navigation,.dialog-header h2{overflow-wrap:anywhere}
+.collection-thumb>span>b{flex-shrink:0}
+.menu-toggle,.dialog-close,.hero-motion,.project-filters button{min-height:44px}
+.dialog-close{flex-shrink:0}
+.dialog-header h2{min-width:0}
+.navigation{max-height:calc(100vh - 62px);max-height:calc(100dvh - 62px);overflow-y:auto}
+.hero{height:calc(100vh - 70px);height:calc(100svh - 70px)}
+.hero-selectors{min-width:0;max-width:100%}
+.hero-selector{min-width:0}
+.hero-copy h2{overflow-wrap:normal}
+.collection-thumbnails{touch-action:pan-x pan-y}
+.project-navigation>*{min-width:0}
+dialog{max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px)}
+.dialog-media img,.dialog-media video{max-height:72vh;max-height:72dvh}
+@media(min-width:761px) and (max-width:1100px){
+  .hero-bottom{display:block}
+  .hero-selectors{justify-content:flex-end}
+  .scroll-cue{margin-bottom:14px}
+  .hero-copy{bottom:205px}
+  .project-feature{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+  .contact-inner{flex-wrap:wrap}
+}
+@media(max-width:760px){
+  .hero{height:calc(100vh - 62px);height:calc(100svh - 62px)}
+  .hero-copy h2{font-size:clamp(39px,11.5vw,86px)}
+  .hero-selectors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hero-selector{width:100%;height:auto;min-height:90px}
+  .selector-label strong{font-size:clamp(11px,3vw,14px)}
+  .selector-label small{overflow-wrap:anywhere}
+  .collection .section-heading{flex-wrap:wrap;align-items:center}
+  .collection-controls{margin-left:auto}
+  .collection-arrow{width:44px;height:44px}
+  .collection-count{display:inline;min-width:47px}
+  .project-feature{grid-template-columns:minmax(0,1fr)}
+  .feature-copy h3{font-size:clamp(28px,7vw,37px)}
+  .collection-caption{align-items:flex-start;flex-wrap:wrap;gap:14px}
+  .collection-caption .text-link{max-width:none;min-height:44px;display:inline-flex;align-items:center;flex-shrink:0}
+  .project-heading h1{font-size:clamp(36px,9vw,51px)}
+  .project-navigation{flex-wrap:wrap;gap:20px}
+  .project-navigation .next{margin-left:auto}
+  .socials{flex-wrap:wrap;gap:8px 24px}
+  .socials a,.back-link,.footer-inner>a{display:inline-flex;align-items:center;min-height:44px}
+  .footer-inner{align-items:center;flex-wrap:wrap}
+  .dialog-media iframe{min-height:0;aspect-ratio:16/9}
+}
+@media(max-width:380px){
+  .wrap{width:calc(100% - 28px)}
+  .header-inner{gap:12px}
+  .brand{gap:10px}
+  .hero-selector .selector-label{padding:7px}
+  .feature-copy{padding:22px}
+  .collection .section-heading{row-gap:16px}
+}
+@media(max-height:500px) and (orientation:landscape){
+  .hero{min-height:620px}
+  .hero-reel{top:70px}
+  .hero-copy{bottom:200px}
+  .dialog-media img,.dialog-media video{max-height:58vh;max-height:58dvh}
+}

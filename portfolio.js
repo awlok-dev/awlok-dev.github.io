@@ -172,10 +172,10 @@
 
   // Titles animate only once their heading is well inside the viewport, then reset
   // after leaving it completely, so scrolling back replays the full sequence.
-  if ('IntersectionObserver' in window && !reducedMotion.matches) {
-    const headings = [...document.querySelectorAll('.section-heading')];
+  if ('IntersectionObserver' in window) {
+    const headings = [...document.querySelectorAll('.section-heading, .contact #about, .project-heading')];
     headings.forEach(heading => {
-      const title = heading.querySelector('h2');
+      const title = heading.querySelector('h2, h1');
       if (!title) return;
       const label = title.textContent.trim();
       title.setAttribute('aria-label', label);
@@ -197,13 +197,40 @@
       });
       heading.classList.add('animated-heading');
     });
+    // One observer owns both states, avoiding competing enter/reset callbacks.
+    const replayHeading = heading => {
+      heading.classList.remove('heading-active');
+      void heading.offsetWidth;
+      heading.classList.add('heading-active');
+    };
     const titleObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('heading-active'); });
-    }, { threshold: 0.35, rootMargin: '0px 0px -90px 0px' });
-    const resetObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (!entry.isIntersecting) entry.target.classList.remove('heading-active'); });
-    }, { threshold: 0 });
-    headings.forEach(heading => { titleObserver.observe(heading); resetObserver.observe(heading); });
+      entries.forEach(entry => {
+        if (entry.isIntersecting) replayHeading(entry.target);
+        else entry.target.classList.remove('heading-active');
+      });
+    }, { threshold: 0.15, rootMargin: '-70px 0px -15% 0px' });
+    headings.forEach(heading => titleObserver.observe(heading));
+    // Navigation can scroll past the trigger before arriving. Replay after it settles.
+    let destinationHeading = null;
+    let replayTimer;
+    const replayAfterScroll = () => {
+      clearTimeout(replayTimer);
+      replayTimer = setTimeout(() => {
+        if (destinationHeading) replayHeading(destinationHeading);
+        destinationHeading = null;
+      }, 180);
+    };
+    document.querySelectorAll('.navigation a, .scroll-cue').forEach(link => {
+      link.addEventListener('click', () => {
+        const hash = new URL(link.href, location.href).hash;
+        const section = hash && document.getElementById(hash.slice(1));
+        destinationHeading = section?.querySelector('.animated-heading');
+        if (destinationHeading) replayAfterScroll();
+      });
+    });
+    window.addEventListener('scroll', () => {
+      if (destinationHeading) replayAfterScroll();
+    }, { passive: true });
     const targets = document.querySelectorAll('.collection-thumbnails, .model-list, .contact-inner, .project-heading, .project-cover, .project-story, .project-gallery > a');
     const revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -211,13 +238,16 @@
         else entry.target.classList.remove('is-visible');
       });
     }, { threshold: 0.08 });
-    targets.forEach(target => { target.classList.add('scroll-reveal'); revealObserver.observe(target); });
+    targets.forEach(target => {
+      if (reducedMotion.matches) return;
+      target.classList.add('scroll-reveal');
+      revealObserver.observe(target);
+    });
     document.addEventListener('focusin', event => event.target.closest('.scroll-reveal')?.classList.add('is-visible'));
     reducedMotion.addEventListener('change', () => {
       if (!reducedMotion.matches) return;
-      headings.forEach(heading => heading.classList.remove('animated-heading'));
       targets.forEach(target => target.classList.add('is-visible'));
-      titleObserver.disconnect(); resetObserver.disconnect(); revealObserver.disconnect();
+      revealObserver.disconnect();
     });
   }
   const aliases = { '#gallery': '#art', '#home': '#top', '#work': '#projects' };

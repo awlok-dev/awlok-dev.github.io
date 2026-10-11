@@ -108,3 +108,11 @@ dialog{max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px)}
 @media(prefers-reduced-motion:reduce){
   .animated-heading.heading-active .title-letter{animation:title-gentle-in 1.4s ease both!important;animation-delay:calc(var(--letter-index)*60ms)!important;transform:none!important;filter:none!important}
 }
+
+/* Featured VFX reel remains separate from the individual work carousel. */
+.hero-reel{z-index:3}
+.vfx-reel-card{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:26px 30px;margin-bottom:28px;border:1px solid #36596c;border-left:3px solid var(--accent);background:linear-gradient(110deg,#102c3b,#0b131e)}
+.vfx-reel-card .eyebrow{margin-bottom:8px}
+.vfx-reel-card h3{font-family:var(--display);font-size:34px;line-height:1;margin:0}
+.vfx-reel-card .button{flex-shrink:0}
+@media(max-width:600px){.vfx-reel-card{align-items:flex-start;flex-direction:column;padding:22px;gap:20px}.vfx-reel-card .button{max-width:100%}.vfx-reel-card h3{font-size:30px}}

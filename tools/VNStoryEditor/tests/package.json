@@ -1,0 +1,6 @@
+{
+  "name": "vn-story-editor-tests",
+  "private": true,
+  "scripts": { "test": "node editor.cjs" },
+  "devDependencies": { "playwright": "1.62.1" }
+}

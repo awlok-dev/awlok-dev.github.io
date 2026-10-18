@@ -39,15 +39,25 @@ body::before {
     height: 100%;
     z-index: -1;
     background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
     animation: float 20s ease-in-out infinite;
 }
 
 @keyframes float {
-    0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
-    33% { transform: translate(30px, -30px) rotate(120deg); }
-    66% { transform: translate(-20px, 20px) rotate(240deg); }
+
+    0%,
+    100% {
+        transform: translate(0px, 0px) rotate(0deg);
+    }
+
+    33% {
+        transform: translate(30px, -30px) rotate(120deg);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) rotate(240deg);
+    }
 }
 
 a {
@@ -134,7 +144,8 @@ section {
     height: auto;
 }
 
-.slick-list, .slick-track {
+.slick-list,
+.slick-track {
     height: 100%;
 }
 
@@ -163,7 +174,7 @@ section {
     justify-content: center;
 }
 
-.slick-slide > div {
+.slick-slide>div {
     width: 100%;
     height: 100%;
     display: flex;
@@ -319,8 +330,13 @@ section {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 #game-container {
@@ -335,8 +351,15 @@ section {
 }
 
 @keyframes scaleIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 #game-frame {
@@ -420,28 +443,28 @@ section {
         min-height: auto;
         gap: 2rem;
     }
-    
+
     .content-container {
         flex-direction: column;
         gap: 2rem;
     }
-    
-    .gallery-container, 
+
+    .gallery-container,
     .info-container {
         width: 100%;
     }
-    
+
     .gallery {
         height: auto;
         min-height: 400px;
     }
-    
+
     .buy-button-container {
         position: relative;
         margin-top: 2rem;
         align-self: flex-end;
     }
-    
+
     #game-container {
         width: 95%;
         height: 90%;
@@ -452,24 +475,24 @@ section {
     header h1 {
         font-size: 2rem;
     }
-    
+
     section {
         padding: 1.5rem;
     }
-    
+
     .gallery,
     .game-details {
         padding: 1.5rem;
     }
-    
+
     .slick-prev {
         left: -40px;
     }
-    
+
     .slick-next {
         right: -40px;
     }
-    
+
     .slick-prev,
     .slick-next {
         width: 40px;
@@ -481,22 +504,22 @@ section {
     header h1 {
         font-size: 1.8rem;
     }
-    
+
     .gallery,
     .game-details {
         padding: 1rem;
     }
-    
+
     .slick-prev,
     .slick-next {
         display: none !important;
     }
-    
+
     #game-container {
         width: 98%;
         height: 95%;
     }
-    
+
     #play-button {
         padding: 0.8rem 2rem;
         font-size: 1rem;
@@ -514,8 +537,8 @@ section {
 
 .light-mode body::before {
     background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(236, 72, 153, 0.03) 0%, transparent 50%);
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(236, 72, 153, 0.03) 0%, transparent 50%);
 }
 
 .light-mode header {

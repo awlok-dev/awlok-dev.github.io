@@ -30,15 +30,15 @@
         const ExpressionSymbols = ["None", "Heart", "Anger", "Sweat", "Question", "Exclamation", "Music", "Sleep"];
         const CGActions = ["None", "Show", "Hide"];
 
-        // Background image cache for performance optimization
+        // Legacy storage keys retained only for optional cleanup.
         const BACKGROUND_ROOT_PATH = 'Textures/Background/';
         const BACKGROUND_CACHE_KEY = 'vn_background_cache';
         
-        // CG image cache for performance optimization
+        // Legacy CG storage key and asset prefix.
         const CG_ROOT_PATH = 'Textures/CG/';
         const CG_CACHE_KEY = 'vn_cg_cache';
 
-        // Dialogue Image cache for performance optimization
+        // Legacy dialogue-image storage key and asset prefix.
         const DIALOGUE_IMAGE_ROOT_PATH = 'Textures/DialogueImage/';
         const DIALOGUE_IMAGE_CACHE_KEY = 'vn_dialogue_image_cache';
 
@@ -864,141 +864,25 @@
 
         // ============ Background Sprite Management ============
 
-        // Background cache management in localStorage
-        function getBackgroundCache() {
-            try {
-                const cache = localStorage.getItem(BACKGROUND_CACHE_KEY);
-                return cache ? JSON.parse(cache) : {};
-            } catch (e) {
-                console.error('Error reading background cache:', e);
-                return {};
-            }
-        }
+        // Compatibility helpers: previews are local Files; no image storage is written.
+        function getBackgroundCache() { return {}; }
 
-        function saveBackgroundToCache(fileName, dataUrl) {
-            try {
-                const cache = getBackgroundCache();
-                cache[fileName] = {
-                    dataUrl: dataUrl,
-                    timestamp: Date.now()
-                };
-                localStorage.setItem(BACKGROUND_CACHE_KEY, JSON.stringify(cache));
-            } catch (e) {
-                console.error('Error saving to background cache:', e);
-                // If localStorage is full, try to clean old entries
-                cleanOldBackgroundCache();
-            }
-        }
+        function saveBackgroundToCache(fileName, dataUrl) { VNLocalAssets.importEmbedded(fileName, dataUrl, "background"); }
 
-        function getBackgroundFromCache(fileName) {
-            const cache = getBackgroundCache();
-            return cache[fileName]?.dataUrl || null;
-        }
+        function getBackgroundFromCache(fileName) { return VNLocalAssets.url(VNLocalAssets.resolve(fileName, "background")); }
 
-        function cleanOldBackgroundCache() {
-            try {
-                const cache = getBackgroundCache();
-                const entries = Object.entries(cache);
-                
-                // Sort by timestamp and keep only the 50 most recent
-                entries.sort((a, b) => b[1].timestamp - a[1].timestamp);
-                const newCache = {};
-                
-                entries.slice(0, 50).forEach(([key, value]) => {
-                    newCache[key] = value;
-                });
-                
-                localStorage.setItem(BACKGROUND_CACHE_KEY, JSON.stringify(newCache));
-            } catch (e) {
-                console.error('Error cleaning background cache:', e);
-            }
-        }
+        function cleanOldBackgroundCache() { /* Preview images are session-local Files. */ }
 
         // CG Cache Functions
-        function getCGCache() {
-            try {
-                const cache = localStorage.getItem(CG_CACHE_KEY);
-                return cache ? JSON.parse(cache) : {};
-            } catch (e) {
-                console.error('Error reading CG cache:', e);
-                return {};
-            }
-        }
+        function getCGCache() { return {}; }
 
-        function saveCGToCache(fileName, dataUrl) {
-            try {
-                const cache = getCGCache();
-                cache[fileName] = {
-                    dataUrl: dataUrl,
-                    timestamp: Date.now()
-                };
-                localStorage.setItem(CG_CACHE_KEY, JSON.stringify(cache));
-            } catch (e) {
-                console.error('Error saving to CG cache:', e);
-                // If localStorage is full, try to clean old entries
-                cleanOldCGCache();
-            }
-        }
+        function saveCGToCache(fileName, dataUrl) { VNLocalAssets.importEmbedded(fileName, dataUrl, "cg"); }
 
-        function getCGFromCache(fileName) {
-            const cache = getCGCache();
-            return cache[fileName]?.dataUrl || null;
-        }
+        function getCGFromCache(fileName) { return VNLocalAssets.url(VNLocalAssets.resolve(fileName, "cg")); }
 
-        function cleanOldCGCache() {
-            try {
-                const cache = getCGCache();
-                const entries = Object.entries(cache);
-                
-                // Sort by timestamp and keep only the 50 most recent
-                entries.sort((a, b) => b[1].timestamp - a[1].timestamp);
-                const newCache = {};
-                
-                entries.slice(0, 50).forEach(([key, value]) => {
-                    newCache[key] = value;
-                });
-                
-                localStorage.setItem(CG_CACHE_KEY, JSON.stringify(newCache));
-            } catch (e) {
-                console.error('Error cleaning CG cache:', e);
-            }
-        }
+        function cleanOldCGCache() { /* Preview images are session-local Files. */ }
 
-        function manageBgCache() {
-            const cache = getBackgroundCache();
-            const entries = Object.entries(cache);
-            
-            if (entries.length === 0) {
-                alert('📁 Background Cache is empty!\n\nNo background images are currently cached.');
-                return;
-            }
-
-            // Sort by timestamp (most recent first)
-            entries.sort((a, b) => b[1].timestamp - a[1].timestamp);
-
-            let message = `🖼️ BACKGROUND CACHE MANAGER\n\n`;
-            message += `📁Š Total cached: ${entries.length} image(s)\n\n`;
-            message += `Cached backgrounds:\n`;
-            
-            entries.slice(0, 10).forEach(([name, data], index) => {
-                const date = new Date(data.timestamp);
-                const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-                message += `${index + 1}. ${name}\n   └─ ${dateStr}\n`;
-            });
-            
-            if (entries.length > 10) {
-                message += `... and ${entries.length - 10} more\n`;
-            }
-
-            message += `\n💡 Tip: These previews are saved in your browser\n`;
-            message += `and will persist across sessions.\n\n`;
-            message += `Would you like to CLEAR ALL background cache?`;
-
-            if (confirm(message)) {
-                localStorage.removeItem(BACKGROUND_CACHE_KEY);
-                alert(`✅ Background cache cleared!\n\n${entries.length} image(s) removed from cache.`);
-            }
-        }
+        function manageBgCache() { document.getElementById('localAssetsDialog').showModal(); }
 
         function setupBackgroundDropzone() {
             const dropzone = document.getElementById('bgDropzone');
@@ -1073,38 +957,15 @@
         }
 
         function processBackgroundFile(file) {
-            // Validate file type
-            if (!file.type.startsWith('image/')) {
-                alert('Please select an image file (PNG, JPG, JPEG, WebP)');
-                return;
-            }
-
-            // Get filename without extension
-            const fileName = file.name;
-            const fileNameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
-
-            // Set the background sprite path (just the filename, Unity will handle the full path)
+            if (!file.type.startsWith('image/')) { alert('Please select an image file.'); return; }
             const node = chapter.nodes[currentNodeIndex];
-            if (node) {
-                node.backgroundSprite = fileNameWithoutExt;
-                
-                // Update display
-                updateBackgroundDisplay(fileNameWithoutExt);
-                
-                // Convert to data URL and save to cache
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const dataUrl = e.target.result;
-                    saveBackgroundToCache(fileNameWithoutExt, dataUrl);
-                    loadBackgroundPreviewFromDataUrl(dataUrl);
-                };
-                reader.onerror = function() {
-                    alert('Error reading file. Please try again.');
-                };
-                reader.readAsDataURL(file);
-                
-                autoSaveChapter();
-            }
+            if (!node) return;
+            const name = file.name.replace(/\.[^/.]+$/, '');
+            VNLocalAssets.add([file], 'background');
+            node.backgroundSprite = name;
+            updateBackgroundDisplay(name);
+            loadBackgroundPreviewFromCache(name);
+            autoSaveChapter();
         }
 
         function updateBackgroundDisplay(fileName) {
@@ -1172,38 +1033,15 @@
         }
 
         function processCGFile(file) {
-            // Validate file type
-            if (!file.type.startsWith('image/')) {
-                alert('Please select an image file (PNG, JPG, JPEG, WebP)');
-                return;
-            }
-
-            // Get filename without extension
-            const fileName = file.name;
-            const fileNameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
-
-            // Set the CG sprite path (just the filename, Unity will handle the full path)
+            if (!file.type.startsWith('image/')) { alert('Please select an image file.'); return; }
             const node = chapter.nodes[currentNodeIndex];
-            if (node) {
-                node.cgSprite = fileNameWithoutExt;
-                
-                // Update display
-                updateCGDisplay(fileNameWithoutExt);
-                
-                // Convert to data URL and save to cache
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const dataUrl = e.target.result;
-                    saveCGToCache(fileNameWithoutExt, dataUrl);
-                    loadCGPreviewFromDataUrl(dataUrl);
-                };
-                reader.onerror = function() {
-                    alert('Error reading file. Please try again.');
-                };
-                reader.readAsDataURL(file);
-                
-                autoSaveChapter();
-            }
+            if (!node) return;
+            const name = file.name.replace(/\.[^/.]+$/, '');
+            VNLocalAssets.add([file], 'cg');
+            node.cgSprite = name;
+            updateCGDisplay(name);
+            loadCGPreviewFromCache(name);
+            autoSaveChapter();
         }
 
         function updateCGDisplay(fileName) {
@@ -1307,56 +1145,13 @@
         // ============ Dialogue Image Functions ============
 
         // Dialogue Image Cache Functions
-        function getDialogueImageCache() {
-            try {
-                const stored = localStorage.getItem(DIALOGUE_IMAGE_CACHE_KEY);
-                return stored ? JSON.parse(stored) : {};
-            } catch (e) {
-                console.error('Error loading dialogue image cache:', e);
-                return {};
-            }
-        }
+        function getDialogueImageCache() { return {}; }
 
-        function saveDialogueImageToCache(fileName, dataUrl) {
-            try {
-                const cache = getDialogueImageCache();
-                cache[fileName] = {
-                    dataUrl: dataUrl,
-                    timestamp: Date.now()
-                };
-                localStorage.setItem(DIALOGUE_IMAGE_CACHE_KEY, JSON.stringify(cache));
-                cleanOldDialogueImageCache();
-            } catch (e) {
-                console.error('Error saving dialogue image to cache:', e);
-            }
-        }
+        function saveDialogueImageToCache(fileName, dataUrl) { VNLocalAssets.importEmbedded(fileName, dataUrl, "dialogue"); }
 
-        function getDialogueImageFromCache(fileName) {
-            const cache = getDialogueImageCache();
-            return cache[fileName]?.dataUrl;
-        }
+        function getDialogueImageFromCache(fileName) { return VNLocalAssets.url(VNLocalAssets.resolve(fileName, "dialogue")); }
 
-        function cleanOldDialogueImageCache() {
-            try {
-                const cache = getDialogueImageCache();
-                const now = Date.now();
-                const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 days
-                
-                let cleaned = false;
-                for (const fileName in cache) {
-                    if (now - cache[fileName].timestamp > maxAge) {
-                        delete cache[fileName];
-                        cleaned = true;
-                    }
-                }
-                
-                if (cleaned) {
-                    localStorage.setItem(DIALOGUE_IMAGE_CACHE_KEY, JSON.stringify(cache));
-                }
-            } catch (e) {
-                console.error('Error cleaning dialogue image cache:', e);
-            }
-        }
+        function cleanOldDialogueImageCache() { /* Preview images are session-local Files. */ }
 
         function setupDialogueImageDropzone() {
             const dropzone = document.getElementById('dialogueImgDropzone');
@@ -1393,29 +1188,15 @@
         }
 
         function processDialogueImageFile(file) {
-            if (!file.type.startsWith('image/')) {
-                alert('Please select an image file (PNG, JPG, JPEG, or WebP)');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const dataUrl = e.target.result;
-                const fileNameWithoutExt = file.name.replace(/\.[^/.]+$/, '');
-                
-                // Save to cache
-                saveDialogueImageToCache(fileNameWithoutExt, dataUrl);
-                
-                // Update node
-                const node = chapter.nodes[currentNodeIndex];
-                if (node) {
-                    node.dialogueImageSprite = fileNameWithoutExt;
-                    updateDialogueImageDisplay(fileNameWithoutExt);
-                    loadDialogueImagePreviewFromDataUrl(dataUrl);
-                    autoSaveChapter();
-                }
-            };
-            reader.readAsDataURL(file);
+            if (!file.type.startsWith('image/')) { alert('Please select an image file.'); return; }
+            const node = chapter.nodes[currentNodeIndex];
+            if (!node) return;
+            const name = file.name.replace(/\.[^/.]+$/, '');
+            VNLocalAssets.add([file], 'dialogue');
+            node.dialogueImageSprite = name;
+            updateDialogueImageDisplay(name);
+            loadDialogueImagePreviewFromCache(name);
+            autoSaveChapter();
         }
 
         function updateDialogueImageDisplay(fileName) {
@@ -1552,7 +1333,7 @@
             } else {
                 // No cache available - show placeholder
                 if (placeholder) {
-                    placeholder.innerHTML = `<div class="placeholder">📁 ${BACKGROUND_ROOT_PATH}${fileName}<br><small>Drop the image file to preview</small></div>`;
+                    placeholder.innerHTML = `<div class="placeholder">📁 ${BACKGROUND_ROOT_PATH}${fileName}<br><small>Link the local image file to preview</small></div>`;
                     placeholder.style.display = 'block';
                 }
                 img.classList.remove('loaded');
@@ -1914,7 +1695,7 @@
             URL.revokeObjectURL(url);
             
             const bgCount = Object.keys(backgroundImages).length;
-            alert(`Chapter "${chapter.storyName} / ${chapter.chapterName}" exported successfully!\n\nFile: ${chapter.fileName}.json\n${bgCount} background image(s) included for cross-machine compatibility.`);
+            alert(`Chapter "${chapter.storyName} / ${chapter.chapterName}" exported successfully!\n\nFile: ${chapter.fileName}.json\n${bgCount} embedded background image(s). Link local image folders again when opening on another machine.`);
         }
 
         function importJSON(event) {
@@ -1985,7 +1766,7 @@
                     const bgCache = getBackgroundCache();
                     
                     chapterData.nodes.forEach((node, index) => {
-                        if (node.backgroundSprite && !bgCache[node.backgroundSprite]) {
+                        if (node.backgroundSprite && !VNLocalAssets.resolve(node.backgroundSprite, 'background')) {
                             missingBackgrounds.push({ index, name: node.backgroundSprite });
                         }
                     });
@@ -2018,7 +1799,7 @@
                     message += `📁Š ${chapterData.nodes.length} node(s) imported\n`;
                     
                     if (importedBgCount > 0) {
-                        message += `\n🖼️ ${importedBgCount} background image(s) imported and cached!\n`;
+                        message += `\n🖼️ ${importedBgCount} background image(s) linked for this session!\n`;
                     }
                     
                     if (missingBackgrounds.length > 0) {
@@ -2505,6 +2286,7 @@
                 return;
             }
 
+            VNLocalAssets.add([file], 'character');
             // Create expression with file name only
             const expr = createEmptyExpression();
             expr.fileName = file.name;
@@ -2858,6 +2640,7 @@
                 throw new Error('No files found in the selected folder.');
             }
 
+            VNLocalAssets.add(files, 'character');
             const rootPath = paths[0].split('/')[0];
             const characterName = rootPath;
             

@@ -25,7 +25,10 @@
     const originalSave = autoSaveChapter;
     const originalTitle = updateChapterTitleBar;
     let page = 0;
-    const pageSize = 100;
+    let pageSize = 100;
+    let virtualStart = -1;
+    const virtualRowHeight = 110;
+    let sceneFrames = [], previewFrame = 0, stageKey = null, stageElement = null;
     const get = (obj, path) => path.split('.').reduce((v, k) => v?.[k], obj);
     function set(obj, path, value) {
         const keys = path.split('.');
@@ -49,7 +52,7 @@
     function syncChapter() {
         if (trackedChapter === chapter) return;
         trackedChapter = chapter; snapshot = JSON.stringify(chapter);
-        past = []; future = []; selected.clear(); active = 0; page = 0;
+        past = []; future = []; selected.clear(); active = 0; page = 0; sceneFrames = [];
         $('nextChapter').value = chapter.nextChapter || '';
     }
     function record() {
@@ -62,7 +65,7 @@
         $('sheetUndo').disabled = !past.length;
         $('sheetRedo').disabled = !future.length;
     }
-    autoSaveChapter = function() { originalSave(); record(); renderPreview(); updateStatus(); };
+    autoSaveChapter = function() { originalSave(); record(); sceneFrames = []; renderPreview(); updateStatus(); };
     updateChapterTitleBar = function() { originalTitle(); if ($('sheetStatus')) updateStatus(); };
     function updateStatus() {
         $('sheetStatus').textContent = hasUnsavedChanges ? 'Unsaved changes · Ctrl/Cmd + S to save' : currentChapterId ? 'Saved in this browser' : 'New chapter · not saved';
@@ -77,7 +80,7 @@
         selected.clear(); currentNodeIndex = null;
         $('editorModal').classList.remove('active');
         for (const key of ['storyName', 'chapterName', 'fileName', 'nextChapter']) $(key).value = chapter[key] || '';
-        originalSave(); renderNodeTable();
+        originalSave(); sceneFrames = []; renderNodeTable();
         tell(direction === 'undo' ? 'Change undone.' : 'Change restored.');
     }
     function mutate(fn, message) {
@@ -98,16 +101,21 @@
     }
     const textValue = (node, f) => f.type === 'lines' ? (get(node, f.key) || []).join('\n') : String(get(node, f.key) ?? '');
     function focusCell(index, col) {
-        const input = document.querySelector(`[data-row="${index}"][data-col="${col}"]`);
+        let input = document.querySelector(`[data-row="${index}"][data-col="${col}"]`);
+        if (!input && pageSize === Number.MAX_SAFE_INTEGER && visible.includes(index)) {
+            document.querySelector('.node-table-container').scrollTop = visible.indexOf(index) * virtualRowHeight; renderNodeTable();
+            input = document.querySelector(`[data-row="${index}"][data-col="${col}"]`);
+        }
         if (input) { input.focus(); input.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
     }
     function activate(index) {
         active = index;
-        document.querySelectorAll('.sheet-row').forEach(row => row.classList.toggle('is-current', Number(row.dataset.index) === active));
+        document.querySelector('.sheet-row.is-current')?.classList.remove('is-current');
+        document.querySelector(`.sheet-row[data-index="${active}"]`)?.classList.add('is-current');
         renderPreview();
     }
     function makeCell(node, index, f, col) {
-        const td = element('td');
+        const td = element('td'); td.dataset.fillRow = index; td.dataset.fillCol = col;
         let input;
         if (f.type === 'select') {
             input = element('select');
@@ -128,7 +136,9 @@
         input.oninput = () => {
             try {
                 const value = f.type === 'boolean' ? input.checked : coerce(input.value, f);
-                set(node, f.key, value); input.setCustomValidity('');
+                set(node, f.key, value);
+                if (/Character\.|backgroundSprite|cgAction|cgSprite/.test(f.key)) sceneFrames.length = Math.min(sceneFrames.length, index);
+                input.setCustomValidity('');
                 originalSave(); renderPreview(); updateStatus();
             } catch (err) { input.setCustomValidity(err.message); }
         };
@@ -156,7 +166,11 @@
             event.preventDefault();
             try { pasteRectangle(parseDelimited(text, '\t'), index, col); } catch (err) { tell(err.message); }
         };
-        td.append(input); if (f.key === 'dialogue') td.className = 'dialogue-cell';
+        td.append(input);
+        const handle = button('', () => {}, 'Drag up or down to copy this cell. Escape cancels.');
+        handle.className = 'fill-handle'; handle.tabIndex = -1; handle.setAttribute('aria-label', `Fill from line ${index + 1}: ${f.label}`);
+        handle.onpointerdown = event => beginFill(event, index, col, handle); td.append(handle);
+        if (f.key === 'dialogue') td.className = 'dialogue-cell';
         return td;
     }
     function matchingRows() {
@@ -172,6 +186,7 @@
             $('nodeTable').tHead.innerHTML = originalHead;
             originalRender(); updateStatus(); renderPreview(); return;
         }
+        const savedScroll = document.querySelector('.node-table-container').scrollTop;
         const table = $('nodeTable'); table.tHead.replaceChildren();
         const header = element('tr');
         const checkHead = element('th');
@@ -184,8 +199,20 @@
         for (const f of groups[group]) header.append(element('th', f.label));
         header.append(element('th', 'Details')); table.tHead.append(header);
         const body = $('nodeTableBody'); body.replaceChildren();
+        const fragment = document.createDocumentFragment();
         page = Math.max(0, Math.min(page, Math.ceil(visible.length / pageSize) - 1));
-        for (const index of visible.slice(page * pageSize, (page + 1) * pageSize)) {
+        const box = document.querySelector('.node-table-container');
+        const virtual = pageSize === Number.MAX_SAFE_INTEGER && visible.length > 250;
+        box.classList.toggle('virtual-all', virtual);
+        const start = virtual ? Math.max(0, Math.floor(Math.max(0, savedScroll - 55) / virtualRowHeight) - 10) : page * pageSize;
+        const end = virtual ? Math.min(visible.length, start + Math.ceil(box.clientHeight / virtualRowHeight) + 24) : Math.min(visible.length, (page + 1) * pageSize);
+        virtualStart = virtual ? start : -1;
+        const spacer = height => {
+            const row = element('tr'), td = element('td'); row.className = 'virtual-spacer'; td.colSpan = groups[group].length + 3;
+            td.style.height = `${height}px`; row.setAttribute('aria-hidden', 'true'); row.append(td); return row;
+        };
+        if (virtual && start) fragment.append(spacer(start * virtualRowHeight));
+        for (const index of visible.slice(start, end)) {
             const node = chapter.nodes[index], row = element('tr', undefined, 'sheet-row'); row.dataset.index = index;
             row.classList.toggle('is-current', active === index); row.classList.toggle('is-selected', selected.has(index));
             const selectTd = element('td'), check = element('input'); check.type = 'checkbox'; check.checked = selected.has(index);
@@ -193,6 +220,11 @@
             check.onchange = () => { check.checked ? selected.add(index) : selected.delete(index); renderNodeTable(); };
             selectTd.append(check);
             const indexTd = element('td'); indexTd.append(button(String(index + 1).padStart(2, '0'), () => activate(index), `Preview line ${index + 1} · Unity index ${index}`));
+            const drag = button('⠿', () => {}, 'Drag to reorder this line or the selected lines');
+            drag.className = 'row-drag'; drag.draggable = true; drag.setAttribute('aria-label', `Drag line ${index + 1}`);
+            drag.ondragstart = event => startRowDrag(event, index); drag.ondragend = endRowDrag;
+            row.ondragover = event => overRow(event, row); row.ondrop = event => dropRow(event, row);
+            indexTd.append(drag);
             row.append(selectTd, indexTd);
             groups[group].forEach((f, col) => row.append(makeCell(node, index, f, col)));
             const details = element('td', undefined, 'sheet-details');
@@ -202,8 +234,11 @@
             if (node.commands?.length) tags.push(`${node.commands.length} commands`);
             if (node.cgAction !== 'None' && node.cgAction) tags.push(`CG ${node.cgAction}`);
             details.append(element('small', tags.join(' · ')));
-            row.append(details); body.append(row);
+            row.append(details); fragment.append(row);
         }
+        if (virtual && end < visible.length) fragment.append(spacer((visible.length - end) * virtualRowHeight));
+        body.append(fragment);
+        box.scrollTop = savedScroll;
         if (!visible.length) {
             const row = element('tr'), td = element('td'); td.colSpan = groups[group].length + 3;
             const empty = element('div', undefined, 'sheet-empty');
@@ -336,36 +371,68 @@
         mutate(() => targets.forEach(i => { const node = chapter.nodes[i]; if ((node.dialogue || '').includes(find)) { node.dialogue = node.dialogue.split(find).join(replacement); count++; } }), `Replaced text in ${count} lines.`);
         tell(`Replaced text in ${count} lines.`);
     }
+    // Preview requests coalesce to one render per animation frame. Stage images survive text edits.
     function renderPreview() {
+        if (previewFrame) return;
+        previewFrame = requestAnimationFrame(() => { previewFrame = 0; buildPreview(); });
+    }
+    function sceneAt(index) {
+        for (let i = sceneFrames.length; i <= index; i++) {
+            const previous = sceneFrames[i - 1] || {bg: '', cg: '', states: {}};
+            const scene = {bg: previous.bg, cg: previous.cg, states: {...previous.states}};
+            const node = chapter.nodes[i];
+            if (node.backgroundSprite) scene.bg = node.backgroundSprite;
+            if (node.cgAction === 'Show') scene.cg = node.cgSprite;
+            if (node.cgAction === 'Hide') scene.cg = '';
+            for (const pos of ['left', 'center', 'right']) {
+                const state = node[`${pos}Character`];
+                if (state?.action === 'Exit') delete scene.states[pos];
+                else if (state?.action === 'Enter' || state?.action === 'ChangeOutfitExpression') scene.states[pos] = {...scene.states[pos], ...state};
+            }
+            sceneFrames.push(scene);
+        }
+        return sceneFrames[index];
+    }
+    function debugFields(value, path, body) {
+        if (value !== null && typeof value === 'object' && Object.keys(value).length) {
+            for (const key of Object.keys(value)) debugFields(value[key], path ? `${path}.${key}` : key, body);
+            return;
+        }
+        const row = element('tr'); row.append(element('th', path), element('td', value === '' ? '(empty)' : JSON.stringify(value) ?? '(undefined)')); body.append(row);
+    }
+    function buildPreview() {
         const pane = $('sheetPreview'); if (!pane) return;
+        const oldScroll = pane.scrollTop;
+        // Reuse the actual image DOM when the scene has not changed.
+        if (stageElement?.isConnected) stageElement.remove();
         pane.replaceChildren();
         active = Math.max(0, Math.min(active, chapter.nodes.length - 1));
         const node = chapter.nodes[active];
-        const top = element('div', undefined, 'preview-top'); top.append(element('span', 'READING PREVIEW'), element('span', node ? `${active + 1} / ${chapter.nodes.length}` : '—')); pane.append(top);
-        if (!node) { pane.append(element('p', 'Your dialogue preview appears here as you write.', 'preview-hint')); return; }
-        let bg = '', cg = ''; const states = {};
-        for (let i = 0; i <= active; i++) {
-            const n = chapter.nodes[i]; if (n.backgroundSprite) bg = n.backgroundSprite;
-            if (n.cgAction === 'Show') cg = n.cgSprite; if (n.cgAction === 'Hide') cg = '';
+        const top = element('div', undefined, 'preview-top'); top.append(element('span', 'READING PREVIEW / DEBUG'), element('span', node ? `${active + 1} / ${chapter.nodes.length}` : '—')); pane.append(top);
+        if (!node) { pane.append(element('p', 'Your dialogue preview appears here as you write.', 'preview-hint')); VNLocalAssets.trim(); return; }
+        const scene = sceneAt(active);
+        const key = JSON.stringify([scene, VNLocalAssets.version, Object.values(scene.states).map(state => [getCharacterNameById(state.characterId), VNLocalAssets.character(state, characterLibrary)?.path])]);
+        if (stageKey !== key) {
+            stageKey = key;
+            stageElement = element('div', undefined, 'preview-stage');
+            const entry = VNLocalAssets.resolve(scene.cg || scene.bg, scene.cg ? 'cg' : 'background');
+            if (entry) stageElement.append(VNLocalAssets.image(entry, scene.cg || scene.bg, 'scene-background'));
+            stageElement.append(element('span', scene.cg ? `CG · ${scene.cg}` : scene.bg ? `BG · ${scene.bg}${entry ? '' : ' · local image missing or ambiguous'}` : 'No background', 'stage-label'));
+            const cast = element('div', undefined, 'preview-cast');
             for (const pos of ['left', 'center', 'right']) {
-                const s = n[`${pos}Character`];
-                if (s?.action === 'Exit') delete states[pos];
-                else if (s?.action === 'Enter' || s?.action === 'ChangeOutfitExpression') states[pos] = { ...states[pos], ...s };
+                const state = scene.states[pos], slot = element('div', undefined, 'cast-slot');
+                slot.append(element('small', pos));
+                if (state) {
+                    const entry = VNLocalAssets.character(state, characterLibrary);
+                    if (entry) slot.append(VNLocalAssets.image(entry, `${pos}: ${state.characterId}`, 'cast-image'));
+                    else slot.append(element('small', 'Local sprite not linked'));
+                    slot.append(element('strong', getCharacterNameById(state.characterId) || state.characterId || 'Character'), element('small', `ID: ${state.characterId}`), element('small', `Outfit ${state.outfitID} / Pose ${state.poseID} / Expr ${state.expressionIndex}`));
+                } else slot.append(element('span', '—'));
+                cast.append(slot);
             }
+            stageElement.append(cast);
         }
-        const stage = element('div', undefined, 'preview-stage');
-        const cached = cg ? getCGFromCache(cg) : bg ? getBackgroundFromCache(bg) : null;
-        if (cached) { const img = element('img'); img.src = cached; img.alt = cg || bg; stage.append(img); }
-        stage.append(element('span', cg ? `CG · ${cg}` : bg ? `BG · ${bg}${cached ? '' : ' · image not cached'}` : 'No background', 'stage-label'));
-        const cast = element('div', undefined, 'preview-cast');
-        for (const pos of ['left', 'center', 'right']) {
-            const s = states[pos], slot = element('div', undefined, 'cast-slot');
-            slot.append(element('small', pos));
-            if (s) { slot.append(element('strong', getCharacterNameById(s.characterId) || s.characterId || 'Character'), element('small', [s.outfitID, s.poseID, s.expressionIndex].filter(x => x !== '').join(' / '))); }
-            else slot.append(element('span', '—'));
-            cast.append(slot);
-        }
-        stage.append(cast); pane.append(stage);
+        pane.append(stageElement);
         const dialogue = element('div', undefined, 'preview-dialogue');
         const name = element('h3', node.isNarration ? 'Narrator' : getCharacterNameById(node.speakingCharacterId) || node.speakingCharacterId || 'Unnamed speaker');
         const content = element('p', node.dialogue || 'Start writing this line…');
@@ -373,14 +440,14 @@
         if (node.useSpecificNameColor && node.specificNameColor) name.style.color = cssColor(node.specificNameColor);
         if (node.useSpecificDialogueColor && node.specificDialogueColor) content.style.color = cssColor(node.specificDialogueColor);
         dialogue.append(name, content); pane.append(dialogue);
-        const dialogueImage = node.dialogueImageSprite && getDialogueImageFromCache(node.dialogueImageSprite);
-        if (dialogueImage) { const img = element('img'); img.src = dialogueImage; img.alt = node.dialogueImageSprite; img.className = 'preview-inline-image'; pane.append(img); }
+        const dialogueImage = VNLocalAssets.resolve(node.dialogueImageSprite, 'dialogue');
+        if (dialogueImage) pane.append(VNLocalAssets.image(dialogueImage, node.dialogueImageSprite, 'preview-inline-image'));
         if (node.hasChoices) {
             const choices = element('div', undefined, 'preview-choices');
             for (const choice of node.choiceList?.choices || []) {
                 const item = button(`${choice.choiceText || '(empty choice)'} → ${choice.nextChapterName || 'Continue'}`, () => {
-                    if (choice.nextChapterName) tell(`Branch target: ${choice.nextChapterName}. Open that chapter in Browse Chapters to preview it. Commands are not executed.`);
-                    else { active = Math.min(active + 1, chapter.nodes.length - 1); activate(active); }
+                    if (choice.nextChapterName) tell(`Branch target: ${choice.nextChapterName}. Open that chapter in Browse Chapters. Commands are not executed.`);
+                    else activate(Math.min(active + 1, chapter.nodes.length - 1));
                 }); item.disabled = choice.isEnabled === false; choices.append(item);
             }
             pane.append(choices);
@@ -389,10 +456,127 @@
         const prev = button('← Previous', () => activate(active - 1)), next = button('Next →', () => activate(active + 1));
         prev.disabled = active <= 0; next.disabled = active >= chapter.nodes.length - 1;
         nav.append(prev, button('Edit details', () => selectNode(active)), next); pane.append(nav);
-        const notes = [`Camera: ${node.cameraRange || 'Far'} · Delay: ${node.dialogueDelay || 0}s`, ...(node.commands || []).map(c => `Command: ${c}`)];
-        if (node.showSoundOptions) notes.push(`BGM: ${node.bgmAction} ${node.backgroundMusic || ''}`, `Ambient: ${node.ambientAction} ${node.ambientSound || ''}`, `SFX: ${node.soundEffect || '—'} · Voice: ${node.characterVoice || '—'}`);
-        pane.append(element('p', notes.join('\n'), 'preview-meta'), element('p', 'Reading & staging guide. Character slots show asset names; Unity animations, rich-text markup, audio and commands are not played.', 'preview-hint'));
+        const resolved = element('section', undefined, 'debug-section'); resolved.append(element('h3', 'Resolved scene (including earlier lines)'));
+        const resolvedTable = element('table'), resolvedBody = element('tbody');
+        const stateInfo = {backgroundSprite: scene.bg, cgSprite: scene.cg, speakingCharacterName: getCharacterNameById(node.speakingCharacterId) || '', speakingCharacterId: node.speakingCharacterId || ''};
+        for (const pos of ['left', 'center', 'right']) {
+            const state = scene.states[pos];
+            stateInfo[pos] = state ? {...state, characterName: getCharacterNameById(state.characterId) || '', localFile: VNLocalAssets.character(state, characterLibrary)?.path || '(missing or ambiguous)'} : '(empty)';
+        }
+        debugFields(stateInfo, '', resolvedBody); resolvedTable.append(resolvedBody); resolved.append(resolvedTable); pane.append(resolved);
+        const debug = element('section', undefined, 'debug-section'); debug.id = 'nodeDebug'; debug.append(element('h3', `Every node setting · Unity index ${active}`), element('p', 'Stored values, including disabled options, empty fields and custom properties.'));
+        const table = element('table'), body = element('tbody'); debugFields(node, '', body); table.append(body); debug.append(table); pane.append(debug);
+        const raw = element('details', undefined, 'debug-raw'); raw.append(element('summary', 'Exact node JSON'), element('pre', JSON.stringify(node, null, 2))); pane.append(raw);
+        pane.append(element('p', 'Local file preview only. Audio, animations, game events and commands are shown for inspection, not executed.', 'preview-hint'));
+        pane.scrollTop = oldScroll;
+        VNLocalAssets.trim();
     }
+    let rowDrag = null;
+    function startRowDrag(event, index) {
+        document.activeElement?.blur();
+        if (query || filter !== 'all') { event.preventDefault(); tell('Clear filters before dragging rows, so the destination is unambiguous.'); return; }
+        rowDrag = selected.has(index) ? [...selected].sort((a, b) => a - b) : [index];
+        event.dataTransfer.effectAllowed = 'move'; event.dataTransfer.setData('text/plain', 'vn-story-rows');
+        for (const i of rowDrag) document.querySelector(`.sheet-row[data-index="${i}"]`)?.classList.add('row-dragging');
+    }
+    function endRowDrag() {
+        rowDrag = null;
+        document.querySelectorAll('.row-dragging,.drop-before,.drop-after').forEach(el => el.classList.remove('row-dragging', 'drop-before', 'drop-after'));
+    }
+    function overRow(event, row) {
+        if (!rowDrag) return;
+        event.preventDefault(); event.dataTransfer.dropEffect = 'move';
+        document.querySelectorAll('.drop-before,.drop-after').forEach(el => el.classList.remove('drop-before', 'drop-after'));
+        const bounds = row.getBoundingClientRect(); row.classList.add(event.clientY < bounds.top + bounds.height / 2 ? 'drop-before' : 'drop-after');
+        const box = document.querySelector('.node-table-container'), rect = box.getBoundingClientRect();
+        if (event.clientY < rect.top + 50) box.scrollTop -= 30;
+        if (event.clientY > rect.bottom - 50) box.scrollTop += 30;
+    }
+    function dropRow(event, row) {
+        if (!rowDrag) return;
+        event.preventDefault();
+        const indices = [...rowDrag], dragged = new Set(indices);
+        const bounds = row.getBoundingClientRect();
+        const boundary = Number(row.dataset.index) + (event.clientY >= bounds.top + bounds.height / 2 ? 1 : 0);
+        const activeNode = chapter.nodes[active];
+        const moving = indices.map(i => chapter.nodes[i]);
+        const remaining = chapter.nodes.filter((_, i) => !dragged.has(i));
+        const insertion = boundary - indices.filter(i => i < boundary).length;
+        endRowDrag();
+        mutate(() => {
+            remaining.splice(insertion, 0, ...moving); chapter.nodes = remaining;
+            selected = new Set(moving.map(node => chapter.nodes.indexOf(node)));
+            active = chapter.nodes.indexOf(activeNode); currentNodeIndex = null;
+        }, `Moved ${moving.length} line(s). Undo is available.`);
+    }
+    function beginFill(event, index, col, handle) {
+        if (event.button !== 0) return;
+        event.preventDefault(); event.stopPropagation(); document.activeElement?.blur();
+        const source = clone(get(chapter.nodes[index], groups[group][col].key) ?? (groups[group][col].type === 'lines' ? [] : groups[group][col].type === 'boolean' ? false : ''));
+        const start = visible.indexOf(index); let end = start, y = event.clientY, x = event.clientX, raf = 0;
+        const box = document.querySelector('.node-table-container');
+        box.setPointerCapture(event.pointerId);
+        function paint() {
+            document.querySelectorAll('.fill-range').forEach(el => el.classList.remove('fill-range'));
+            for (const i of visible.slice(Math.min(start, end), Math.max(start, end) + 1)) document.querySelector(`[data-fill-row="${i}"][data-fill-col="${col}"]`)?.classList.add('fill-range');
+        }
+        function update() {
+            const bounds = box.getBoundingClientRect();
+            const cell = document.elementFromPoint(x, Math.max(bounds.top + 55, Math.min(y, Math.min(bounds.bottom, innerHeight) - 4)))?.closest('[data-fill-row]');
+            if (cell) { const next = visible.indexOf(Number(cell.dataset.fillRow)); if (next >= 0 && next !== end) { end = next; paint(); } }
+        }
+        function tick() {
+            const bounds = box.getBoundingClientRect();
+            if (y < bounds.top + 65) box.scrollTop -= 16;
+            else if (y > Math.min(bounds.bottom, innerHeight) - 30) box.scrollTop += 16;
+            update(); raf = requestAnimationFrame(tick);
+        }
+        function move(e) { x = e.clientX; y = e.clientY; update(); }
+        function finish(apply) {
+            cancelAnimationFrame(raf);
+            box.removeEventListener('pointermove', move); box.removeEventListener('pointerup', up); box.removeEventListener('pointercancel', cancel);
+            document.removeEventListener('keydown', escape, true); window.removeEventListener('blur', cancel);
+            if (box.hasPointerCapture(event.pointerId)) box.releasePointerCapture(event.pointerId);
+            document.querySelectorAll('.fill-range').forEach(el => el.classList.remove('fill-range'));
+            if (apply && end !== start) {
+                const indexes = visible.slice(Math.min(start, end), Math.max(start, end) + 1);
+                mutate(() => indexes.forEach(i => set(chapter.nodes[i], groups[group][col].key, clone(source))), `Filled ${indexes.length - 1} cell(s). Undo restores the entire fill.`);
+                focusCell(index, col);
+            }
+        }
+        const up = () => finish(true), cancel = () => finish(false);
+        const escape = e => { if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); finish(false); } };
+        box.addEventListener('pointermove', move); box.addEventListener('pointerup', up); box.addEventListener('pointercancel', cancel);
+        document.addEventListener('keydown', escape, true); window.addEventListener('blur', cancel);
+        paint(); raf = requestAnimationFrame(tick);
+    }
+    function setupAssets() {
+        const dialog = element('dialog'); dialog.id = 'localAssetsDialog';
+        dialog.innerHTML = `<h2>Local image previews</h2><p>Link files from your computer. Images stay local and are not saved in browser storage or exported in JSON. Reconnect your folder after refreshing.</p><label>Image type <select id="assetKind"><option value="auto">Auto / complete asset folder</option><option value="background">Backgrounds</option><option value="character">Characters</option><option value="cg">CGs</option><option value="dialogue">Dialogue images</option></select></label><div class="asset-actions"><label class="sheet-file">Link folder<input id="assetFolder" type="file" webkitdirectory multiple hidden></label><label class="sheet-file">Link image files<input id="assetFiles" type="file" accept="image/*" multiple hidden></label></div><p>Backgrounds match sprite filenames. Characters use your library's expression filename and CharacterName/OutfitID_Name/PoseID_Name folders. Duplicate filenames require matching folders; ambiguous images stay unresolved.</p><div id="assetDrop" tabindex="0">Drop image files here, or use Link folder for a directory.</div><p id="assetStatus" role="status"></p><div class="asset-actions"><button id="assetClear">Unlink all images</button><button id="assetCleanLegacy">Remove old stored image caches</button><button id="assetClose">Done</button></div>`;
+        document.body.append(dialog);
+        const update = () => {
+            $('assetStatus').textContent = `${VNLocalAssets.stats().files} linked files · previews load on demand`;
+            stageKey = null; renderPreview();
+            if ($('editorModal').classList.contains('active') && chapter.nodes[currentNodeIndex]) {
+                const n = chapter.nodes[currentNodeIndex];
+                loadBackgroundPreviewFromCache(n.backgroundSprite); loadCGPreviewFromCache(n.cgSprite); loadDialogueImagePreviewFromCache(n.dialogueImageSprite);
+            }
+        };
+        document.addEventListener('vn-assets-changed', update);
+        const link = list => { const count = VNLocalAssets.add([...list], $('assetKind').value); tell(`${count} local image(s) linked. No image data saved in browser storage.`); };
+        for (const id of ['assetFiles', 'assetFolder']) $(id).onchange = event => { link(event.target.files); event.target.value = ''; };
+        $('assetDrop').ondragover = e => e.preventDefault();
+        $('assetDrop').ondrop = e => { e.preventDefault(); link(e.dataTransfer.files); };
+        $('assetClear').onclick = () => VNLocalAssets.clear();
+        $('assetCleanLegacy').onclick = () => {
+            if (!confirm('Remove only the old background, CG and dialogue-image caches? Chapters and character definitions are kept.')) return;
+            for (const key of [BACKGROUND_CACHE_KEY, CG_CACHE_KEY, DIALOGUE_IMAGE_CACHE_KEY]) localStorage.removeItem(key);
+            $('assetStatus').textContent = 'Old image caches removed. Chapters and character definitions were kept.';
+        };
+        $('assetClose').onclick = () => dialog.close();
+        update();
+    }
+
     function setup() {
         document.body.classList.add('sheet-workspace');
         document.querySelector('.header h1').innerHTML = '<span class="brand-mark">VN</span> Story studio <small>VISUAL NOVEL EDITOR</small>';
@@ -404,7 +588,7 @@
         content.before(bar);
         const preview = element('aside'); preview.id = 'sheetPreview'; preview.setAttribute('aria-label', 'Live reading preview'); content.append(preview);
         const footer = element('footer', undefined, 'sheet-footer');
-        footer.innerHTML = `<div><span id="sheetStatus"></span><span id="sheetNotice" role="status">Tab moves across cells · Enter moves down · Shift+Enter adds a new paragraph · Paste cells from a spreadsheet</span></div><div><button id="pageBack">←</button><span id="sheetPage"></span><button id="pageNext">→</button></div>`;
+        footer.innerHTML = `<div><span id="sheetStatus"></span><span id="sheetNotice" role="status">Tab moves across cells · Enter moves down · Shift+Enter adds a new paragraph · Paste cells from a spreadsheet</span></div><div><label>Rows <select id="pageSize" aria-label="Rows per page"><option value="50">50</option><option value="100" selected>100</option><option value="250">250</option><option value="all">All</option></select></label><button id="pageBack">←</button><span id="sheetPage"></span><button id="pageNext">→</button></div>`;
         content.after(footer);
         const dialog = element('dialog'); dialog.id = 'scriptDialog';
         dialog.innerHTML = `<h2>Bring your script in.</h2><p>Paste two columns from a spreadsheet: <b>Speaker → Dialogue</b>. Or paste plain text: each non-empty line becomes narration. New lines are appended.</p><textarea id="scriptText" aria-label="Script to append" placeholder="Paste your story here…"></textarea><p id="scriptError" role="alert"></p><div><button id="scriptCancel">Cancel</button><button id="scriptAppend">Append lines</button></div>`; document.body.append(dialog);
@@ -415,13 +599,14 @@
         $('scriptPaste').onclick = pasteScript; $('scriptCancel').onclick = () => dialog.close(); $('scriptAppend').onclick = appendScript;
         $('csvExport').onclick = exportCSV;
         $('csvImport').onchange = async event => { const file = event.target.files[0]; if (!file) return; try { importCSV(await file.text()); } catch (err) { tell(err.message); } event.target.value = ''; };
-        $('sheetSearch').oninput = event => { query = event.target.value.toLowerCase(); page = 0; renderNodeTable(); };
+        $('sheetSearch').oninput = event => { query = event.target.value.toLowerCase(); page = 0; document.querySelector('.node-table-container').scrollTop = 0; renderNodeTable(); };
         $('sheetFilter').onchange = event => { filter = event.target.value; page = 0; renderNodeTable(); };
         $('sheetMode').onchange = event => { mode = event.target.value; document.body.classList.toggle('classic-mode', mode === 'classic'); renderNodeTable(); };
         $('previewToggle').onclick = () => { const hidden = content.classList.toggle('preview-hidden'); $('previewToggle').setAttribute('aria-pressed', String(!hidden)); };
         document.querySelectorAll('[data-group]').forEach(btn => { btn.onclick = () => { group = btn.dataset.group; renderTabs(); renderNodeTable(); }; });
         document.querySelectorAll('[data-bulk]').forEach(btn => { btn.onclick = () => bulk(btn.dataset.bulk); });
         $('replaceApply').onclick = replaceText;
+        $('pageSize').onchange = event => { document.querySelector('.node-table-container').scrollTop = 0; pageSize = event.target.value === 'all' ? Number.MAX_SAFE_INTEGER : Number(event.target.value); page = 0; renderNodeTable(); };
         $('pageBack').onclick = () => { page--; renderNodeTable(); }; $('pageNext').onclick = () => { page++; renderNodeTable(); };
         document.addEventListener('keydown', event => {
             if (!(event.ctrlKey || event.metaKey) || event.isComposing) return;
@@ -430,8 +615,29 @@
                 event.preventDefault(); document.activeElement?.blur(); record(); history(event.shiftKey ? 'redo' : 'undo');
             }
         });
+        const scrollBox = document.querySelector('.node-table-container');
+        let scrollFrame = 0;
+        scrollBox.addEventListener('scroll', () => {
+            if (scrollFrame || virtualStart < 0) return;
+            scrollFrame = requestAnimationFrame(() => {
+                scrollFrame = 0;
+                const start = Math.max(0, Math.floor(Math.max(0, scrollBox.scrollTop - 55) / virtualRowHeight) - 10);
+                if (Math.abs(start - virtualStart) < 5) return;
+                const focused = document.activeElement;
+                const cell = focused?.classList.contains('sheet-cell') ? {row:focused.dataset.row, col:focused.dataset.col, start:focused.selectionStart, end:focused.selectionEnd} : null;
+                // Commit an in-progress edit before recycling offscreen row controls.
+                if (cell) { record(); focused.blur(); }
+                renderNodeTable();
+                if (cell) {
+                    const next = document.querySelector(`[data-row="${cell.row}"][data-col="${cell.col}"]`);
+                    if (next) { next.focus({preventScroll:true}); if (cell.start !== null && next.setSelectionRange) next.setSelectionRange(cell.start, cell.end); }
+                }
+            });
+        });
+        setupAssets();
         renderTabs(); renderNodeTable();
     }
     function renderTabs() { document.querySelectorAll('[data-group]').forEach(btn => { const on = btn.dataset.group === group; btn.classList.toggle('active', on); btn.setAttribute('aria-pressed', String(on)); }); }
     setup();
 })();
+

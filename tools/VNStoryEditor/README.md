@@ -71,3 +71,17 @@ Use **Local Images → Link folder** to reconnect your image folder for the curr
 Drag the **⠿ handle** in the line-number column to insert a line above or below the highlighted destination. Dragging a selected line moves all selected lines together in original order, preserving complete node data. Clear search/filters before dragging rows; bulk Move buttons remain available. Use All to drag within a continuous chapter.
 
 Focus or hover a cell and drag its **small green corner handle** upward/downward to repeat that value in the same column. The gesture can auto-scroll and works across recycled rows in All view. Filled arrays (commands) are copied independently. Filtered filling affects only the visible matching sequence. Escape/pointer cancellation leaves the data untouched. A completed fill or row move is one undo step.
+
+
+## Tool versioning
+
+Current release: **ver20261019.001**.
+
+Use `verYYYYMMDD.NNN`, based on the release date in **Asia/Hong_Kong**. Start each day's first release at `.001`; increment same-day revisions to `.002`, `.003`, etc. This identifies a released build, so it does not change automatically when the page is opened on a different day.
+
+For each release:
+1. Update the `vn-editor-version` meta tag and browser title in `vn_editor.html`. The visible header badge reads that meta tag.
+2. Set every local script and stylesheet `?v=` value in that HTML to the same version to refresh cached code/styles after deployment.
+3. Update this release value and add an entry to `CHANGELOG.md`.
+
+Tool versions are separate from the Unity JSON format's `metadata.version`, which remains `1.0` for compatibility.

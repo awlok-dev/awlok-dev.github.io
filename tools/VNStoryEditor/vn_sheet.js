@@ -580,6 +580,12 @@
     function setup() {
         document.body.classList.add('sheet-workspace');
         document.querySelector('.header h1').innerHTML = '<span class="brand-mark">VN</span> Story studio <small>VISUAL NOVEL EDITOR</small>';
+        const version = document.querySelector('meta[name="vn-editor-version"]')?.content;
+        if (version) {
+            const badge = element('span', version, 'tool-version');
+            badge.title = 'Tool release: YYYYMMDD.daily revision (Hong Kong date)';
+            document.querySelector('.header h1').append(badge);
+        }
         const content = document.querySelector('.content-area');
         const bar = element('section', undefined, 'sheet-toolbar');
         bar.innerHTML = `<div class="sheet-toolbar-top"><div><h2>Write the scene.</h2><p>Edit in place. Keep the story in view.</p></div><div class="sheet-actions"><button id="sheetUndo" title="Undo (Ctrl/Cmd + Z)">↶ Undo</button><button id="sheetRedo" title="Redo (Ctrl/Cmd + Shift + Z)">↷ Redo</button><button id="scriptPaste">Paste script</button><button id="csvExport">Export CSV</button><label class="sheet-file">Import CSV<input id="csvImport" type="file" accept=".csv,text/csv" hidden></label></div></div>

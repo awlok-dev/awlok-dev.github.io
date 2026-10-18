@@ -150,3 +150,7 @@ td:focus-within>.fill-handle,td:hover>.fill-handle { opacity:1; }
 .virtual-all textarea.sheet-cell { height:109px; resize:none!important; }
 .sheet-workspace:not(.classic-mode) .node-table .virtual-spacer td { padding:0; border:0; position:static; min-width:0; background:transparent; }
 .stage-label { background:#101c2cbb; padding:4px 6px; border-radius:4px; width:fit-content; max-width:calc(100% - 20px); }
+
+/* Tool release stays visible in desktop and mobile headers. */
+.sheet-workspace .header h1 { flex-wrap:wrap; }
+.tool-version { font:500 11px/1.4 ui-monospace,monospace; letter-spacing:0; color:var(--accent); border:1px solid #39534e; border-radius:5px; padding:4px 7px; white-space:nowrap; }

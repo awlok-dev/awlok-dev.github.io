@@ -114,10 +114,61 @@
         document.querySelector(`.sheet-row[data-index="${active}"]`)?.classList.add('is-current');
         renderPreview();
     }
+    function characterFieldOptions(node, key) {
+        const match = /^(left|center|right)Character\.(outfitID|poseID|expressionIndex)$/.exec(key);
+        if (!match) return null;
+        const state = node[`${match[1]}Character`] || {};
+        const character = characterLibrary[state.characterId];
+        const outfit = character?.outfits?.find(item => String(item.outfitID) === String(state.outfitID));
+        const pose = outfit?.poses?.find(item => String(item.poseID) === String(state.poseID));
+        const label = (id, name) => name ? `${id} · ${name}` : String(id);
+        if (match[2] === 'outfitID') return {
+            placeholder: !character ? 'Select a library character first' : 'Select outfit',
+            options: (character?.outfits || []).map(item => [String(item.outfitID), label(item.outfitID, item.outfitName)])
+        };
+        if (match[2] === 'poseID') return {
+            placeholder: !outfit ? 'Select a valid outfit first' : 'Select pose',
+            options: (outfit?.poses || []).map(item => [String(item.poseID), label(item.poseID, item.poseName)])
+        };
+        return {
+            placeholder: !pose ? 'Select a valid pose first' : 'Select expression',
+            options: (pose?.expressions || []).map((item, index) => [String(index), label(index, item.fileName)])
+        };
+    }
+    function populateCharacterSelect(input, node, key) {
+        const config = characterFieldOptions(node, key);
+        if (!config) return;
+        const value = String(get(node, key) ?? '');
+        input.replaceChildren(new Option(config.placeholder, ''));
+        for (const [id, label] of config.options) input.add(new Option(label, id));
+        if (value && !config.options.some(([id]) => id === value)) {
+            input.add(new Option(`${value} · Unlisted value (preserved)`, value));
+        }
+        input.value = value;
+        input.title = config.options.length ? 'Library values; existing unlisted IDs are preserved until you select a replacement.' : config.placeholder;
+    }
+    function refreshCharacterSelects(index = null) {
+        const selector = index === null ? 'select[data-character-field]' : `select[data-character-field][data-row="${index}"]`;
+        document.querySelectorAll(selector).forEach(input => {
+            const node = chapter.nodes[Number(input.dataset.row)];
+            if (node) populateCharacterSelect(input, node, input.dataset.characterField);
+        });
+    }
+    const originalSaveCharacterLibrary = saveCharacterLibrary;
+    saveCharacterLibrary = function() {
+        originalSaveCharacterLibrary();
+        refreshCharacterSelects();
+        renderPreview();
+    };
+
     function makeCell(node, index, f, col) {
         const td = element('td'); td.dataset.fillRow = index; td.dataset.fillCol = col;
         let input;
-        if (f.type === 'select') {
+        if (characterFieldOptions(node, f.key)) {
+            input = element('select');
+            input.dataset.characterField = f.key;
+            populateCharacterSelect(input, node, f.key);
+        } else if (f.type === 'select') {
             input = element('select');
             for (const option of f.options) input.add(new Option(option, option));
             if (!f.options.includes(get(node, f.key)) && get(node, f.key) != null) input.add(new Option(get(node, f.key), get(node, f.key)));
@@ -137,6 +188,7 @@
             try {
                 const value = f.type === 'boolean' ? input.checked : coerce(input.value, f);
                 set(node, f.key, value);
+                if (/Character\.(characterId|outfitID|poseID)$/.test(f.key)) refreshCharacterSelects(index);
                 if (/Character\.|backgroundSprite|cgAction|cgSprite/.test(f.key)) sceneFrames.length = Math.min(sceneFrames.length, index);
                 input.setCustomValidity('');
                 originalSave(); renderPreview(); updateStatus();
@@ -646,4 +698,5 @@
     function renderTabs() { document.querySelectorAll('[data-group]').forEach(btn => { const on = btn.dataset.group === group; btn.classList.toggle('active', on); btn.setAttribute('aria-pressed', String(on)); }); }
     setup();
 })();
+
 

@@ -75,7 +75,7 @@ Focus or hover a cell and drag its **small green corner handle** upward/downward
 
 ## Tool versioning
 
-Current release: **ver20261019.001**.
+Current release: **ver20261019.002**.
 
 Use `verYYYYMMDD.NNN`, based on the release date in **Asia/Hong_Kong**. Start each day's first release at `.001`; increment same-day revisions to `.002`, `.003`, etc. This identifies a released build, so it does not change automatically when the page is opened on a different day.
 
@@ -85,3 +85,9 @@ For each release:
 3. Update this release value and add an entry to `CHANGELOG.md`.
 
 Tool versions are separate from the Unity JSON format's `metadata.version`, which remains `1.0` for compatibility.
+
+
+
+### Character dropdowns in the sheet
+
+In Characters & visuals, enter/select a library character ID for a slot. Outfit lists that character’s outfit IDs/names; Pose follows the selected outfit; Expression follows the pose and displays the zero-based expression index plus filename. Lists refresh immediately when the parent selection changes or the character library is saved/imported. Existing unlisted IDs are retained and labelled instead of silently changing story data. Empty lists explain which parent selection is needed. CSV, fill and undo continue to store the original IDs/indexes, not display labels.
